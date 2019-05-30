@@ -12,7 +12,7 @@ class Ligacao{
 
     public:
         Ligacao(Date _dataHora, double _duracao, double _custo) : dataHora(_dataHora), duracao(_duracao), custo(_custo) {};
-        ~Ligacao();
+        virtual ~Ligacao();
 
         inline const double getDuracao(){return(duracao);};
         inline const double getCusto(){return(custo);};

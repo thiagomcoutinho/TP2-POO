@@ -1,8 +1,10 @@
 #ifndef CELULAR
 #define CELULAR
+
 #include<Headers/Cliente.h>
 #include<Headers/Plano.h>
 #include<Headers/Ligacao.h>
+#include<Headers/LigacaoDados.h>
 #include<Headers/Date.h>
 #include<vector>
 
@@ -18,12 +20,9 @@ class Celular{
         static double proxNumCelular;
 
     public:
+        Celular();
         Celular(Cliente c, Plano& p);
-        Celular(Cliente c, Plano& p, Date vencimento);
         ~Celular();
-        void addLigacaoSimples(Date timestamp, double duracao);
-        void addLigacaoDados(Date timestamp, double duracao);
-        
 };
 static double proxNumCelular = 0;
 

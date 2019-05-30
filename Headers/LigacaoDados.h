@@ -5,12 +5,9 @@
 
 using namespace std;
 
-template <class T>;
-
 class LigacaoDados : public Ligacao{
 
-    private:
-        enum <T> tipo;
-
+    public:
+        enum tipoDados {download, upload};
 };
 #endif
