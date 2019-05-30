@@ -24,3 +24,15 @@ Celular::Celular(Cliente c, Plano& p, Date vencimento){
     */
 }
 
+void Celular::addLigacao(Date timestamp, double duracao){
+
+    double custo = duracao*plano->getValorMinuto();
+
+    /*
+        TODO: Verificar o plano atual e se a ligacao pode
+        ser feita. Caso possivel, execute abaixo. Caso contrario,
+        throw exception.
+    */
+    Ligacao l(timestamp, duracao, custo);
+    ligacoes.push_back(l);
+}

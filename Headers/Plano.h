@@ -1,3 +1,7 @@
+#include<string>
+
+using namespace std;
+
 class Plano{
 
     private:
@@ -7,4 +11,8 @@ class Plano{
         double franquia;
         double velocAlem;
 
+    public:
+        Plano();
+        ~Plano();
+        inline const double getValorMinuto(){return(valorMinuto);};
 };

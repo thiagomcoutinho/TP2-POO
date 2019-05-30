@@ -16,5 +16,5 @@ class Cliente{
         Cliente(int _cpf, string _nome, string _endereco);
         ~Cliente();
         void addCelular(Celular c);
-
+        void efetuarLigacao(int celularIndex, Date timestamp, double duracao);
 };

@@ -9,3 +9,8 @@ Cliente::Cliente(int _CPF, string _nome, string _endereco){
 void Cliente::addCelular(Celular c){
     celulares.push_back(c);
 }
+
+void Cliente::efetuarLigacao(int celularIndex, Date timestamp, double duracao){
+    celulares[celularIndex].addLigacao(timestamp, duracao);
+
+}

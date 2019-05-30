@@ -1,5 +1,9 @@
 #include<Headers/Plano.h>
 #include<Headers/Ligacao.h>
+#include<Headers/Date.h>
+#include<vector>
+
+using namespace std;
 
 class Celular{
 
@@ -14,8 +18,7 @@ class Celular{
         Celular(Cliente c, Plano& p);
         Celular(Cliente c, Plano& p, Date vencimento);
         ~Celular();
-
-
-
+        void addLigacao(Date timestamp, double duracao);
+        
 };
 static double proxNumCelular = 0;
