@@ -5,4 +5,8 @@ class Ligacao{
         double duracao;
         double custo;
 
+    public:
+
+        void registraLigacao()
+
 };
