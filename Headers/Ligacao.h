@@ -11,6 +11,7 @@ class Ligacao{
         const double custo;
 
     public:
+        Ligacao();
         Ligacao(Date _dataHora, double _duracao, double _custo) : dataHora(_dataHora), duracao(_duracao), custo(_custo) {};
         virtual ~Ligacao();
 
