@@ -21,10 +21,9 @@ class Cliente{
         Cliente();
         Cliente(int _cpf, string _nome, string _endereco);
         ~Cliente();
-        void pushCelular(Celular cel);
         void addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, Date vencimento);
         void addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, Date curr_date, double credito);
         void efetuarLigacao(int celularIndex, Date timestamp, double duracao, double numTel);
-        void efetuarLigacao(int celularIndex, Date timestamp, double duracao, TipoDados data_type);
+        void efetuarLigacao(int celularIndex, Date timestamp, double duracao, tipoDados data_type);
 };
 #endif

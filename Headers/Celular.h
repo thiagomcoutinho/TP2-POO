@@ -23,6 +23,8 @@ class Celular{
         Celular();
         Celular(Cliente c, Plano& p);
         ~Celular();
+        void ligar(Date timestamp, double duracao, double numTel);
+        void ligar(Date timestamp, double duracao, tipoDados td);
 };
 static double proxNumCelular = 0;
 
