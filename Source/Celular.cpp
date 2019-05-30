@@ -25,7 +25,7 @@ void Celular::ligar(Date timestamp, double duracao, double numTel){
     if(dynamic_cast<PrePago*>(plano) == nullptr){
         throw exception::exception();
     }else{
-
+        
         double custo = duracao*plano->getValorMinuto();
         LigacaoSimples l(timestamp, duracao, custo, numTel);
         ligacoes.push_back(l);

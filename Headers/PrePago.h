@@ -16,5 +16,7 @@ class PrePago : public Plano{
         Plano(_nome, _vlrMinuto, _franquia, _velocAlem), credito(_credito), validade(_validade) {};
         ~PrePago();
         void adicionaCreditos(int creditos, Date dataAtual);
+        const void verificaCredito(const double& custo);
+        const void verificaValidade(const Date& dataLigacao);
 };
 #endif

@@ -14,5 +14,6 @@ class PosPago : public Plano{
         PosPago(string _nome, double _vlrMinuto, double _franquia, double _velocAlem, Date _vencimento) : \
         Plano(_nome, _vlrMinuto, _franquia, _velocAlem), vencimento(_vencimento) {};
         ~PosPago();
+        const void verificaVencimento(const Date& dataLigacao);
 };
 #endif
