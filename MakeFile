@@ -1,0 +1,8 @@
+main.out:	main.o Celular.o Cliente.p Date.o Interface.o Ligacao.o LigacaoDados.o LigacaoSimples.o Plano.o PosPago.o PrePago.o
+	g++ -std=c++11 main.o Celular.o Cliente.p Date.o Interface.o Ligacao.o LigacaoDados.o LigacaoSimples.o Plano.o PosPago.o PrePago.o -o main
+
+main.o:	main.cpp
+	g++ -std=c++11 -c main.cpp
+
+Celular.o:	Celular.cpp	Celular.h
+	g++ -std=c++11 -c Celular.cpp 

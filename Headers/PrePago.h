@@ -1,3 +1,6 @@
+#ifndef PREPAGO
+#define PREPAGO
+
 #include<Headers/Date.h>
 #include<Headers/Plano.h>
 
@@ -13,3 +16,4 @@ class PrePago : public Plano{
         void adicionaCreditos(int creditos, Date dataAtual);
 
 };
+#endif

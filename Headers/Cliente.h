@@ -1,3 +1,5 @@
+#ifndef CLIENTE
+#define CLIENTE
 #include<Headers/Celular.h>
 #include<vector>
 #include<string>
@@ -18,3 +20,5 @@ class Cliente{
         void addCelular(Celular c);
         void efetuarLigacao(int celularIndex, Date timestamp, double duracao);
 };
+
+#endif

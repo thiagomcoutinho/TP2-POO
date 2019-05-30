@@ -1,3 +1,6 @@
+#ifndef DATE
+#define DATE
+
 class Date{
 
     private:
@@ -8,3 +11,4 @@ class Date{
         int mes;
         int ano;
 };
+#endif

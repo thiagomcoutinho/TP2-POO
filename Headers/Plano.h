@@ -1,3 +1,6 @@
+#ifndef PLANO
+#define PLANO
+
 #include<string>
 
 using namespace std;
@@ -16,3 +19,4 @@ class Plano{
         ~Plano();
         inline const double getValorMinuto(){return(valorMinuto);};
 };
+#endif

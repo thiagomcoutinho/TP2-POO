@@ -1,3 +1,8 @@
+#ifndef LIGACAO
+#define LIGACAO
+
+#include<Headers/Date.h>
+
 class Ligacao{
 
     private:
@@ -13,3 +18,4 @@ class Ligacao{
         inline const double getCusto(){return(custo);};
         inline const Date getDate(){return(dataHora);};
 };
+#endif

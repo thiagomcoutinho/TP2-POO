@@ -9,6 +9,8 @@ Celular::Celular(Cliente c, Plano& p){
 
     /* TODO: Verificar se o plano é da classe 
         PosPago. Caso verdadeiro throw exception.
+
+        TYPE* dynamic_cast<TYPE*> (object); --> Retorna NULL. (TESTAR)
     */
 }
 
@@ -24,7 +26,7 @@ Celular::Celular(Cliente c, Plano& p, Date vencimento){
     */
 }
 
-void Celular::addLigacao(Date timestamp, double duracao){
+void Celular::addLigacaoSimples(Date timestamp, double duracao){
 
     double custo = duracao*plano->getValorMinuto();
 
