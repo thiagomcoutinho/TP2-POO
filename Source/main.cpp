@@ -1,9 +1,14 @@
-#include<ncurses.h>
+#include "./../Headers/Interface.h"
 
 using namespace std;
 
 int main(int argc, char **arvg){
 
+    Interface i;
+
+    i.getString();
+
+    /*
     // initilizes the screen
     // sets up memory and clears the screen
     initscr();
@@ -30,32 +35,6 @@ int main(int argc, char **arvg){
     int c = getch(); // Esta em ASC II -->  Tem que fazer a funcao de conversao de ASCII para numeros/chars
     // clears the screen
     clear();
-
-    // GET STRING FUNCTION
-    /*
-    std::string getstring()
-    {
-        std::string input;
-
-        // let the terminal do the line editing
-        nocbreak();
-        echo();
-
-        // this reads from buffer after <ENTER>, not "raw" 
-        // so any backspacing etc. has already been taken care of
-        int ch = getch();
-
-        while ( ch != '\n' )
-        {
-            input.push_back( ch );
-            ch = getch();
-        }
-
-        // restore your cbreak / echo settings here
-
-        return input;
-    }*/
-
 
     move(0, 0);
     printw("%d", c);
@@ -186,7 +165,6 @@ int main(int argc, char **arvg){
 
 
     */
-
 
     return 0;
 }

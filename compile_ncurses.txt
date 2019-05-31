@@ -1,2 +1,5 @@
  
  g++ -lncurses main.cpp -o main
+
+ g++ -lncurses -o main main.cpp Interface.cpp
+
