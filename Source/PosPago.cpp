@@ -4,8 +4,16 @@ PosPago::PosPago(){}
 
 PosPago::~PosPago(){}
 
-const void PosPago::verificaVencimento(const Date& dataLigacao){
+void PosPago::verificaData(const Date& dataLigacao) const{
     if(dataLigacao > vencimento){
         throw exception::exception();
     }
+}
+
+void PosPago::verificaCredito(const double& custo) const{
+    throw exception::exception(); // FUNCAO DO PLANO PRE-PAGO.
+}
+
+void PosPago::cobraCusto(const double& custo){
+    valor += custo;
 }

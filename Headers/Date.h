@@ -17,7 +17,7 @@ class Date{
         Date(int _hora, int _min, int _seg, int aux);
         ~Date();
 
-        void acrescentaTempo(const Date& tempoExtra);
+        void acrescentaTempo();
         bool operator > (const Date& b);
 };
 #endif

@@ -4,17 +4,21 @@ PrePago::PrePago(){}
 
 void PrePago::adicionaCreditos(int creditos, Date dataAtual){
     credito += creditos;
-    //validade.acrescentaTempo(180*60*60);
+    validade.acrescentaTempo();
 }
 
-const void PrePago::verificaCredito(const double& custo){
+void PrePago::verificaCredito(const double& custo) const{
     if(credito - custo < 0){
         throw exception::exception();
     }
 }
 
-const void PrePago::verificaValidade(const Date& dataLigacao){
+void PrePago::verificaData(const Date& dataLigacao) const{
     if(dataLigacao > validade){
         throw exception::exception();
     }
+}
+
+void PrePago::cobraCusto(const double& custo){
+    credito -= custo;
 }

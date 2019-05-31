@@ -18,10 +18,15 @@ class Plano{
         Plano(string _nome, double _vlrMinuto, double _franquia, double _velocAlem);
         Plano();
         virtual ~Plano();
-        inline const double getValorMinuto(){return(valorMinuto);};
-        inline const double getVelocidade(){return(velocidade);};
-        inline const double getFranquia(){return(franquia);};
-        inline const double getVelocAlem(){return(velocAlem);};
+        // FUNCOES GET
+        inline double getValorMinuto() const {return(valorMinuto);};
+        inline double getVelocidade()  const {return(velocidade);};
+        inline double getFranquia()    const {return(franquia);};
+        inline double getVelocAlem()   const {return(velocAlem);};
 
+        // VIRTUAIS PURAS
+        virtual void verificaCredito(const double& custo) const = 0;
+        virtual void verificaData(const Date& dataLigacao) const = 0;
+        virtual void cobraCusto(const double& custo) = 0;
 };
 #endif

@@ -28,10 +28,12 @@ void Cliente::addCelular(string nomePlano, double vlrMinuto, double _franquia, d
     celulares.push_back(newCel);
 }
 
+// LIGACAO SIMPLES
 void Cliente::efetuarLigacao(int celularIndex, Date timestamp, double duracao, double numTel){
     celulares[celularIndex].ligar(timestamp, duracao, numTel);
 } 
 
+// LIGACAO DE DADOS
 void Cliente::efetuarLigacao(int celularIndex, Date timestamp, double duracao, tipoDados td){
     celulares[celularIndex].ligar(timestamp, duracao, td);
 }
