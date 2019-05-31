@@ -1,0 +1,2 @@
+ 
+ g++ -lncurses main.cpp -o main
