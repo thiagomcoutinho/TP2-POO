@@ -30,7 +30,8 @@ class Interface{
         void listaClientes();
         void informaVencimentos();
         void informaLimiteFranquia();
-
+        void print(const char* text) const;
+        void switchMenu(const char option);
         string getString();
 
 };
