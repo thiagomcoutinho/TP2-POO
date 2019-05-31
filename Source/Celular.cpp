@@ -7,11 +7,9 @@ Celular::Celular(){
 }
 
 Celular::Celular(Cliente client, Plano& p){
-
     plano = &p;
     numero = proxNumCelular;
     proxNumCelular++;
-
 }
 
 // LIGACAO SIMPLES
@@ -27,7 +25,8 @@ void Celular::ligar(Date timestamp, double duracao, double numTel){
         plano->verificaCredito(custo);
     }
 
-    // 
+    // COBRA CUSTO
+    plano->cobraCusto(custo);
 
     // FAZ LIGACAO
     LigacaoSimples l(timestamp, duracao, custo, numTel);
