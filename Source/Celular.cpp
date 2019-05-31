@@ -35,7 +35,16 @@ void Celular::ligar(Date timestamp, double duracao, double numTel){
 
 // LIGACAO DADOS
 void Celular::ligar(Date timestamp, double duracao, tipoDados td){
+    
     double franquia = plano->getFranquia();
+    double franquiaGasta = plano->getFranquiaGasta();
+    double custo;
 
+    if(franquiaGasta > franquia){
+        custo = plano->getVelocAlem*duracao;
+    }else{
+        custo = plano->getVelocidade*duracao;
+    }
+    plano->setFranquiaGasta(custo);
     
 }
