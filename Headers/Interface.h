@@ -14,6 +14,7 @@ class Interface{
     private:
         int x;
         int y;
+        string input;
         //vector<Cliente> clientes;
         //vector<Plano> planos;
 
@@ -22,7 +23,7 @@ class Interface{
         ~Interface();
         // FUNCOES DE MENU
         void menuInicial();
-        void menuCadastroCliente();
+        void menuCadastroCliente(int option);
         void menuCadastroPlano();
         void menuCadastroCelular();
         void menuAdicionaCreditos();
@@ -39,10 +40,11 @@ class Interface{
         void informaVencimentos();
         void informaLimiteFranquia();
         // FUNCOES AUXILIARES
-        void print(const char* text) const;
-        void switchMenu(const char option);
+        void print(const char* text, bool breakLine);
+        void switchMenu(int option);
+        void setMenu();
         
-        string getString();
+        void getString();
 
 };
 #endif

@@ -7,12 +7,16 @@ Interface::Interface(){
     x = y = 5;
     
     int c = 0;
+    int b;
 
     // Cria menu inicial
     menuInicial();
     // Loop infinito ate que o cliente saia da aplicacao
     while(c != 113){ // 'q' quit
         c = getch();
+        if(c == 113){break;}
+
+        b = getch(); // VARIAVEL AUXILIAR PARA ENTRADA
         if(c != 113){
             switchMenu(c);
         }
@@ -23,20 +27,23 @@ Interface::~Interface(){
     endwin();
 }
 
-void Interface::print(const char* text) const{
+void Interface::print(const char* text, bool breakLine = true){
     mvprintw(y, x, text);
+    if(breakLine){
+        y++;
+    }
 }
 
-string Interface::getString()
-{
-    string input;
+void Interface::setMenu(){
+    y = x = 5;
+    clear();
+}
 
-    // let the terminal do the line editing
+void Interface::getString()
+{
     nocbreak();
     echo();
 
-    // this reads from buffer after <ENTER>, not "raw" 
-    // so any backspacing etc. has already been taken care of
     int ch = getch();
 
     while ( ch != '\n' )
@@ -44,135 +51,171 @@ string Interface::getString()
         input.push_back( ch );
         ch = getch();
     }
-
-    // restore your cbreak / echo settings here
-    return input;
 }
 
-void Interface::switchMenu(const char option){
+void Interface::switchMenu(int option){
 
     switch (option)
     {
-    case 97:
-        menuCadastroCliente();
-        break;
-    case 98:
-        menuCadastroPlano();
-        break;
-    case 99:
-        menuCadastroCelular();
-        break;
-    case 100:
-        menuAdicionaCreditos();
-        break;
-    case 101:
-        menuRegistraLigacaoS();
-        break;
-    case 102:
-        menuRegistraLigacaoD();
-        break;
-    case 103:
-        listaDadosPacote();
-        break;
-    case 104:
-        listaValorConta();
-        break;
-    case 105:
-        listaCreditos();
-        break;
-    case 106:
-        listaExtratoS();
-        break;
-    case 107:
-        listaExtratoD();
-        break;
-    case 108:
-        listaClientes();
-        break;
-    case 109:
-        listaPlanos();
-        break;
-    case 110:
-        listaCelulares();
-        break;
-    case 111:
-        informaVencimentos();
-        break;
-    case 112:
-        informaLimiteFranquia();
-        break;
-    default:
-        break;
+        case 97:
+            menuCadastroCliente(option);
+            break;
+        case 98:
+            menuCadastroPlano();
+            break;
+        case 99:
+            menuCadastroCelular();
+            break;
+        case 100:
+            menuAdicionaCreditos();
+            break;
+        case 101:
+            menuRegistraLigacaoS();
+            break;
+        case 102:
+            menuRegistraLigacaoD();
+            break;
+        case 103:
+            listaDadosPacote();
+            break;
+        case 104:
+            listaValorConta();
+            break;
+        case 105:
+            listaCreditos();
+            break;
+        case 106:
+            listaExtratoS();
+            break;
+        case 107:
+            listaExtratoD();
+            break;
+        case 108:
+            listaClientes();
+            break;
+        case 109:
+            listaPlanos();
+            break;
+        case 110:
+            listaCelulares();
+            break;
+        case 111:
+            informaVencimentos();
+            break;
+        case 112:
+            informaLimiteFranquia();
+            break;
+        default:
+            break;
     }
 }
 
 void Interface::menuInicial(){
 
+    setMenu();
+
     print("///// OPERADORA TELEFONICA CONAUT /////");
-    y++;
     print("a. Cadastro de Clientes");
-    y++;
     print("b. Cadastro de Planos");
-    y++;
     print("c. Cadastro de Celulares");
-    y++;
     print("d. Adicionar Creditos");
-    y++;
     print("e. Registro de Ligacao Simples");
-    y++;
     print("f. Registro de Ligacao de Dados");
-    y++;
     print("g. Informacao de Pacote de Dados");
-    y++;
     print("h. Valor de Contas");
-    y++;
     print("i. Saldo de Creditos");
-    y++;
     print("j. Extrato de Ligacoes Simples");
-    y++;
     print("k. Extrato de Ligacoes de Dados");
-    y++;
     print("l. Lista de Clientes");
-    y++;
     print("m. Lista de Planos");
-    y++;
     print("n. Lista de Celulares");
-    y++;
     print("o. Informe de Vencimentos");
-    y++;
     print("p. Limite de Franquia");
-    y++;
     print("Pressione q para sair");
-    y++;
     print("Escolha uma opcao: ");
+
     refresh();
 }
 
-void Interface::menuCadastroCliente(){
-    // NOME
-    // ENDERECO
-    // CPF
+void Interface::menuCadastroCliente(int option){
+
+    setMenu();
+
+    print("///// MENU DE CADASTRO DE CLIENTES /////");
+    
+    print("ENTRE COM OS DADOS DO CLIENTE: ");
+    print("NOME DO CLIENTE: ");
+    getString();
+    print("ENDERECO: ");
+    getString();
+    print("CPF/CNPJ: ");
+    getString();
+    
+    refresh();
+
+    // CRIA CLIENTE
+
+    menuInicial();
 }
 
 void Interface::menuCadastroPlano(){
-    // NOME
-    // VALOR MINUTO
-    // VELOCIDADE
-    // FRANQUIA
-    // VELOC ALEM
+
+    setMenu();
+
+    print("///// MENU DE CADASTRO DE PLANOS /////");
+    print("NOME DO PLANO: ");
+    getString();
+    print("TIPO DO PLANO: ");
+    getString();
+    print("VALOR DO MINUTO: ");
+    getString();
+    print("VELOCIDADE DO PACOTE DE DADOS: ");
+    getString();
+    print("FRANQUIA: ");
+    getString();
+    print("VELOCIDADE ALEM DA FRANQUIA: ");
+    getString();
+
+    refresh();
+    menuInicial();
 }
 
 void Interface::menuCadastroCelular(){
-    // CLIENTE
-    // PLANO
-    // DATA DE VENCIMENTO CASO POS PAGO
+
+    setMenu();
+
+    print("///// MENU DE CADASTRO DE CELULARES /////");
+    print("NUMERO DO CLIENTE: ");
+    getString();
+    print("NOME DO PLANO: ");
+    getString();
+    // IF PLANO É POS PAGO
+    print("DATA DE VENCIMENTO: ");
+    getString();
+    
+    refresh();
+    menuInicial();
 }
 
 void Interface::menuAdicionaCreditos(){
-    // VALOR CREDITOS
+
+    setMenu();
+
+    print("///// MENU DE CREDITOS /////");
+    print("NUMERO DO CELULAR: ");
+    getString();
+    print("VALOR DE CREDITOS: ");
+    getString();
+    
+    refresh();
+    menuInicial();
 }
 
 void Interface::menuRegistraLigacaoS(){
+
+    setMenu();
+
+    
     // DATA
     // HORA
     // DURACAO
