@@ -21,7 +21,7 @@ class Interface{
     public:
         Interface();
         ~Interface();
-        // FUNCOES DE MENU
+        // FUNCOES DE IMPRESSAO
         void menuInicial();
         void menuCadastroCliente(int option);
         void menuCadastroPlano();
@@ -44,7 +44,7 @@ class Interface{
         void switchMenu(int option);
         void setMenu();
         
+        // FUNCOES DE ENTRADA
         void getString();
-
 };
 #endif
