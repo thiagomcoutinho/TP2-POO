@@ -11,6 +11,8 @@ class Ligacao{
         const double custo;
 
     public:
+        // IMPORTANTE: USAR PROTECTED NAS CLASSES.
+
         Ligacao() : duracao(0), custo(0) {};
         Ligacao(Date _dataHora, double _duracao, double _custo) : dataHora(_dataHora), duracao(_duracao), custo(_custo) {};
         virtual ~Ligacao();

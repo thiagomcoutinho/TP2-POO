@@ -76,3 +76,13 @@ bool Date::operator > (const Date& b){
         return(false);
     }
 }
+
+string Date::convertDateToString(bool ligacao) const{
+    string sDate;
+    if(ligacao){
+        sDate = to_string(hora) + ":" + to_string(min) + ":" + to_string(seg); 
+    }else{
+        sDate = to_string(dia) + "/" + to_string(mes) + "/" + to_string(ano);
+    }
+    return(sDate);
+}

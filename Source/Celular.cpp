@@ -40,11 +40,28 @@ void Celular::ligar(Date timestamp, double duracao, tipoDados td){
     double franquiaGasta = plano->getFranquiaGasta();
     double custo;
 
-    if(franquiaGasta > franquia){
-        custo = plano->getVelocAlem*duracao;
-    }else{
-        custo = plano->getVelocidade*duracao;
+    // PLANO NAO POSSUI ASSINATURA DE DADOS
+    if(franquia == 0){
+        throw exception::exception();
     }
+
+    if(franquiaGasta > franquia){
+        if(td == download){ // DOWNLOAD
+            custo = plano->getVelocAlem*duracao;
+        }else{ // UPLOAD
+            custo = plano->getVelocAlem*0.1*duracao;
+        }
+    }else{ // FRANQUIA TOTALMENTE CONSUMIDA, VELOCIDADE DE DOWNLOAD REDUZIDA
+        if(td == download){ // DOWNLOAD
+            custo = plano->getVelocidade*duracao;
+        }else{ // UPLOAD
+            custo = plano->getVelocidade*0.1*duracao;
+        }
+    }
+    // ATUALIZA FRANQUIA GASTA
     plano->setFranquiaGasta(custo);
     
+    // FAZ LIGACAO
+    LigacaoDados l(timestamp, duracao, custo, td);
+    ligacoes.push_back(l);
 }

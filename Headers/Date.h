@@ -1,6 +1,10 @@
 #ifndef DATE
 #define DATE
 
+#include<string>
+
+using namespace std;
+
 class Date{
 
     private:
@@ -19,5 +23,6 @@ class Date{
 
         void acrescentaTempo();
         bool operator > (const Date& b);
+        string convertDateToString(bool ligacao) const;
 };
 #endif
