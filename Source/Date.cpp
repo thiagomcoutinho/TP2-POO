@@ -59,7 +59,7 @@ void Date::acrescentaTempo(){
     }
 }
 
-bool Date::operator > (const Date& b){
+bool Date::operator > (Date b) const{
     if(b.ano > ano){ // Compara ano
         return(true);
     }else if(b.mes > mes){ // Compara mes

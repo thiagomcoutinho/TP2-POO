@@ -22,7 +22,7 @@ class Date{
         ~Date();
 
         void acrescentaTempo();
-        bool operator > (const Date& b);
+        bool operator > (Date b) const;
         string convertDateToString(bool ligacao) const;
 };
 #endif
