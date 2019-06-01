@@ -14,5 +14,7 @@ class LigacaoSimples : public Ligacao{
          Ligacao(_dataHora, _duracao, _custo), numTelefone(_numTel) {};
         ~LigacaoSimples();
         
+        // FUNCOES GET
+        inline double getNumTelefone() const {return(numTelefone);};
 };
 #endif

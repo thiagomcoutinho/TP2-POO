@@ -18,7 +18,3 @@ void PrePago::verificaData(const Date& dataLigacao) const{
         throw exception::exception();
     }
 }
-
-void PrePago::cobraCusto(const double& custo){
-    credito -= custo;
-}

@@ -13,7 +13,3 @@ void PosPago::verificaData(const Date& dataLigacao) const{
 void PosPago::verificaCredito(const double& custo) const{
     throw exception::exception(); // FUNCAO DO PLANO PRE-PAGO.
 }
-
-void PosPago::cobraCusto(const double& custo){
-    valor += custo;
-}
