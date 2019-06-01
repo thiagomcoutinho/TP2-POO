@@ -1,4 +1,4 @@
-#include<Headers/PrePago.h>
+#include "./../Headers/PrePago.h"
 
 PrePago::PrePago(){}
 

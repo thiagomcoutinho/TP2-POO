@@ -1,4 +1,4 @@
-#include<Headers/PosPago.h>
+#include "./../Headers/PosPago.h"
 
 PosPago::PosPago(){}
 

@@ -14,6 +14,7 @@ class Interface{
         int x;
         int y;
         //vector<Cliente> clientes;
+        //vector<Plano> planos;
 
     public:
         Interface();
@@ -32,6 +33,8 @@ class Interface{
         void listaExtratoS();
         void listaExtratoD();
         void listaClientes();
+        void listaPlanos();
+        void listaCelulares();
         void informaVencimentos();
         void informaLimiteFranquia();
         // FUNCOES AUXILIARES

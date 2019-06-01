@@ -90,9 +90,15 @@ void Interface::switchMenu(const char option){
         listaClientes();
         break;
     case 109:
-        informaVencimentos();
+        listaPlanos();
         break;
     case 110:
+        listaCelulares();
+        break;
+    case 111:
+        informaVencimentos();
+        break;
+    case 112:
         informaLimiteFranquia();
         break;
     default:
@@ -128,9 +134,13 @@ void Interface::menuInicial(){
     y++;
     print("l. Lista de Clientes");
     y++;
-    print("m. Informe de Vencimentos");
+    print("m. Lista de Planos");
     y++;
-    print("n. Limite de Franquia");
+    print("n. Lista de Celulares");
+    y++;
+    print("o. Informe de Vencimentos");
+    y++;
+    print("p. Limite de Franquia");
     y++;
     print("Pressione q para sair");
     y++;
@@ -139,57 +149,99 @@ void Interface::menuInicial(){
 }
 
 void Interface::menuCadastroCliente(){
-
+    // NOME
+    // ENDERECO
+    // CPF
 }
 
 void Interface::menuCadastroPlano(){
-
+    // NOME
+    // VALOR MINUTO
+    // VELOCIDADE
+    // FRANQUIA
+    // VELOC ALEM
 }
 
 void Interface::menuCadastroCelular(){
-
+    // CLIENTE
+    // PLANO
+    // DATA DE VENCIMENTO CASO POS PAGO
 }
 
 void Interface::menuAdicionaCreditos(){
-
+    // VALOR CREDITOS
 }
 
 void Interface::menuRegistraLigacaoS(){
-
+    // DATA
+    // HORA
+    // DURACAO
+    // CUSTO
+    // NUM TELEFONE
 }
 
 void Interface::menuRegistraLigacaoD(){
-
+    // DATA
+    // HORA
+    // DURACAO
+    // CUSTO
+    // TIPO (DOWNLOAD || UPLOAD)
 }
 
 void Interface::listaDadosPacote(){
-
+    // TO-DO: TEM QUE RESOLVER O CELULAR --> CLIENTE.
+    // CELULAR
+    // RETORNA SALDO DADOS
+    // RETORNA VELOCIDADE ATUAL (DOWN E UP)
 }
 
 void Interface::listaValorConta(){
-
+    // RECEBE CELULAR
+    // VALOR TOTAL DAS LIGACOES APOS O DIA DE VENCIMENTO MES ANTERIOR
+    // DIA DE VENCIMENTO 
 }
 
 void Interface::listaCreditos(){
-
+    // RECEBE CELULAR
+    // LISTA OS CREDITOS 
+    // DATA DE VALIDADE DOS CREDITOS
 }
 
 void Interface::listaExtratoS(){
-
+    // RECEBE CELULAR
+    // RECEBE DATA
+    // IMPRIME TODAS AS LIGACOES A PARTIR DA DATA
+    // DURACAO
+    // VALOR
+    // DATA
 }
 
 void Interface::listaExtratoD(){
-
+    // RECEBE CELULAR E DATA
+    // CONSUMO DE DADOS A PARTIR DA DATA
+    // IMPRIMIR DATA, DURACAO, TIPO, E QUANTIDADE CONSUMIDA.
 }
 
 void Interface::listaClientes(){
+    // LISTA CLIENTES E INFORMACOES
+}
 
+void Interface::listaPlanos(){
+    // LISTA PLANOS E INFORMACOEs
+}
+
+void Interface::listaCelulares(){
+    // LISTA CELULARES E INFORMACOES
 }
 
 void Interface::informaVencimentos(){
-
+    // SEMPRE QUE UMA FATURA OU CREDITO VENCER
+    // INFORMAR AO USUARIO OS DADOS DO CLIENTE E CELULAR
 }
 
 void Interface::informaLimiteFranquia(){
-
+    // QUANDO O CONSUMO DE DADOS ALCANCAR O VALOR
+    // DA FRANQUIA, INFORMAR OS DADOS DO CLIENTE E CELULAR
 }
+
+// HASH TABLE(MAP) CELULAR --> CLIENTE.

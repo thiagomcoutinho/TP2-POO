@@ -1,8 +1,8 @@
 #ifndef PREPAGO
 #define PREPAGO
 
-#include<Headers/Date.h>
-#include<Headers/Plano.h>
+#include "./Date.h"
+#include "./Plano.h"
 
 class PrePago : public Plano{
 

@@ -1,9 +1,9 @@
 #ifndef CLIENTE
 #define CLIENTE
 
-#include<Headers/Celular.h>
-#include<Headers/PrePago.h>
-#include<Headers/PosPago.h>
+#include "./Celular.h"
+#include "./PrePago.h"
+#include "./PosPago.h"
 #include<vector>
 #include<string>
 

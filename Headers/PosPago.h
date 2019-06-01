@@ -1,8 +1,8 @@
 #ifndef POSPAGO
 #define POSPAGO
 
-#include<Headers/Date.h>
-#include<Headers/Plano.h>
+#include "./Date.h"
+#include "./Plano.h"
 
 class PosPago : public Plano{
 

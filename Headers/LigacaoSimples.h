@@ -1,7 +1,7 @@
 #ifndef LIGACAOSIMPLES
 #define LIGACAOSIMPLES
 
-#include<Headers/Ligacao.h>
+#include "./Ligacao.h"
 
 class LigacaoSimples : public Ligacao{
 

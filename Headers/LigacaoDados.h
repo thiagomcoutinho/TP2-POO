@@ -1,7 +1,7 @@
 #ifndef LIGACAODADOS
 #define LIGACAODADOS
 
-#include<Headers/Ligacao.h>
+#include "./Ligacao.h"
 
 using namespace std;
 
