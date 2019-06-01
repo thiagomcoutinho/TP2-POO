@@ -214,24 +214,47 @@ void Interface::menuAdicionaCreditos(){
 void Interface::menuRegistraLigacaoS(){
 
     setMenu();
+    print("///// MENU DE REGISTRO DE LIGACOES SIMPLES /////");
+    print("CELULAR: ");
+    getString();
+    print("DATA: ");
+    getString();
+    print("DURACAO(MIN): ");
+    getString();
+    print("# TELEFONE: ");
+    getString();
 
-    
-    // DATA
-    // HORA
-    // DURACAO
-    // CUSTO
-    // NUM TELEFONE
+    refresh();
+    menuInicial();
 }
 
 void Interface::menuRegistraLigacaoD(){
-    // DATA
-    // HORA
-    // DURACAO
-    // CUSTO
-    // TIPO (DOWNLOAD || UPLOAD)
+
+    setMenu();
+    print("///// MENU DE REGISTRO DE LIGACOES DE DADOS /////");
+    print("CELULAR: ");
+    getString();
+    print("DATA: ");
+    getString();
+    print("DURACAO: ");
+    getString();
+    print("TIPO: ");
+    getString();
+
+    refresh();
+    menuInicial();
 }
 
 void Interface::listaDadosPacote(){
+
+    setMenu();
+    print("///// CONSULTA DE DADOS DO PACOTE /////");
+    print("CELULAR: ");
+    getString();
+
+    refresh();
+    menuInicial();
+
     // TO-DO: TEM QUE RESOLVER O CELULAR --> CLIENTE.
     // CELULAR
     // RETORNA SALDO DADOS
@@ -239,18 +262,46 @@ void Interface::listaDadosPacote(){
 }
 
 void Interface::listaValorConta(){
+
+    setMenu();
+    print("///// CONSULTA DE CONTAS /////");
+    print("CELULAR : ");
+    getString();
+
+    refresh();
+    menuInicial();
+
     // RECEBE CELULAR
     // VALOR TOTAL DAS LIGACOES APOS O DIA DE VENCIMENTO MES ANTERIOR
     // DIA DE VENCIMENTO 
 }
 
 void Interface::listaCreditos(){
+
+    setMenu();
+    print("///// CONSULTA DE CREDITOS /////");
+    print("CELULAR : ");
+    getString();
+
+    refresh();
+    menuInicial();
+
     // RECEBE CELULAR
     // LISTA OS CREDITOS 
     // DATA DE VALIDADE DOS CREDITOS
 }
 
 void Interface::listaExtratoS(){
+
+    setMenu();
+    print("///// CONSULTA DE EXTRATO SIMPLES /////");
+    print("CELULAR: ");
+    getString();
+    print("DATA INICIAL: ");
+    getString();
+
+    refresh();
+    menuInicial();
     // RECEBE CELULAR
     // RECEBE DATA
     // IMPRIME TODAS AS LIGACOES A PARTIR DA DATA
@@ -260,6 +311,16 @@ void Interface::listaExtratoS(){
 }
 
 void Interface::listaExtratoD(){
+
+    setMenu();
+    print("///// CONSULTA DE EXTRADO DE DADOS /////");
+    print("CELULAR: ");
+    getString();
+    print("DATA INICIAL: ");
+    getString();
+
+    refresh();
+    menuInicial();
     // RECEBE CELULAR E DATA
     // CONSUMO DE DADOS A PARTIR DA DATA
     // IMPRIMIR DATA, DURACAO, TIPO, E QUANTIDADE CONSUMIDA.
