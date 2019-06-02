@@ -1,4 +1,4 @@
-#include "./../Headers/Interface.h"
+#include "./Headers/Interface.h"
 
 using namespace std;
 
@@ -7,6 +7,8 @@ int main(int argc, char **arvg){
     Interface i;
 
     i.getString();
+
+
 
     /*
     // initilizes the screen

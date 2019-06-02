@@ -13,6 +13,6 @@ class Excecao{
     public:
         Excecao(string _mensagem) : mensagem(_mensagem) {};
         ~Excecao();
-        const string getExcesao() const {return(mensagem);};
+        inline const string getExcesao() const {return(mensagem);};
 };
 #endif

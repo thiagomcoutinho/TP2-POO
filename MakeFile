@@ -1,8 +1,0 @@
-main.out:	main.o Interface.o 
-	g++ -std=c++11 main.o Interface.o -o main
-
-main.o:	main.cpp
-	g++ -std=c++11 -c main.cpp
-
-Interface.o:   Interface.cpp	Interface.h
-	g++ -std=c++11 -c Interface.cpp 
