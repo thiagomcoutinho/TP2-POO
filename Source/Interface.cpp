@@ -44,6 +44,8 @@ void Interface::getString()
     nocbreak();
     echo();
 
+    input.clear();
+
     int ch = getch();
 
     while ( ch != '\n' )
@@ -146,6 +148,7 @@ void Interface::menuCadastroCliente(int option){
     print("ENTRE COM OS DADOS DO CLIENTE: ");
     print("NOME DO CLIENTE: ");
     getString();
+    print(input.c_str());
     print("ENDERECO: ");
     getString();
     print("CPF/CNPJ: ");
