@@ -16,7 +16,7 @@ class Interface{
         int x;
         int y;
         string input;
-        //vector<Cliente> clientes;
+        vector<Cliente> clientes;
         //vector<Plano> planos;
 
     public:

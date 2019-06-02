@@ -6,10 +6,15 @@
 Celular::Celular(){
 }
 
-Celular::Celular(Cliente client, Plano& p){
+Celular::Celular(Cliente* c, Plano& p){
     plano = &p;
+    cliente = c;
     numero = proxNumCelular;
     proxNumCelular++;
+}
+
+Celular::~Celular(){
+    
 }
 
 // LIGACAO SIMPLES
