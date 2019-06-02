@@ -148,7 +148,6 @@ void Interface::menuCadastroCliente(int option){
     print("ENTRE COM OS DADOS DO CLIENTE: ");
     print("NOME DO CLIENTE: ");
     getString();
-    print(input.c_str());
     print("ENDERECO: ");
     getString();
     print("CPF/CNPJ: ");
@@ -179,6 +178,12 @@ void Interface::menuCadastroPlano(){
     print("VELOCIDADE ALEM DA FRANQUIA: ");
     getString();
 
+    // CRIA OBJETO PLANO
+    /*
+    Plano p(nome, vlrMinuto, franquia, velocAlem);
+    planos.push_back(p);
+    */
+
     refresh();
     menuInicial();
 }
@@ -192,7 +197,11 @@ void Interface::menuCadastroCelular(){
     getString();
     print("NOME DO PLANO: ");
     getString();
-    // IF PLANO É POS PAGO
+    /* 
+        Se o plano for pos-pago, pedir data de vencimento.
+        É necessário acessar o plano e seus atributos para
+        montar o novo plano de classe derivada.
+    */
     print("DATA DE VENCIMENTO: ");
     getString();
     
@@ -351,4 +360,6 @@ void Interface::informaLimiteFranquia(){
     // DA FRANQUIA, INFORMAR OS DADOS DO CLIENTE E CELULAR
 }
 
-// HASH TABLE(MAP) CELULAR --> CLIENTE.
+// TO-DO: HASH TABLE(MAP) CELULAR(INT) --> CLIENTE(INT).
+// TO-DO: HASH TABLE NOME PLANO(STRING) --> pair(PLANO(INT), tipo de plano(INT)).
+// TO-DO: Exceções: Plano nao existente. Celular não existente. Cliente não existente.
