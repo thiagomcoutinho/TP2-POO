@@ -3,9 +3,7 @@ S_D = ./Source/
 
 RM=rm -f
 
-HDRS = $(H_D)Interface.h
-SRCS=	main.cpp $(S_D)Interface.cpp
-OBJS=	main.o Interface.o
+OBJS=main.o Interface.o
 
 main:	$(OBJS)
 	g++ -std=c++11 -lncurses $(OBJS) -o main
@@ -13,8 +11,8 @@ main:	$(OBJS)
 main.o:	main.cpp
 	g++ -std=c++11 -c main.cpp
 
-Interface.o:	$(SRCS)	$(HDRS)
-	g++ -std=c++11 -c $(SRCS) 
+Interface.o:	main.cpp $(S_D)Interface.cpp	$(H_D)Interface.h
+	g++ -std=c++11 -c main.cpp $(S_D)Interface.cpp 
 
 clean: 
 	$(RM) $(OBJS)
