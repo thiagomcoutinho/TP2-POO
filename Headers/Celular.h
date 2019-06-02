@@ -10,18 +10,20 @@
 
 using namespace std;
 
+class Cliente; // Instanciando classe sem declaração completa
+
 class Celular{
 
     private:
         double numero;
-        Cliente cliente;
+        Cliente* cliente;
         Plano* plano;
         vector<Ligacao> ligacoes;
         static double proxNumCelular;
 
     public:
         Celular();
-        Celular(Cliente c, Plano& p);
+        Celular(Cliente* c, Plano& p);
         ~Celular();
         void ligar(Date timestamp, double duracao, double numTel);
         void ligar(Date timestamp, double duracao, tipoDados td);

@@ -1,7 +1,7 @@
 #ifndef INTERFACE
 #define INTERFACE
 
-//#include "./Cliente.h"
+#include "./Cliente.h"
 //#include "./Plano.h"
 #include<ncurses.h>
 #include<vector>

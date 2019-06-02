@@ -11,7 +11,7 @@ main:	$(OBJS)
 main.o:	main.cpp
 	g++ -std=c++11 -c main.cpp
 
-Interface.o:	main.cpp $(S_D)Interface.cpp	$(H_D)Interface.h
+Interface.o:	main.cpp $(S_D)Interface.cpp	$(H_D)Interface.h	$(S_D)Cliente.cpp
 	g++ -std=c++11 -c main.cpp $(S_D)Interface.cpp 
 
 clean: 
