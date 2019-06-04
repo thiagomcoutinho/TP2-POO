@@ -28,9 +28,8 @@ class Celular{
         void ligar(Date timestamp, double duracao, double numTel);
         void ligar(Date timestamp, double duracao, tipoDados td);
 
-        inline static double getProxNumCelular() {return(proxNumCelular);};
-        inline static void incrementProxNumCelular() {proxNumCelular++;};
+        static double getProxNumCelular();
+        static void incrementProxNumCelular();
 };
-static double proxNumCelular = 0;
 
 #endif

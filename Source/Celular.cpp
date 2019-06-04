@@ -41,6 +41,16 @@ void Celular::ligar(Date timestamp, double duracao, double numTel){
     ligacoes.push_back(l);
 }
 
+double Celular::proxNumCelular = 0;
+
+double Celular::getProxNumCelular(){
+    return(proxNumCelular);
+}
+
+void Celular::incrementProxNumCelular(){
+    proxNumCelular++;
+}
+
 // LIGACAO DADOS
 void Celular::ligar(Date timestamp, double duracao, tipoDados td){
     
