@@ -13,14 +13,14 @@ using namespace std;
 class Cliente{
 
     private:
-        string CPF;
-        string nome;
+        const string CPF;
+        const string nome;
         string endereco;
         vector<Celular> celulares;
 
     public:
         Cliente();
-        Cliente(int _cpf, string _nome, string _endereco);
+        Cliente(string _cpf, string _nome, string _endereco) : CPF(_cpf), nome(_nome), endereco(_endereco) {};
         ~Cliente();
 
         // FUNCOES DE ADICIONAR CELULAR

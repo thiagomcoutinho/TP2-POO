@@ -9,7 +9,7 @@ using namespace std;
 class Plano{
 
     private:
-        string nome;
+        const string nome;
         double valorMinuto;
         double velocidade;
         double franquia;
@@ -20,7 +20,7 @@ class Plano{
         Plano(string _nome, double _vlrMinuto, double _franquia, double _velocAlem) : \
         nome(_nome), valorMinuto(_vlrMinuto), franquia(_franquia), velocAlem(_velocAlem), franquiaGasta(0) {};
 
-        Plano() : nome(""), valorMinuto(0), franquia(0), velocAlem(0), franquiaGasta(0) {};
+        Plano();
         virtual ~Plano();
         // FUNCOES GET
         inline double getValorMinuto()   const {return(valorMinuto);};

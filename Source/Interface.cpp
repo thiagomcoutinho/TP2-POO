@@ -60,7 +60,7 @@ void Interface::switchMenu(int option){
     switch (option)
     {
         case 97:
-            menuCadastroCliente(option);
+            menuCadastroCliente();
             break;
         case 98:
             menuCadastroPlano();
@@ -139,7 +139,7 @@ void Interface::menuInicial(){
     refresh();
 }
 
-void Interface::menuCadastroCliente(int option){
+void Interface::menuCadastroCliente(){
 
     setMenu();
 

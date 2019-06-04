@@ -24,9 +24,9 @@ class Interface{
         ~Interface();
         // FUNCOES DE IMPRESSAO
         void menuInicial();
-        void menuCadastroCliente(int option);
+        void menuCadastroCliente();
         void menuCadastroPlano();
-        void menuCadastroCelular();
+        void menuCadastroCelular();   // TO-DO: VERIFICAR QUAIS FUNCOES AQUI PODEM SER CONST
         void menuAdicionaCreditos();
         void menuRegistraLigacaoS();
         void menuRegistraLigacaoD();

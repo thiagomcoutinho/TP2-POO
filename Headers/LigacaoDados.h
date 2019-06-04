@@ -10,7 +10,7 @@ enum tipoDados{download, upload};
 class LigacaoDados : public Ligacao{
 
     private:
-        tipoDados dtype;
+        const tipoDados dtype;
 
     public:
         LigacaoDados();

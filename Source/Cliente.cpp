@@ -1,15 +1,6 @@
 #include "./../Headers/Cliente.h"
 
 Cliente::Cliente(){
-    CPF = -1;
-    nome = "";
-    endereco = "";
-}
-
-Cliente::Cliente(int _CPF, string _nome, string _endereco){
-    CPF = _CPF;
-    nome = _nome;
-    endereco = _endereco;
 }
 
 Cliente::~Cliente(){
