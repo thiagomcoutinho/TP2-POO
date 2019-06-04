@@ -2,7 +2,7 @@
 #define INTERFACE
 
 #include "./Cliente.h"
-//#include "./Plano.h"
+#include "./Plano.h"
 #include<ncurses.h>
 #include<vector>
 #include<string>
@@ -17,7 +17,7 @@ class Interface{
         int y;
         string input;
         vector<Cliente> clientes;
-        //vector<Plano> planos;
+        vector<Plano> planos;
 
     public:
         Interface();

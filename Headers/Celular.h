@@ -31,5 +31,6 @@ class Celular{
         inline static double getProxNumCelular() {return(proxNumCelular);};
         inline static void incrementProxNumCelular() {proxNumCelular++;};
 };
+static double proxNumCelular = 0;
 
 #endif

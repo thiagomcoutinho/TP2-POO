@@ -1,7 +1,13 @@
 #include "./../Headers/PrePago.h"
 #include "./../Headers/Excecao.h"
 
-PrePago::PrePago(){}
+PrePago::PrePago(){
+
+}
+
+PrePago::~PrePago(){
+    
+}
 
 void PrePago::adicionaCreditos(int creditos, Date dataAtual){
     credito += creditos;

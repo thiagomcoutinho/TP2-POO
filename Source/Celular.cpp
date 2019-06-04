@@ -5,7 +5,6 @@
 #include "./../Headers/PosPago.h"
 #include "./../Headers/Excecao.h"
 
-static double proxNumCelular = 0;
 
 Celular::Celular(){
 }
