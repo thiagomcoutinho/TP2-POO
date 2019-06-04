@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class Cliente; // Instanciando classe sem declaração completa
+class Cliente; // Instanciando classe sem declaração completa (FORWARD DECLARATION)
 
 class Celular{
 
@@ -28,11 +28,15 @@ class Celular{
         Celular();
         Celular(Cliente& c, Plano& p);
         ~Celular();
+
+        // FUNCOES DE LIGAR
         void ligar(Date timestamp, double duracao, double numTel);
         void ligar(Date timestamp, double duracao, tipoDados td);
 
-        static double getProxNumCelular();
-        static void incrementProxNumCelular();
+        // FUNCAO INLINE GET STATIC
+        inline static double getProxNumCelular() {return(proxNumCelular);};
+        // FUNCAO INLINE SET STATIC
+        inline static void incrementProxNumCelular() {proxNumCelular++;};
 };
 
 #endif

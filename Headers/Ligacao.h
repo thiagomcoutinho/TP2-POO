@@ -17,6 +17,7 @@ class Ligacao{
         Ligacao(Date _dataHora, double _duracao, double _custo) : dataHora(_dataHora), duracao(_duracao), custo(_custo) {};
         virtual ~Ligacao();
 
+        // FUNCOES GET
         inline double getDuracao() const {return(duracao);};
         inline double getCusto()   const {return(custo);};
         inline Date getDate()      const {return(dataHora);};

@@ -21,8 +21,13 @@ class Date{
         Date(int _hora, int _min, int _seg, int aux);
         ~Date();
 
+        // FUNCAO DE ADICIONAR TEMPO
         void acrescentaTempo();
+        
+        // OPERADOR DE COMPARACAO
         bool operator > (Date b) const;
+
+        // FUNCAO AUXILIAR DE CONVERSAO DE STRING
         string convertDateToString(bool ligacao) const;
 };
 #endif

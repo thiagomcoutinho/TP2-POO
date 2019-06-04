@@ -1,5 +1,7 @@
 #include "./../Headers/Celular.h"
 
+double Celular::proxNumCelular = 0;
+
 Celular::Celular(){
 }
 
@@ -33,16 +35,6 @@ void Celular::ligar(Date timestamp, double duracao, double numTel){
     // FAZ LIGACAO
     LigacaoSimples l(timestamp, duracao, custo, numTel);
     ligacoes.push_back(l);
-}
-
-double Celular::proxNumCelular = 0;
-
-double Celular::getProxNumCelular(){
-    return(proxNumCelular);
-}
-
-void Celular::incrementProxNumCelular(){
-    proxNumCelular++;
 }
 
 // LIGACAO DADOS

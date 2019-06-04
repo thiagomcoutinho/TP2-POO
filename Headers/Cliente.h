@@ -22,8 +22,12 @@ class Cliente{
         Cliente();
         Cliente(int _cpf, string _nome, string _endereco);
         ~Cliente();
+
+        // FUNCOES DE ADICIONAR CELULAR
         void addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, Date vencimento);
         void addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, Date curr_date, double credito);
+        
+        // FUNCOES DE EFETUAR LIGACAO
         void efetuarLigacao(int celularIndex, Date timestamp, double duracao, double numTel);
         void efetuarLigacao(int celularIndex, Date timestamp, double duracao, tipoDados data_type);
 };

@@ -14,6 +14,8 @@ class Excecao{
         Excecao();
         Excecao(string _mensagem) : mensagem(_mensagem) {};
         ~Excecao();
+
+        // FUNCAO GET
         inline const string getExcesao() const {return(mensagem);};
 };
 #endif
