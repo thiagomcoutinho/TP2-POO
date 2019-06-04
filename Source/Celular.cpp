@@ -3,15 +3,18 @@
 #include "./../Headers/LigacaoSimples.h"
 #include "./../Headers/LigacaoDados.h"
 #include "./../Headers/PosPago.h"
+#include "./../Headers/Excecao.h"
+
+static double proxNumCelular = 0;
 
 Celular::Celular(){
 }
 
-Celular::Celular(Cliente* c, Plano& p){
+Celular::Celular(Cliente& c, Plano& p){
     plano = &p;
-    cliente = c;
-    numero = proxNumCelular;
-    proxNumCelular++;
+    cliente = &c;
+    numero = getProxNumCelular();
+    incrementProxNumCelular();
 }
 
 Celular::~Celular(){
@@ -48,20 +51,20 @@ void Celular::ligar(Date timestamp, double duracao, tipoDados td){
 
     // PLANO NAO POSSUI ASSINATURA DE DADOS
     if(franquia == 0){
-        throw exception::exception();
+        throw Excecao();
     }
 
     if(franquiaGasta > franquia){
         if(td == download){ // DOWNLOAD
-            custo = plano->getVelocAlem*duracao;
+            custo = plano->getVelocAlem()*duracao;
         }else{ // UPLOAD
-            custo = plano->getVelocAlem*0.1*duracao;
+            custo = plano->getVelocAlem()*0.1*duracao;
         }
     }else{ // FRANQUIA TOTALMENTE CONSUMIDA, VELOCIDADE DE DOWNLOAD REDUZIDA
         if(td == download){ // DOWNLOAD
-            custo = plano->getVelocidade*duracao;
+            custo = plano->getVelocidade()*duracao;
         }else{ // UPLOAD
-            custo = plano->getVelocidade*0.1*duracao;
+            custo = plano->getVelocidade()*0.1*duracao;
         }
     }
     // ATUALIZA FRANQUIA GASTA

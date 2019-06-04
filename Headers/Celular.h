@@ -4,6 +4,7 @@
 #include "./Plano.h"
 #include "./Ligacao.h"
 #include "./LigacaoDados.h"
+#include "./LigacaoSimples.h"
 #include "./Date.h"
 #include<vector>
 
@@ -22,11 +23,13 @@ class Celular{
 
     public:
         Celular();
-        Celular(Cliente* c, Plano& p);
+        Celular(Cliente& c, Plano& p);
         ~Celular();
         void ligar(Date timestamp, double duracao, double numTel);
         void ligar(Date timestamp, double duracao, tipoDados td);
+
+        inline static double getProxNumCelular() {return(proxNumCelular);};
+        inline static void incrementProxNumCelular() {proxNumCelular++;};
 };
-static double proxNumCelular = 0;
 
 #endif
