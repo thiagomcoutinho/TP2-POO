@@ -1,4 +1,5 @@
 #include "./../Headers/PrePago.h"
+#include "./../Headers/Excecao.h"
 
 PrePago::PrePago(){}
 
@@ -9,12 +10,12 @@ void PrePago::adicionaCreditos(int creditos, Date dataAtual){
 
 void PrePago::verificaCredito(const double& custo) const{
     if(credito - custo < 0){
-        throw exception::exception();
+        throw Excecao();
     }
 }
 
 void PrePago::verificaData(const Date& dataLigacao) const{
     if(dataLigacao > validade){
-        throw exception::exception();
+        throw Excecao();
     }
 }

@@ -2,6 +2,7 @@
 #include "./../Headers/Date.h"
 #include "./../Headers/LigacaoSimples.h"
 #include "./../Headers/LigacaoDados.h"
+#include "./../Headers/PosPago.h"
 
 Celular::Celular(){
 }
@@ -14,7 +15,6 @@ Celular::Celular(Cliente* c, Plano& p){
 }
 
 Celular::~Celular(){
-    
 }
 
 // LIGACAO SIMPLES
@@ -26,7 +26,8 @@ void Celular::ligar(Date timestamp, double duracao, double numTel){
     custo = duracao*plano->getValorMinuto();
 
     // VERIFICA CREDITO CELULAR PRE PAGO
-    if(dynamic_cast<PosPago*>(plano) == nullptr){ 
+    PosPago* ptr_plano = dynamic_cast<PosPago*>(plano);
+    if( ptr_plano == nullptr){ 
         plano->verificaCredito(custo);
     }
 

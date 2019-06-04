@@ -1,7 +1,6 @@
 #ifndef CELULAR
 #define CELULAR
 
-#include "./Cliente.h"
 #include "./Plano.h"
 #include "./Ligacao.h"
 #include "./LigacaoDados.h"

@@ -13,7 +13,6 @@ Cliente::Cliente(int _CPF, string _nome, string _endereco){
 }
 
 Cliente::~Cliente(){
-    
 }
 
 // DUVIDA: Construtor que recebe vetor de celulares tambem?
