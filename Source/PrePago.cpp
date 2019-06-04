@@ -1,5 +1,4 @@
 #include "./../Headers/PrePago.h"
-#include "./../Headers/Excecao.h"
 
 PrePago::PrePago(){
 

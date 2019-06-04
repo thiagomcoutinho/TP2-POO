@@ -3,6 +3,7 @@
 
 #include "./Date.h"
 #include "./Plano.h"
+#include "./Excecao.h"
 
 class PrePago : public Plano{
 

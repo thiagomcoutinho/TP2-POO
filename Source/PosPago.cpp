@@ -1,5 +1,4 @@
 #include "./../Headers/PosPago.h"
-#include "./../Headers/Excecao.h"
 
 PosPago::PosPago(){}
 

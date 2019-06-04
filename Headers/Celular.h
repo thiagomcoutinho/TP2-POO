@@ -2,10 +2,13 @@
 #define CELULAR
 
 #include "./Plano.h"
+#include "./PosPago.h"
+#include "./Excecao.h"
 #include "./Ligacao.h"
 #include "./LigacaoDados.h"
 #include "./LigacaoSimples.h"
 #include "./Date.h"
+
 #include<vector>
 
 using namespace std;

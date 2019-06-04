@@ -1,10 +1,4 @@
 #include "./../Headers/Celular.h"
-#include "./../Headers/Date.h"
-#include "./../Headers/LigacaoSimples.h"
-#include "./../Headers/LigacaoDados.h"
-#include "./../Headers/PosPago.h"
-#include "./../Headers/Excecao.h"
-
 
 Celular::Celular(){
 }
