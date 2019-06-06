@@ -24,11 +24,18 @@ class Cliente{
         ~Cliente();
 
         // FUNCOES DE ADICIONAR CELULAR
-        void addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, Date vencimento);
-        void addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, Date curr_date, double credito);
+        void addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, \
+        double _veloc, Date vencimento);
+        void addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, \
+        double _veloc, Date curr_date, double credito);
         
         // FUNCOES DE EFETUAR LIGACAO
         void efetuarLigacao(int celularIndex, Date timestamp, double duracao, double numTel);
         void efetuarLigacao(int celularIndex, Date timestamp, double duracao, tipoDados data_type);
+
+        // FUNCOES GET
+        inline string getNome() {return(nome);};
+        inline string getCPF() {return(CPF);};
+        inline string getEndereco() {return(endereco);};
 };
 #endif

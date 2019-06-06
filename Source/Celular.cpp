@@ -1,5 +1,7 @@
 #include "./../Headers/Celular.h"
 
+#include<iostream>
+
 double Celular::proxNumCelular = 0;
 
 Celular::Celular(){
@@ -38,7 +40,7 @@ void Celular::ligar(Date timestamp, double duracao, double numTel){
 }
 
 // LIGACAO DADOS
-void Celular::ligar(Date timestamp, double duracao, tipoDados td){
+void Celular::ligar(double duracao, tipoDados td, Date timestamp){
     
     double franquia = plano->getFranquia();
     double franquiaGasta = plano->getFranquiaGasta();
@@ -49,17 +51,25 @@ void Celular::ligar(Date timestamp, double duracao, tipoDados td){
         throw Excecao();
     }
 
+    cout << "AQUI" << endl;
     if(franquiaGasta > franquia){
         if(td == download){ // DOWNLOAD
             custo = plano->getVelocAlem()*duracao;
+            cout << "T1" << endl;
         }else{ // UPLOAD
             custo = plano->getVelocAlem()*0.1*duracao;
+            cout << "T2" << endl;
         }
     }else{ // FRANQUIA TOTALMENTE CONSUMIDA, VELOCIDADE DE DOWNLOAD REDUZIDA
         if(td == download){ // DOWNLOAD
             custo = plano->getVelocidade()*duracao;
+            cout << plano->getVelocidade() << endl;
+            cout << duracao << endl;
+            cout << custo << endl;
+            cout << "T3" << endl;
         }else{ // UPLOAD
             custo = plano->getVelocidade()*0.1*duracao;
+            cout << "T4" << endl;
         }
     }
     // ATUALIZA FRANQUIA GASTA
@@ -68,4 +78,6 @@ void Celular::ligar(Date timestamp, double duracao, tipoDados td){
     // FAZ LIGACAO
     LigacaoDados l(timestamp, duracao, custo, td);
     ligacoes.push_back(l);
+
+    // TO-DO: DIMINUIR A VELOCIDADE DA PARCELA EXTRA SE ULTRAPASSAR A FRANQUIA DE UMA VEZ
 }

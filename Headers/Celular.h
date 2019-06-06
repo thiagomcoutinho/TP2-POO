@@ -29,14 +29,18 @@ class Celular{
         Celular(Cliente& c, Plano& p);
         ~Celular();
 
+        // TO-DO: FALTA O NUMERO DO CELULAR.
+
         // FUNCOES DE LIGAR
         void ligar(Date timestamp, double duracao, double numTel);
-        void ligar(Date timestamp, double duracao, tipoDados td);
+        void ligar(double duracao, tipoDados td, Date timestamp);
 
         // FUNCAO INLINE GET STATIC
         inline static double getProxNumCelular() {return(proxNumCelular);};
         // FUNCAO INLINE SET STATIC
         inline static void incrementProxNumCelular() {proxNumCelular++;};
+        
+        inline vector<Ligacao> getLigacoes() {return(ligacoes);};
 };
 
 #endif

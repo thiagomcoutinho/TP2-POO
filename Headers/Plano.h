@@ -17,8 +17,9 @@ class Plano{
         double franquiaGasta;
 
     public:
-        Plano(string _nome, double _vlrMinuto, double _franquia, double _velocAlem) : \
-        nome(_nome), valorMinuto(_vlrMinuto), franquia(_franquia), velocAlem(_velocAlem), franquiaGasta(0) {};
+        Plano(string _nome, double _vlrMinuto, double _franquia, double _velocAlem, double _veloc) : \
+        nome(_nome), valorMinuto(_vlrMinuto), franquia(_franquia), velocAlem(_velocAlem), \
+        velocidade(_veloc), franquiaGasta(0) {};
 
         Plano();
         virtual ~Plano();

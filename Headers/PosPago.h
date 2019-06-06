@@ -13,8 +13,8 @@ class PosPago : public Plano{
 
     public:
         PosPago();
-        PosPago(string _nome, double _vlrMinuto, double _franquia, double _velocAlem, Date _vencimento) : \
-        Plano(_nome, _vlrMinuto, _franquia, _velocAlem), vencimento(_vencimento) {};
+        PosPago(string _nome, double _vlrMinuto, double _franquia, double _velocAlem, double _veloc, Date _vencimento) : \
+        Plano(_nome, _vlrMinuto, _franquia, _velocAlem, _veloc), vencimento(_vencimento) {};
         ~PosPago();
 
         // FUNCOES DE VERIFICACAO

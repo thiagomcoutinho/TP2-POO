@@ -1,51 +1,46 @@
 #include "./../Headers/Interface.h"
+#include<iostream>
 
 using namespace std;
 
 int main(int argc, char **arvg){
 
-    Interface i;
+    // CLIENTE OK
 
-    i.getString();
+    Cliente c("120.704", "Thiago", "Viotti");
+    cout << c.getNome() << endl;
+    cout << c.getCPF() << endl;
+    cout << c.getEndereco() << endl;
 
+    Cliente* ptr_client;
+    ptr_client = &c;
 
+    // DATE
+    Date d(2019, 10, 11);
 
-    /*
-    // initilizes the screen
-    // sets up memory and clears the screen
-    initscr();
+    // PLANO
+    PosPago p1("TIM", 10, 100, 10, 10, d);
+    cout << p1.getFranquia() << endl;
 
-    int x, y;
-    x = y = 10;
+    Plano* p = &p1;
 
-    // moves the cursos to the specified location
-    move(y, x);
+    // CELULAR
+    Celular t(*ptr_client, *p);
+    cout << t.getProxNumCelular() << endl;
 
-    //prints a string(const char *) to a window
-    printw("Hello world\n");
+    t.ligar(d, 100, 87448327);
+    vector<Ligacao> l = t.getLigacoes();
+    cout << l[0].getCusto() << endl;
 
-    // print o lugar especifico, sem necessidade de usar o move() antes.
-    mvprintw(11, 10, "TESTE");
+    tipoDados down = download;
+    tipoDados up = upload;
 
-    // Y --> Colunas verticais saindo do 0(canto superior)
-    // X --> Linhas horizontais saindo do 0(canto esquerdo)
+    t.ligar(100, download, d);
+    vector<Ligacao> k = t.getLigacoes();
+    cout << k[1].getCusto() << endl;
 
-    //refreshes the screen to match whats in memory
-    refresh();
-
-    // whats for user input, returns int value of that key
-    int c = getch(); // Esta em ASC II -->  Tem que fazer a funcao de conversao de ASCII para numeros/chars
-    // clears the screen
-    clear();
-
-    move(0, 0);
-    printw("%d", c);
-    refresh();
-
-    getch();
-
-    endwin();
-    // deallocates memory and ends ncurses
+    cout << p->getFranquiaGasta() << endl;
+    //Interface i;
 
     /* FUNCAO DE SALVAR E LER OBJETOS ( SALVAR UM VECTOR, MELHOR )
 
