@@ -5,8 +5,10 @@ using namespace std;
 
 int main(int argc, char **arvg){
 
-    // CLIENTE OK
+    Interface i;
 
+    // CLIENTE OK
+    /*
     Cliente c("120.704", "Thiago", "Viotti");
     cout << c.getNome() << endl;
     cout << c.getCPF() << endl;
@@ -41,6 +43,8 @@ int main(int argc, char **arvg){
 
     cout << p->getFranquiaGasta() << endl;
     //Interface i;
+
+    */
 
     /* FUNCAO DE SALVAR E LER OBJETOS ( SALVAR UM VECTOR, MELHOR )
 

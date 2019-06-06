@@ -17,7 +17,7 @@ class Interface{
         int y;
         string input;
         vector<Cliente> clientes;
-        vector<Plano> planos;
+        vector<Plano*> planos;
 
     public:
         Interface();

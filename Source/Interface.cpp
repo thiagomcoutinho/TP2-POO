@@ -141,6 +141,8 @@ void Interface::menuInicial(){
 
 void Interface::menuCadastroCliente(){
 
+    string nome, CPF, endereco;
+
     setMenu();
 
     print("///// MENU DE CADASTRO DE CLIENTES /////");
@@ -148,14 +150,18 @@ void Interface::menuCadastroCliente(){
     print("ENTRE COM OS DADOS DO CLIENTE: ");
     print("NOME DO CLIENTE: ");
     getString();
+    nome = input;
     print("ENDERECO: ");
     getString();
+    CPF = input;
     print("CPF/CNPJ: ");
     getString();
+    endereco = input;
     
     refresh();
 
     // CRIA CLIENTE
+    Cliente c(CPF, nome, endereco);
 
     menuInicial();
 }
@@ -164,23 +170,49 @@ void Interface::menuCadastroPlano(){
 
     setMenu();
 
+    string nome;
+    int vlrMinuto, franquia, veloc, velocAlem;
+
     print("///// MENU DE CADASTRO DE PLANOS /////");
     print("NOME DO PLANO: ");
     getString();
-    print("TIPO DO PLANO: ");
-    getString();
+    nome = input;
     print("VALOR DO MINUTO: ");
     getString();
+    vlrMinuto = stoi(input);
     print("VELOCIDADE DO PACOTE DE DADOS: ");
     getString();
+    veloc = stoi(input);
     print("FRANQUIA: ");
     getString();
+    franquia = stoi(input);
     print("VELOCIDADE ALEM DA FRANQUIA: ");
     getString();
+    velocAlem = stoi(input);
+    print("TIPO DO PLANO: ");
+    getString();
+    if(input == "PosPago"){
+        print("DATA DE VENCIMENTO: ");
+        getString();
+        input;
+        // TO-DO: FUNC CONVERTER STRING PARA DATA
+    }else if(input == "PrePago"){
+        print("VALOR CREDITO: ");
+        getString();
+        // TO-DO: RECEBER A DATA ATUAL E ADICIONAR 180dias.
+        // PrePago sub_p();
+    }else{ // Pós-Pago
+        throw Excecao();
+        // TO-DO: ESPECIFICAR EXCECAO
+        // A FUNCAO TRY: SERA CHAMADA NA CONSTRUCAO DA CLASSE
+        // DENTRO DO WHILE
+        // PosPago sub_p();
+    }
+    
 
     // CRIA OBJETO PLANO
     /*
-    Plano p(nome, vlrMinuto, franquia, velocAlem);
+    Plano* p = &sub_p;
     planos.push_back(p);
     */
 
