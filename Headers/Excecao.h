@@ -12,10 +12,10 @@ class Excecao{
 
     public:
         Excecao();
-        Excecao(string _mensagem) : mensagem(_mensagem) {};
+        Excecao(char* _mensagem) : mensagem(_mensagem) {};
         ~Excecao();
 
         // FUNCAO GET
-        inline const string getExcesao() const {return(mensagem);};
+        const inline string getExcecao() const {return(mensagem);};
 };
 #endif

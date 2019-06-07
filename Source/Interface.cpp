@@ -18,7 +18,14 @@ Interface::Interface(){
 
         b = getch(); // VARIAVEL AUXILIAR PARA ENTRADA
         if(c != 113){
-            switchMenu(c);
+            try{
+                switchMenu(c);
+            }
+            catch (Excecao& e){
+                /* string excecao = e.getExcecao();
+                char* ptr_char_excecao = excecao.c_str();
+                print(ptr_char_excecao); */
+            }
         }
     }
 }
@@ -213,7 +220,7 @@ void Interface::menuCadastroPlano(){
     // CRIA OBJETO PLANO
     /*
     Plano* p = &sub_p;
-    planos.push_back(p);
+    planos.insert(make_pair(nome, p));
     */
 
     refresh();
@@ -222,21 +229,53 @@ void Interface::menuCadastroPlano(){
 
 void Interface::menuCadastroCelular(){
 
+    string nome_plano;
+    double numero, n_cliente;
+    // TO-DO: TRY COM STOI
+
     setMenu();
 
     print("///// MENU DE CADASTRO DE CELULARES /////");
+    print("NUMERO DO CELULAR");
+    getString();
+    numero = stoi(input);
     print("NUMERO DO CLIENTE: ");
     getString();
+    n_cliente = stoi(input);
+    // TO-DO: VERIFICAR O NUMERO DO CLIENTE E JOGAR THROW
     print("NOME DO PLANO: ");
     getString();
-    /* 
-        Se o plano for pos-pago, pedir data de vencimento.
-        É necessário acessar o plano e seus atributos para
-        montar o novo plano de classe derivada.
-    */
-    print("DATA DE VENCIMENTO: ");
-    getString();
-    
+    nome_plano = input;
+    if(planos.find(nome_plano) == planos.end()){
+        throw Excecao();
+    }else{
+        Plano* p = planos.find(nome_plano)->second;
+        PosPago* ptr_posPago = dynamic_cast<PosPago*>(p);
+        Plano* new_p;
+        if(ptr_posPago != nullptr){ // Pós-Pago
+            print("DATA DE VENCIMENTO: ");
+            getString();
+            // TO-DO: PROCESSAR DATA
+            // d = data;
+
+            double vlr_minuto = p->getValorMinuto();
+            double franquia = p->getFranquia();
+            double velocAlem = p->getVelocAlem();
+            double veloc = p->getVelocidade();
+            //PosPago pos(nome_plano, vlr_minuto, franquia, velocAlem, veloc, d);
+            //new_p = &pos;
+        }else{ // Pre-Pago
+            print("CREDITO INICIAL: ");
+            getString();
+            double credito = stoi(input);
+            // CRIAR DATA COM DATA ATUAL E ADICIONAR 180 dias e colocar aqui.
+            // validade = data;
+            //PrePago pre(nome_plano, vlr_minuto, franquia, velocAlem, veloc, credito, d);
+            // new_p = &pos;
+        }
+
+    }
+
     refresh();
     menuInicial();
 }

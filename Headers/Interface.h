@@ -7,6 +7,7 @@
 #include<vector>
 #include<string>
 #include<cstring>
+#include<map>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ class Interface{
         int y;
         string input;
         vector<Cliente> clientes;
-        vector<Plano*> planos;
+        map<string, Plano*> planos;
 
     public:
         Interface();

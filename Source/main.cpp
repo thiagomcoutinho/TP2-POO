@@ -1,11 +1,37 @@
 #include "./../Headers/Interface.h"
 #include<iostream>
+#include<map>
 
 using namespace std;
 
 int main(int argc, char **arvg){
 
-    Interface i;
+    //Interface i;
+
+    map<string, Plano*> hash_planos;
+
+    Date d(2019, 10, 11);
+    PosPago p1("TIM", 10, 100, 10, 10, d);
+
+    Plano* p = &p1;
+
+    hash_planos.insert(make_pair("TIM", p));
+    if(hash_planos.find("TIM") != hash_planos.end()){
+        std::cout<<"Plano 'TIM' found"<<std::endl;
+    }else{
+        cout << "FOI" << endl;
+    }
+
+    Plano *p2;
+    p2 = p;
+    p->cobraCusto(1000);
+    PosPago* ptr_plano = dynamic_cast<PosPago*>(p);
+    cout << ptr_plano->getValor() << endl;
+
+    PosPago* ptr_plano2 = dynamic_cast<PosPago*>(p2);
+    cout << ptr_plano->getValor() << endl;
+
+
 
     // CLIENTE OK
     /*
