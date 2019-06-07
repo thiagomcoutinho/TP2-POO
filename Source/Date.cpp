@@ -100,9 +100,7 @@ Date & Date::operator = (string str_date){
     mes = stoi(date_split[1]);
     ano = stoi(date_split[2]);
 
-    Date d(ano, mes, dia);
-
-    return(d);
+    return(*this);
 }
 
 Date & Date::operator = (Date data){
@@ -112,6 +110,8 @@ Date & Date::operator = (Date data){
     hora = data.getHora();
     min = data.getMin();
     seg = data.getSeg();
+
+    return(*this);
 }
 
 string Date::convertDateToString(bool ligacao) const{

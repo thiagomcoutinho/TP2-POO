@@ -501,6 +501,4 @@ void Interface::informaLimiteFranquia(){
     // DA FRANQUIA, INFORMAR OS DADOS DO CLIENTE E CELULAR
 }
 
-// TO-DO: HASH TABLE(MAP) CELULAR(INT) --> CLIENTE(INT).
-// TO-DO: HASH TABLE NOME PLANO(STRING) --> pair(PLANO(INT), tipo de plano(INT)).
 // TO-DO: Exceções: Plano nao existente. Celular não existente. Cliente não existente.
