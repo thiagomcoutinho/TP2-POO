@@ -6,6 +6,8 @@ Cliente::Cliente(){
 Cliente::~Cliente(){
 }
 
+// CONSTRUTOR DE COPIA
+
 // DUVIDA: Construtor que recebe vetor de celulares tambem?
 
 // Celular Pos-Pago
@@ -17,6 +19,7 @@ void Cliente::addCelular(string nomePlano, double vlrMinuto, double _franquia, d
 
 // Celular Pre-Pago
 void Cliente::addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, double _veloc, Date curr_date, double credito){
+    curr_date.acrescentaTempo(); // ATUALIZA VALIDADE
     PrePago p(nomePlano, vlrMinuto, _franquia, _velAlem, _veloc, credito, curr_date);
     Celular newCel(*this, p);
     celulares.push_back(newCel);
@@ -31,3 +34,5 @@ void Cliente::efetuarLigacao(int celularIndex, Date timestamp, double duracao, d
 void Cliente::efetuarLigacao(int celularIndex, Date timestamp, double duracao, tipoDados td){
     celulares[celularIndex].ligar(timestamp, duracao, td);
 }
+
+// TO-DO: quando tenho que definir o operador de atribuicao?

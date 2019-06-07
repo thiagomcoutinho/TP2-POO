@@ -29,5 +29,10 @@ class Date{
 
         // FUNCAO GET AUXILIAR DE CONVERSAO DE STRING
         string convertDateToString(bool ligacao) const;
+
+        // FUNCAO SET DE CONVERSAO DE STRING PARA DATA
+
+        // FUNCAO DE CONVERSAO DE DATA PARA STRING
+        
 };
 #endif

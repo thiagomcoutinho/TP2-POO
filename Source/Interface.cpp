@@ -229,8 +229,9 @@ void Interface::menuCadastroPlano(){
 
 void Interface::menuCadastroCelular(){
 
+    Cliente* ptr_cliente;
     string nome_plano;
-    double numero, n_cliente;
+    double numero, n_cliente, vlr_minuto, franquia, velocAlem, veloc, credito;
     // TO-DO: TRY COM STOI
 
     setMenu();
@@ -239,9 +240,15 @@ void Interface::menuCadastroCelular(){
     print("NUMERO DO CELULAR");
     getString();
     numero = stoi(input);
-    print("NUMERO DO CLIENTE: ");
+    print("NUMERO DO CLIENTE(A PARTIR DE 1): ");
     getString();
     n_cliente = stoi(input);
+    if(n_cliente <= clientes.size()){
+        n_cliente--;
+        ptr_cliente = &clientes[n_cliente];
+    }else{
+        throw Excecao();
+    }
     // TO-DO: VERIFICAR O NUMERO DO CLIENTE E JOGAR THROW
     print("NOME DO PLANO: ");
     getString();
@@ -251,29 +258,26 @@ void Interface::menuCadastroCelular(){
     }else{
         Plano* p = planos.find(nome_plano)->second;
         PosPago* ptr_posPago = dynamic_cast<PosPago*>(p);
-        Plano* new_p;
+
+        vlr_minuto = p->getValorMinuto();
+        franquia = p->getFranquia();
+        velocAlem = p->getVelocAlem();
+        veloc = p->getVelocidade();
         if(ptr_posPago != nullptr){ // Pós-Pago
             print("DATA DE VENCIMENTO: ");
             getString();
             // TO-DO: PROCESSAR DATA
             // d = data;
+            //ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, data_vencimento);
 
-            double vlr_minuto = p->getValorMinuto();
-            double franquia = p->getFranquia();
-            double velocAlem = p->getVelocAlem();
-            double veloc = p->getVelocidade();
-            //PosPago pos(nome_plano, vlr_minuto, franquia, velocAlem, veloc, d);
-            //new_p = &pos;
         }else{ // Pre-Pago
             print("CREDITO INICIAL: ");
             getString();
-            double credito = stoi(input);
+            credito = stoi(input);
             // CRIAR DATA COM DATA ATUAL E ADICIONAR 180 dias e colocar aqui.
             // validade = data;
-            //PrePago pre(nome_plano, vlr_minuto, franquia, velocAlem, veloc, credito, d);
-            // new_p = &pos;
+            //ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, data_atual, credito);
         }
-
     }
 
     refresh();
@@ -289,6 +293,8 @@ void Interface::menuAdicionaCreditos(){
     getString();
     print("VALOR DE CREDITOS: ");
     getString();
+
+    // TO-DO: Atulizar data para data atual + 180 dias.
     
     refresh();
     menuInicial();

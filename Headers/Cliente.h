@@ -34,8 +34,8 @@ class Cliente{
         void efetuarLigacao(int celularIndex, Date timestamp, double duracao, tipoDados data_type);
 
         // FUNCOES GET
-        inline string getNome() {return(nome);};
-        inline string getCPF() {return(CPF);};
-        inline string getEndereco() {return(endereco);};
+        inline string getNome() const {return(nome);};
+        inline string getCPF() const {return(CPF);};
+        inline string getEndereco() const {return(endereco);};
 };
 #endif
