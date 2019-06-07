@@ -321,16 +321,35 @@ void Interface::menuAdicionaCreditos(){
 
 void Interface::menuRegistraLigacaoS(){
 
+    int numeroCelular;
+    Date data_ligacao;
+    double duracao, telefone;
+    Celular* c;
+
     setMenu();
+
     print("///// MENU DE REGISTRO DE LIGACOES SIMPLES /////");
     print("CELULAR: ");
     getString();
+    numeroCelular = stoi(input);
+
+    if(numeroCelular <= ptr_celulares.size() && numeroCelular >= 0){
+        c = ptr_celulares[numeroCelular];
+    }else{
+        throw Excecao("Numero de celular inexistente!");
+    }
+
     print("DATA: ");
     getString();
+    data_ligacao = input;
     print("DURACAO(MIN): ");
     getString();
+    duracao = stod(input);
     print("# TELEFONE: ");
     getString();
+    telefone = stod(input);
+
+    c->ligar(data_ligacao, duracao, telefone);
 
     refresh();
     menuInicial();
@@ -338,16 +357,42 @@ void Interface::menuRegistraLigacaoS(){
 
 void Interface::menuRegistraLigacaoD(){
 
+    tipoDados td;
+    int numeroCelular;
+    Date data_ligacao;
+    double duracao;
+    Celular* c;
+
     setMenu();
+
     print("///// MENU DE REGISTRO DE LIGACOES DE DADOS /////");
     print("CELULAR: ");
     getString();
+    numeroCelular = stoi(input);
+
+    if(numeroCelular <= ptr_celulares.size() && numeroCelular >= 0){
+        c = ptr_celulares[numeroCelular];
+    }else{
+        throw Excecao("Numero de celular inexistente!");
+    }
+
     print("DATA: ");
     getString();
-    print("DURACAO: ");
+    data_ligacao = input;
+    print("DURACAO(MIN): ");
     getString();
-    print("TIPO: ");
+    duracao = stod(input);
+    print("TIPO(download ou upload): ");
     getString();
+    if(input == "download"){
+        td = download;
+    }else if(input == "upload"){
+        td = upload;
+    }else{
+        throw Excecao("Tipo de dados incorreto!");
+    }
+
+    c->ligar(duracao, td, data_ligacao);
 
     refresh();
     menuInicial();
