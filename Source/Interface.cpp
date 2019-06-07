@@ -62,6 +62,19 @@ void Interface::getString()
     }
 }
 
+Celular* Interface::getCelular(int numeroCelular){
+
+    Celular* c;
+
+    if(numeroCelular <= ptr_celulares.size() && numeroCelular >= 0){
+        c = ptr_celulares[numeroCelular];
+    }else{
+        throw Excecao("Numero de celular inexistente!");
+    }
+
+    return(c);
+}
+
 void Interface::switchMenu(int option){
 
     switch (option)
@@ -294,11 +307,7 @@ void Interface::menuAdicionaCreditos(){
     print("NUMERO DO CELULAR: ");
     getString();
     numeroCelular = stoi(input);
-    if(numeroCelular <= ptr_celulares.size() && numeroCelular >= 0){
-        c = ptr_celulares[numeroCelular];
-    }else{
-        throw Excecao("Numero de celular inexistente!");
-    }
+    Celular* c = getCelular(numeroCelular);
 
     print("VALOR DE CREDITOS: ");
     getString();
@@ -324,7 +333,6 @@ void Interface::menuRegistraLigacaoS(){
     int numeroCelular;
     Date data_ligacao;
     double duracao, telefone;
-    Celular* c;
 
     setMenu();
 
@@ -332,12 +340,7 @@ void Interface::menuRegistraLigacaoS(){
     print("CELULAR: ");
     getString();
     numeroCelular = stoi(input);
-
-    if(numeroCelular <= ptr_celulares.size() && numeroCelular >= 0){
-        c = ptr_celulares[numeroCelular];
-    }else{
-        throw Excecao("Numero de celular inexistente!");
-    }
+    Celular* c = getCelular(numeroCelular);
 
     print("DATA: ");
     getString();
@@ -361,7 +364,6 @@ void Interface::menuRegistraLigacaoD(){
     int numeroCelular;
     Date data_ligacao;
     double duracao;
-    Celular* c;
 
     setMenu();
 
@@ -369,12 +371,7 @@ void Interface::menuRegistraLigacaoD(){
     print("CELULAR: ");
     getString();
     numeroCelular = stoi(input);
-
-    if(numeroCelular <= ptr_celulares.size() && numeroCelular >= 0){
-        c = ptr_celulares[numeroCelular];
-    }else{
-        throw Excecao("Numero de celular inexistente!");
-    }
+    Celular* c = getCelular(numeroCelular);
 
     print("DATA: ");
     getString();
@@ -400,18 +397,47 @@ void Interface::menuRegistraLigacaoD(){
 
 void Interface::listaDadosPacote(){
 
+    int numeroCelular;
+    string aux;
+
     setMenu();
+    
     print("///// CONSULTA DE DADOS DO PACOTE /////");
     print("CELULAR: ");
     getString();
+    numeroCelular = stoi(input);
+    Celular* c = getCelular(numeroCelular);
+
+    Plano* p = c->getPlano();
+
+    print("FRANQUIA: ", false);
+    aux = to_string(p->getFranquia());
+    print(aux.c_str());
+    print("FRANQUIA GASTA: ", false);
+    aux = to_string(p->getFranquiaGasta());
+    print(aux.c_str());
+    print("VELOCIDADE ATUAL: ");
+
+    print("DOWNLOAD: ", false);
+
+    if(p->getFranquiaGasta() > p->getFranquia()){ // FRANQUIA TOTALMENTE GASTA, VELOCIDADE REDUZIDA
+        aux = to_string(p->getVelocAlem());
+        print(aux.c_str());
+
+        aux = to_string(p->getVelocAlem()*0.1);
+        print("UPLOAD: ", false);
+        print(aux.c_str());
+    }else{ // FRANQUIA DISPONIVEL, VELOCIDADE CONTRATADA
+        aux = to_string(p->getVelocidade());
+        print(aux.c_str());
+
+        aux = to_string(p->getVelocidade()*0.1);
+        print("UPLOAD: ", false);
+        print(aux.c_str());
+    }
 
     refresh();
     menuInicial();
-
-    // TO-DO: TEM QUE RESOLVER O CELULAR --> CLIENTE.
-    // CELULAR
-    // RETORNA SALDO DADOS
-    // RETORNA VELOCIDADE ATUAL (DOWN E UP)
 }
 
 void Interface::listaValorConta(){
@@ -480,7 +506,7 @@ void Interface::listaExtratoD(){
 }
 
 void Interface::listaClientes(){
-    // LISTA CLIENTES E INFORMACOES
+    // LISTA CLIENTES E INFORMACOES --> TODOS OS DADOS
 }
 
 void Interface::listaPlanos(){
@@ -502,3 +528,4 @@ void Interface::informaLimiteFranquia(){
 }
 
 // TO-DO: Exceções: Plano nao existente. Celular não existente. Cliente não existente.
+// TO-DO: Criar diagrama UML para colocar no trabalho.

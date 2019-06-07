@@ -47,6 +47,7 @@ class Interface{
         void print(const char* text, bool breakLine);
         void switchMenu(int option);
         void setMenu();
+        Celular* getCelular(int numeroCelular);
         
         // FUNCOES DE ENTRADA
         void getString();
