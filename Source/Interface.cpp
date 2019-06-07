@@ -228,10 +228,10 @@ void Interface::menuCadastroPlano(){
 
 void Interface::menuCadastroCelular(){
 
+    Date vencimento_ou_validade;
     Cliente* ptr_cliente;
     string nome_plano;
     double numero, n_cliente, vlr_minuto, franquia, velocAlem, veloc, credito;
-    // TO-DO: TRY COM STOI
 
     setMenu();
 
@@ -246,9 +246,9 @@ void Interface::menuCadastroCelular(){
         n_cliente--;
         ptr_cliente = &clientes[n_cliente];
     }else{
-        throw Excecao();
+        throw Excecao("Numero de cliente nao existente!");
     }
-    // TO-DO: VERIFICAR O NUMERO DO CLIENTE E JOGAR THROW
+
     print("NOME DO PLANO: ");
     getString();
     nome_plano = input;
@@ -265,17 +265,15 @@ void Interface::menuCadastroCelular(){
         if(ptr_posPago != nullptr){ // Pós-Pago
             print("DATA DE VENCIMENTO: ");
             getString();
-            // TO-DO: PROCESSAR DATA
-            // d = data;
-            //ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, data_vencimento);
-
+            vencimento_ou_validade = input;
+            ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, vencimento_ou_validade);
         }else{ // Pre-Pago
             print("CREDITO INICIAL: ");
             getString();
             credito = stoi(input);
-            // CRIAR DATA COM DATA ATUAL E ADICIONAR 180 dias e colocar aqui.
-            // validade = data;
-            //ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, data_atual, credito);
+            vencimento_ou_validade = data_atual;
+            vencimento_ou_validade.acrescentaTempo();
+            ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, vencimento_ou_validade, credito);
         }
     }
 
