@@ -169,6 +169,7 @@ void Interface::menuCadastroCliente(){
 
     // CRIA CLIENTE
     Cliente c(CPF, nome, endereco);
+    clientes.push_back(c);
 
     menuInicial();
 }
@@ -177,51 +178,49 @@ void Interface::menuCadastroPlano(){
 
     setMenu();
 
-    string nome;
-    int vlrMinuto, franquia, veloc, velocAlem;
+    Date vencimento_ou_validade;
+
+    string nome_plano;
+    double vlrMinuto, franquia, veloc, velocAlem, credito;
+    Plano* p;
 
     print("///// MENU DE CADASTRO DE PLANOS /////");
     print("NOME DO PLANO: ");
     getString();
-    nome = input;
+    //nome_plano = input;
     print("VALOR DO MINUTO: ");
     getString();
-    vlrMinuto = stoi(input);
+    vlrMinuto = stod(input);
     print("VELOCIDADE DO PACOTE DE DADOS: ");
     getString();
-    veloc = stoi(input);
+    veloc = stod(input);
     print("FRANQUIA: ");
     getString();
-    franquia = stoi(input);
+    franquia = stod(input);
     print("VELOCIDADE ALEM DA FRANQUIA: ");
     getString();
-    velocAlem = stoi(input);
+    velocAlem = stod(input);
     print("TIPO DO PLANO: ");
     getString();
-    if(input == "PosPago"){
+    if(input == "PosPago"){ // Pós-Pago
         print("DATA DE VENCIMENTO: ");
         getString();
-        input;
-        // TO-DO: FUNC CONVERTER STRING PARA DATA
-    }else if(input == "PrePago"){
+        vencimento_ou_validade = input;
+        PosPago sub_p(nome_plano, vlrMinuto, franquia, velocAlem, veloc, vencimento_ou_validade);
+        p = &sub_p;
+    }else if(input == "PrePago"){ // Pŕe-Pago
         print("VALOR CREDITO: ");
         getString();
-        // TO-DO: RECEBER A DATA ATUAL E ADICIONAR 180dias.
-        // PrePago sub_p();
-    }else{ // Pós-Pago
-        throw Excecao();
-        // TO-DO: ESPECIFICAR EXCECAO
-        // A FUNCAO TRY: SERA CHAMADA NA CONSTRUCAO DA CLASSE
-        // DENTRO DO WHILE
-        // PosPago sub_p();
-    }
-    
+        credito = stod(input);
+        vencimento_ou_validade = data_atual;
+        vencimento_ou_validade.acrescentaTempo();
 
-    // CRIA OBJETO PLANO
-    /*
-    Plano* p = &sub_p;
-    planos.insert(make_pair(nome, p));
-    */
+        PrePago sub_p(nome_plano, vlrMinuto, franquia, velocAlem, veloc, credito, vencimento_ou_validade);
+        p = &sub_p;
+    }else{
+        throw Excecao("Tipo de plano nao existente!");
+    }
+    planos.insert(make_pair(nome_plano, p));
 
     refresh();
     menuInicial();

@@ -12,7 +12,7 @@ class Excecao{
 
     public:
         Excecao();
-        Excecao(char* _mensagem) : mensagem(_mensagem) {};
+        Excecao(string _mensagem) : mensagem(_mensagem) {};
         ~Excecao();
 
         // FUNCAO GET

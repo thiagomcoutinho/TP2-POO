@@ -51,25 +51,17 @@ void Celular::ligar(double duracao, tipoDados td, Date timestamp){
         throw Excecao();
     }
 
-    cout << "AQUI" << endl;
     if(franquiaGasta > franquia){
         if(td == download){ // DOWNLOAD
             custo = plano->getVelocAlem()*duracao;
-            cout << "T1" << endl;
         }else{ // UPLOAD
             custo = plano->getVelocAlem()*0.1*duracao;
-            cout << "T2" << endl;
         }
     }else{ // FRANQUIA TOTALMENTE CONSUMIDA, VELOCIDADE DE DOWNLOAD REDUZIDA
         if(td == download){ // DOWNLOAD
             custo = plano->getVelocidade()*duracao;
-            cout << plano->getVelocidade() << endl;
-            cout << duracao << endl;
-            cout << custo << endl;
-            cout << "T3" << endl;
         }else{ // UPLOAD
             custo = plano->getVelocidade()*0.1*duracao;
-            cout << "T4" << endl;
         }
     }
     // ATUALIZA FRANQUIA GASTA

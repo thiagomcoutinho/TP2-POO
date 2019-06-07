@@ -31,7 +31,7 @@ int main(int argc, char **arvg){
     PosPago* ptr_plano2 = dynamic_cast<PosPago*>(p2);
     cout << ptr_plano->getValor() << endl;
 
-
+    cout << stoi("123");
 
     // CLIENTE OK
     /*

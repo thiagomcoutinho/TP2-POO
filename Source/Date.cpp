@@ -77,6 +77,43 @@ bool Date::operator > (Date b) const{
     }
 }
 
+Date & Date::operator = (string str_date){
+
+    vector<string> date_split;
+    string aux;
+
+    for(int i=0; i<str_date.size(); i++){
+        if(str_date[i] == '-'){
+            date_split.push_back(aux);
+            aux.clear();
+        }else{
+            aux.push_back(str_date[i]);
+        }
+    }
+
+    if(date_split.size() != 3 || date_split[0].size() != 2 || date_split[1].size() != 2 || date_split[2].size() != 4){
+        throw Excecao("Formato de data invalido!");
+    }
+
+    int dia, mes, ano;
+    dia = stoi(date_split[0]);
+    mes = stoi(date_split[1]);
+    ano = stoi(date_split[2]);
+
+    Date d(ano, mes, dia);
+
+    return(d);
+}
+
+Date & Date::operator = (Date data){
+    ano = data.getAno();
+    mes = data.getMes();
+    dia = data.getDia();
+    hora = data.getHora();
+    min = data.getMin();
+    seg = data.getSeg();
+}
+
 string Date::convertDateToString(bool ligacao) const{
     string sDate;
     if(ligacao){

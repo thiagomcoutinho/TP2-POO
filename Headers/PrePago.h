@@ -13,7 +13,7 @@ class PrePago : public Plano{
 
     public:
         PrePago();
-        PrePago(string _nome, double _vlrMinuto, double _franquia, double _velocAlem, double _credito, double _veloc, Date _validade) : \
+        PrePago(string _nome, double _vlrMinuto, double _franquia, double _velocAlem, double _veloc, double _credito, Date _validade) : \
         Plano(_nome, _vlrMinuto, _franquia, _velocAlem, _veloc), credito(_credito), validade(_validade) {};
         ~PrePago();
 
