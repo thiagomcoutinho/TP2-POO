@@ -9,6 +9,14 @@ Interface::Interface(){
     int c = 0;
     int b;
 
+    /*
+        print("DATA ATUAL(dd-mm-yyyy): ", false);
+        getString();
+        data_atual = input;
+
+        print("Pressione Enter para continuar.");
+     */
+
     // Cria menu inicial
     menuInicial();
     // Loop infinito ate que o cliente saia da aplicacao
@@ -442,25 +450,53 @@ void Interface::listaDadosPacote(){
 
 void Interface::listaValorConta(){
 
+    int numeroCelular;
+
     setMenu();
+
     print("///// CONSULTA DE CONTAS /////");
     print("CELULAR : ");
     getString();
+    numeroCelular = stoi(input);
+
+    Celular* c = getCelular(numeroCelular);
+
+    Plano* p = c->getPlano();
+    PosPago* sub_p = dynamic_cast<PosPago*> (p);
+
+    if(sub_p != nullptr){ // Plano Pos-Pago
+        // IMPRIME O VALOR ACUMULADO APOS O DIA DE VENCIMENTO DO MES ANTERIOR
+        // IMPRIME O VALOR ACUMULADO APOS O DIA DE VENCIMENTO ATUAL
+    }else{
+        throw Excecao("O celular escolhido nao possui plano pos pago!");
+    }
 
     refresh();
     menuInicial();
-
-    // RECEBE CELULAR
-    // VALOR TOTAL DAS LIGACOES APOS O DIA DE VENCIMENTO MES ANTERIOR
-    // DIA DE VENCIMENTO 
 }
 
 void Interface::listaCreditos(){
 
+    int numeroCelular;
+
     setMenu();
+
     print("///// CONSULTA DE CREDITOS /////");
     print("CELULAR : ");
     getString();
+    numeroCelular = stoi(input);
+
+    Celular* c = getCelular(numeroCelular);
+
+    Plano* p = c->getPlano();
+
+    PrePago* sub_p = dynamic_cast<PrePago*> (p);
+
+    if(sub_p != nullptr){ // Celular com plano PrePago
+
+    }else{
+        throw Excecao("O celular escolhido nao possui plano pre pago!");
+    }
 
     refresh();
     menuInicial();
@@ -518,6 +554,15 @@ void Interface::listaCelulares(){
 }
 
 void Interface::informaVencimentos(){
+
+    /* 
+        DEPOIS QUE A INTERFACE INICIALIZAR,
+        pegar a data atual. Rodar as funcoes de informe e caso tiver algum plano
+        vencido ou franquia vencida, imprimir na tela do usuario.
+
+        Esperar tecla enter para Imprimir menuInicial();
+    */
+
     // SEMPRE QUE UMA FATURA OU CREDITO VENCER
     // INFORMAR AO USUARIO OS DADOS DO CLIENTE E CELULAR
 }
