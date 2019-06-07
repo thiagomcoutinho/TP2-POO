@@ -187,7 +187,7 @@ void Interface::menuCadastroPlano(){
     print("///// MENU DE CADASTRO DE PLANOS /////");
     print("NOME DO PLANO: ");
     getString();
-    //nome_plano = input;
+    nome_plano = input;
     print("VALOR DO MINUTO: ");
     getString();
     vlrMinuto = stod(input);
@@ -231,18 +231,15 @@ void Interface::menuCadastroCelular(){
     Date vencimento_ou_validade;
     Cliente* ptr_cliente;
     string nome_plano;
-    double numero, n_cliente, vlr_minuto, franquia, velocAlem, veloc, credito;
+    double n_cliente, vlr_minuto, franquia, velocAlem, veloc, credito;
 
     setMenu();
 
     print("///// MENU DE CADASTRO DE CELULARES /////");
-    print("NUMERO DO CELULAR");
-    getString();
-    numero = stoi(input);
     print("NUMERO DO CLIENTE(A PARTIR DE 1): ");
     getString();
     n_cliente = stoi(input);
-    if(n_cliente <= clientes.size()){
+    if(n_cliente <= clientes.size() && n_cliente >= 0){
         n_cliente--;
         ptr_cliente = &clientes[n_cliente];
     }else{
@@ -270,12 +267,15 @@ void Interface::menuCadastroCelular(){
         }else{ // Pre-Pago
             print("CREDITO INICIAL: ");
             getString();
-            credito = stoi(input);
+            credito = stod(input);
             vencimento_ou_validade = data_atual;
             vencimento_ou_validade.acrescentaTempo();
             ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, vencimento_ou_validade, credito);
         }
     }
+    vector<Celular> celulares_cliente = ptr_cliente->getCelulares();
+    Celular* ptr_celular = &celulares_cliente[celulares_cliente.size()-1];
+    ptr_celulares.push_back(ptr_celular);
 
     refresh();
     menuInicial();
@@ -283,15 +283,37 @@ void Interface::menuCadastroCelular(){
 
 void Interface::menuAdicionaCreditos(){
 
+    double creditos;
+    int numeroCelular;
+    Date validade;
+    Celular* c;
+
     setMenu();
 
     print("///// MENU DE CREDITOS /////");
     print("NUMERO DO CELULAR: ");
     getString();
+    numeroCelular = stoi(input);
+    if(numeroCelular <= ptr_celulares.size() && numeroCelular >= 0){
+        c = ptr_celulares[numeroCelular];
+    }else{
+        throw Excecao("Numero de celular inexistente!");
+    }
+
     print("VALOR DE CREDITOS: ");
     getString();
+    creditos = stod(input);
 
-    // TO-DO: Atulizar data para data atual + 180 dias.
+    validade = data_atual;
+
+    Plano* p = c->getPlano();
+    PrePago* sub_p = dynamic_cast<PrePago*> (p);
+
+    if(sub_p != nullptr){
+        sub_p->adicionaCreditos(creditos, data_atual);
+    }else{
+        throw Excecao("O celular escolhido nao possui plano Pre Pago!");
+    }
     
     refresh();
     menuInicial();

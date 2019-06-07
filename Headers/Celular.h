@@ -41,6 +41,8 @@ class Celular{
         inline static void incrementProxNumCelular() {proxNumCelular++;};
         
         inline vector<Ligacao> getLigacoes() {return(ligacoes);};
+
+        inline Plano* getPlano() {return(plano);};
 };
 
 #endif

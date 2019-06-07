@@ -19,6 +19,7 @@ class Interface{
         string input;
         vector<Cliente> clientes;
         map<string, Plano*> planos;
+        vector<Celular*> ptr_celulares;
         Date data_atual;
 
     public:

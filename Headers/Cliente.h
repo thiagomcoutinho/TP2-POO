@@ -37,5 +37,6 @@ class Cliente{
         inline string getNome() const {return(nome);};
         inline string getCPF() const {return(CPF);};
         inline string getEndereco() const {return(endereco);};
+        inline vector<Celular> getCelulares() const {return(celulares);};
 };
 #endif
