@@ -1,5 +1,16 @@
 #include "./../Headers/Interface.h"
 
+void Interface::print(const char* text, bool breakLine = true){
+    mvprintw(y, x, text);
+    if(breakLine){
+        y++;
+        x = 5;
+    }else{
+        string s_text(text);
+        x += s_text.size();
+    }
+}
+
 Interface::Interface(){
     // Inicializa tela
     initscr();
@@ -7,7 +18,7 @@ Interface::Interface(){
     x = y = 5;
     
     int c = 0;
-    int b;
+    int b, erro;
 
     /*
         print("DATA ATUAL(dd-mm-yyyy): ", false);
@@ -32,10 +43,17 @@ Interface::Interface(){
             try{
                 switchMenu(c);
             }
-            catch (Excecao& e){
-                /* string excecao = e.getExcecao();
-                char* ptr_char_excecao = excecao.c_str();
-                print(ptr_char_excecao); */
+            catch (Excecao e){
+                string excecao = e.getExcecao();
+                setMenu();
+                print("ERRO: ", false);
+                print(excecao.c_str());
+                print("OPERACAO CANCELADA!");
+                print("Aperte qualquer tecla para retornar ao menu principal");
+                erro = getch();
+
+                refresh();
+                menuInicial();
             }
         }
     }
@@ -45,16 +63,10 @@ Interface::~Interface(){
     endwin();
 }
 
-void Interface::print(const char* text, bool breakLine = true){
-    mvprintw(y, x, text);
-    if(breakLine){
-        y++;
-    }
-}
-
 void Interface::setMenu(){
     y = x = 5;
     clear();
+    refresh();
 }
 
 void Interface::getString()
@@ -212,24 +224,28 @@ void Interface::menuCadastroPlano(){
     print("NOME DO PLANO: ");
     getString();
     nome_plano = input;
-    print("VALOR DO MINUTO: ");
+    print("VALOR DO MINUTO(REAIS): ");
     getString();
     vlrMinuto = stod(input);
-    print("VELOCIDADE DO PACOTE DE DADOS: ");
+    print("VELOCIDADE DO PACOTE DE DADOS(Mbps): ");
     getString();
     veloc = stod(input);
-    print("FRANQUIA: ");
+    print("FRANQUIA(Mb): ");
     getString();
     franquia = stod(input);
-    print("VELOCIDADE ALEM DA FRANQUIA: ");
+    print("VELOCIDADE ALEM DA FRANQUIA(Mbps): ");
     getString();
     velocAlem = stod(input);
-    print("TIPO DO PLANO: ");
+    print("TIPO DO PLANO(PosPago ou PrePago): ");
     getString();
     if(input == "PosPago"){ // Pós-Pago
-        print("DATA DE VENCIMENTO: ");
+        print("DATA DE VENCIMENTO(dd-mm-yyyy): ");
         getString();
-        vencimento_ou_validade = input;
+        vencimento_ou_validade = input; //TO-DO: BUG NA FUNCAO DE ATRIBUICAO.
+        
+        //Date aux(1990, 10, 11);
+        // TO-DO: tratar meses e dias maiores que o possivel em Date.
+
         PosPago sub_p(nome_plano, vlrMinuto, franquia, velocAlem, veloc, vencimento_ou_validade);
         p = &sub_p;
     }else if(input == "PrePago"){ // Pŕe-Pago
@@ -310,7 +326,6 @@ void Interface::menuAdicionaCreditos(){
     double creditos;
     int numeroCelular;
     Date validade;
-    Celular* c;
 
     setMenu();
 
@@ -451,7 +466,7 @@ void Interface::listaDadosPacote(){
     menuInicial();
 }
 
-void Interface::listaValorConta(){
+void Interface::listaValorConta(){ // TO-DO
 
     int numeroCelular;
 
@@ -547,12 +562,14 @@ void Interface::listaExtratoD(){
 
 void Interface::listaClientes(){
 
+    setMenu();
+
     vector<Celular> aux;
 
     for(int i=0; i<clientes.size(); i++){
-        print("Cliente #", false);
+        print("///// Cliente #", false);
         print(to_string(i).c_str(), false);
-        print(": ");
+        print(" /////");
         print("CPF: ", false);
         print(clientes[i].getCPF().c_str());
         print("NOME: ", false);
@@ -563,11 +580,17 @@ void Interface::listaClientes(){
         aux = clientes[i].getCelulares();
         print(to_string(aux.size()).c_str());
     }
+
+    print("Pressione qualquer tecla para sair");
+    int c = getch();
+
     refresh();
     menuInicial();
 }
 
 void Interface::listaPlanos(){
+
+    setMenu();
 
     map<string, Plano*>::iterator it;
     Plano* p;
@@ -601,6 +624,8 @@ void Interface::listaPlanos(){
 
 void Interface::listaCelulares(){
 
+    setMenu();
+
     vector<Ligacao> aux;
     Plano* p;
 
@@ -627,6 +652,8 @@ void Interface::informaVencimentos(){
 
         Esperar tecla enter para Imprimir menuInicial();
     */
+
+   setMenu();
 
     print("///// FATURAS VENCIDAS /////");
 

@@ -8,7 +8,7 @@ using namespace std;
 class Excecao{
 
     private:
-        const string mensagem;
+        string mensagem;
 
     public:
         Excecao();
@@ -16,6 +16,6 @@ class Excecao{
         ~Excecao();
 
         // FUNCAO GET
-        const inline string getExcecao() const {return(mensagem);};
+        inline string getExcecao() {return(mensagem);};
 };
 #endif

@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char **arvg){
 
-    //Interface i;
+    Interface i;
 
     map<string, Plano*> hash_planos;
 
