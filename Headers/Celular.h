@@ -45,6 +45,8 @@ class Celular{
         inline double getNumero() {return(numero);};
 
         inline Plano* getPlano() {return(plano);};
+
+        inline Cliente* getCliente() {return(cliente);};
 };
 
 #endif

@@ -14,6 +14,9 @@ Interface::Interface(){
         getString();
         data_atual = input;
 
+        informaVencimentos();
+        informaLimiteFranquia();
+
         print("Pressione Enter para continuar.");
      */
 
@@ -625,8 +628,38 @@ void Interface::informaVencimentos(){
         Esperar tecla enter para Imprimir menuInicial();
     */
 
-    // SEMPRE QUE UMA FATURA OU CREDITO VENCER
-    // INFORMAR AO USUARIO OS DADOS DO CLIENTE E CELULAR
+    print("///// FATURAS VENCIDAS /////");
+
+    Plano* p;
+    PosPago* sub_p;
+    Date vencimento;
+    Cliente* c;
+    Celular* curr_cel;
+    string nome_cliente;
+
+    for(int i = 0; i<ptr_celulares.size(); i++){
+
+        curr_cel = ptr_celulares[i];
+
+        p = curr_cel->getPlano();
+        sub_p = dynamic_cast<PosPago*> (p);
+        if(sub_p != nullptr){ // Plano Pos Pago
+            vencimento = sub_p->getVencimento();
+            if(vencimento > data_atual){
+                
+                c = curr_cel->getCliente();
+                nome_cliente = c->getNome();
+                print("Cliente: ", false);
+                print(nome_cliente.c_str());
+                print("Numero de celular: ", false);
+                print(to_string(curr_cel->getNumero()).c_str());
+                print("VALOR DO PLANO: ", false);
+                print(to_string(sub_p->getValor()).c_str());
+                print("DATA DE VENCIMENTO: ", false);
+                print(vencimento.convertDateToString(false).c_str());
+            }
+        }
+    }
 }
 
 void Interface::informaLimiteFranquia(){
