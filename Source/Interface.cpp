@@ -543,11 +543,51 @@ void Interface::listaExtratoD(){
 }
 
 void Interface::listaClientes(){
-    // LISTA CLIENTES E INFORMACOES --> TODOS OS DADOS
+    for(int i=0; i<clientes.size(); i++){
+        print("Cliente #", false);
+        print(to_string(i).c_str(), false);
+        print(": ");
+        print("CPF: ", false);
+        print(clientes[i].getCPF().c_str());
+        print("NOME: ", false);
+        print(clientes[i].getEndereco().c_str());
+        print("ENDERECO: ", false);
+        print(clientes[i].getEndereco().c_str());
+    }
+    refresh();
+    menuInicial();
 }
 
 void Interface::listaPlanos(){
-    // LISTA PLANOS E INFORMACOEs
+
+    map<string, Plano*>::iterator it;
+    Plano* p;
+    PosPago* pos;
+
+    for(it = planos.begin(); it != planos.end(); it++){
+        print("Nome do Plano: ", false);
+        print(it->first.c_str());
+        
+        p = it->second;
+
+        print("Valor do minuto: ", false);
+        print(to_string(p->getValorMinuto()).c_str());
+        print("Velocidade: ", false);
+        print(to_string(p->getVelocidade()).c_str());
+        print("FRANQUIA: ", false);
+        print(to_string(p->getFranquia()).c_str());
+        print("Velocidade alem do limite: ", false);
+        print(to_string(p->getVelocAlem()).c_str());
+        
+        PosPago* pos = dynamic_cast<PosPago*> (p);
+        if(pos != nullptr){ // Pos-Pago
+            print("TIPO: POS PAGO");
+        }else{ // PrePago
+            print("TIPO: PRE PAGO");
+        }
+    }
+    refresh();
+    menuInicial();
 }
 
 void Interface::listaCelulares(){
