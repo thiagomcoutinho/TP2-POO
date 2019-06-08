@@ -116,7 +116,7 @@ Date & Date::operator = (Date data){
 
 string Date::convertDateToString(bool ligacao) const{
     string sDate;
-    if(ligacao){
+    if(ligacao){ // TO-DO: fazer overload dessa funcao, recebe duracao e print o tempo.
         sDate = to_string(hora) + ":" + to_string(min) + ":" + to_string(seg); 
     }else{
         sDate = to_string(dia) + "/" + to_string(mes) + "/" + to_string(ano);

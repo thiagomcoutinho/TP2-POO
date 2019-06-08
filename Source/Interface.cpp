@@ -478,6 +478,8 @@ void Interface::listaValorConta(){
 void Interface::listaCreditos(){
 
     int numeroCelular;
+    string str_validade;
+    Date validade;
 
     setMenu();
 
@@ -493,17 +495,16 @@ void Interface::listaCreditos(){
     PrePago* sub_p = dynamic_cast<PrePago*> (p);
 
     if(sub_p != nullptr){ // Celular com plano PrePago
-
+        validade = sub_p->getValidade();
+        str_validade = validade.convertDateToString(false);
+        print("CREDITOS DISPONIVEIS: ", false);
+        print(str_validade.c_str());
     }else{
         throw Excecao("O celular escolhido nao possui plano pre pago!");
     }
 
     refresh();
     menuInicial();
-
-    // RECEBE CELULAR
-    // LISTA OS CREDITOS 
-    // DATA DE VALIDADE DOS CREDITOS
 }
 
 void Interface::listaExtratoS(){
