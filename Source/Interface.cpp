@@ -543,6 +543,9 @@ void Interface::listaExtratoD(){
 }
 
 void Interface::listaClientes(){
+
+    vector<Celular> aux;
+
     for(int i=0; i<clientes.size(); i++){
         print("Cliente #", false);
         print(to_string(i).c_str(), false);
@@ -553,6 +556,9 @@ void Interface::listaClientes(){
         print(clientes[i].getEndereco().c_str());
         print("ENDERECO: ", false);
         print(clientes[i].getEndereco().c_str());
+        print("Numero de celulares: ", false);
+        aux = clientes[i].getCelulares();
+        print(to_string(aux.size()).c_str());
     }
     refresh();
     menuInicial();
@@ -591,7 +597,22 @@ void Interface::listaPlanos(){
 }
 
 void Interface::listaCelulares(){
-    // LISTA CELULARES E INFORMACOES
+
+    vector<Ligacao> aux;
+    Plano* p;
+
+    for(int i=0; i<ptr_celulares.size(); i++){
+        print("NUMERO DO CELULAR: ", false);
+        print(to_string(ptr_celulares[i]->getNumero()).c_str());
+
+        aux = ptr_celulares[i]->getLigacoes();
+        print("NUMERO DE LIGACOES: ", false);
+        print(to_string(aux.size()).c_str());
+
+        p = ptr_celulares[i]->getPlano();
+        print("PLANO: ", false);
+        print(p->getNomePlano().c_str());
+    }
 }
 
 void Interface::informaVencimentos(){

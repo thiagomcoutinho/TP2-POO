@@ -42,6 +42,8 @@ class Celular{
         
         inline vector<Ligacao> getLigacoes() {return(ligacoes);};
 
+        inline double getNumero() {return(numero);};
+
         inline Plano* getPlano() {return(plano);};
 };
 

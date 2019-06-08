@@ -29,6 +29,7 @@ class Plano{
         inline double getFranquia()      const {return(franquia);};
         inline double getVelocAlem()     const {return(velocAlem);};
         inline double getFranquiaGasta() const {return(franquiaGasta);};
+        inline string getNomePlano()     const {return(nome);};
 
         // FUNCOES SET
         inline void setFranquiaGasta(const double& gasto) {franquiaGasta += gasto;};
