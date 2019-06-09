@@ -227,15 +227,23 @@ void Interface::menuCadastroPlano(){
     print("VALOR DO MINUTO(REAIS): ");
     getString();
     vlrMinuto = stod(input);
+    print(to_string(vlrMinuto).c_str());
+    refresh();
     print("VELOCIDADE DO PACOTE DE DADOS(Mbps): ");
     getString();
     veloc = stod(input);
+    print(to_string(veloc).c_str());
+    refresh();
     print("FRANQUIA(Mb): ");
     getString();
     franquia = stod(input);
+    print(to_string(franquia).c_str());
+    refresh();
     print("VELOCIDADE ALEM DA FRANQUIA(Mbps): ");
     getString();
     velocAlem = stod(input);
+    print(to_string(velocAlem).c_str());
+    refresh();
     print("TIPO DO PLANO(PosPago ou PrePago): ");
     getString();
     if(input == "PosPago"){ // Pós-Pago
@@ -246,7 +254,11 @@ void Interface::menuCadastroPlano(){
         //Date aux(1990, 10, 11);
         // TO-DO: tratar meses e dias maiores que o possivel em Date.
 
+<<<<<<< HEAD
         p = new PosPago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, vencimento_ou_validade);
+=======
+        p = new PosPago (nome_plano, vlrMinuto, franquia, velocAlem, veloc, vencimento_ou_validade);
+>>>>>>> 3eca45b7d71078ab974a0ca853eb02a68fb4c3ae
     }else if(input == "PrePago"){ // Pŕe-Pago
         print("VALOR CREDITO: ");
         getString();
@@ -254,11 +266,19 @@ void Interface::menuCadastroPlano(){
         vencimento_ou_validade = data_atual;
         vencimento_ou_validade.acrescentaTempo();
 
+<<<<<<< HEAD
         p = new PrePago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, credito, vencimento_ou_validade);
+=======
+        p = new PrePago (nome_plano, vlrMinuto, franquia, velocAlem, veloc, credito, vencimento_ou_validade);
+>>>>>>> 3eca45b7d71078ab974a0ca853eb02a68fb4c3ae
     }else{
         throw Excecao("Tipo de plano nao existente!");
     }
-    planos.insert(make_pair(nome_plano, p));
+    planos.push_back(p);
+
+    /*string aux = planos[0]->getNomePlano();
+    print(aux.c_str());
+    int c = getch();*/
 
     refresh();
     menuInicial();
@@ -269,6 +289,7 @@ void Interface::menuCadastroCelular(){
     Date vencimento_ou_validade;
     Cliente* ptr_cliente;
     string nome_plano;
+    int plano_index = -1;
     double n_cliente, vlr_minuto, franquia, velocAlem, veloc, credito;
 
     setMenu();
@@ -287,10 +308,17 @@ void Interface::menuCadastroCelular(){
     print("NOME DO PLANO: ");
     getString();
     nome_plano = input;
-    if(planos.find(nome_plano) == planos.end()){
+
+    for(int i=0; i<planos.size(); i++){
+        if(planos[i]->getNomePlano() == input){
+            plano_index = i;
+        }
+    }
+
+    if(plano_index == -1){
         throw Excecao();
     }else{
-        Plano* p = planos.find(nome_plano)->second;
+        Plano* p = planos[plano_index];
         PosPago* ptr_posPago = dynamic_cast<PosPago*>(p);
 
         vlr_minuto = p->getValorMinuto();
@@ -592,26 +620,29 @@ void Interface::listaPlanos(){
 
     setMenu();
 
-    map<string, Plano*>::iterator it;
     Plano* p;
     PosPago* pos;
+    string nome_plano;
 
-    for(it = planos.begin(); it != planos.end(); it++){
-        print("Nome do Plano: ", false);
-        print(it->first.c_str());
-        
-        p = it->second;
+    for(int i=0; i<planos.size(); i++){
 
+        nome_plano = planos[0]->getNomePlano();
+        print("Nome do plano: ", false);
+        print(nome_plano.c_str());
         print("Valor do minuto: ", false);
-        print(to_string(p->getValorMinuto()).c_str());
+        print(to_string(planos[0]->getValorMinuto()).c_str());
+        refresh();
         print("Velocidade: ", false);
-        print(to_string(p->getVelocidade()).c_str());
-        print("FRANQUIA: ", false);
-        print(to_string(p->getFranquia()).c_str());
+        print(to_string(planos[0]->getVelocidade()).c_str());
+        refresh();
+        print("Franquia: ", false);
+        print(to_string(planos[0]->getFranquia()).c_str());
+        refresh();
         print("Velocidade alem do limite: ", false);
-        print(to_string(p->getVelocAlem()).c_str());
-        
-        PosPago* pos = dynamic_cast<PosPago*> (p);
+        print(to_string(planos[0]->getVelocAlem()).c_str());
+        refresh();
+
+        pos = dynamic_cast<PosPago*> (planos[0]);
         if(pos != nullptr){ // Pos-Pago
             print("TIPO: POS PAGO");
         }else{ // PrePago

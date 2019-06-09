@@ -9,7 +9,7 @@ using namespace std;
 class Plano{
 
     private:
-        const string nome;
+        string nome;
         double valorMinuto;
         double velocidade;
         double franquia;
