@@ -1,41 +1,7 @@
 #include "./../Headers/Interface.h"
 #include<iostream>
-#include<map>
-
-#include <string>
 
 using namespace std;
-
-vector<string> split_string(string str_date){
-
-    vector<string> date_split;
-    string aux;
-
-    for(int i=0; i<str_date.size(); i++){
-        if(str_date[i] == '-'){
-            date_split.push_back(aux);
-            aux.clear();
-        }else{
-            aux.push_back(str_date[i]);
-        }
-    }
-    date_split.push_back(aux);
-
-    cout << date_split[0] << endl;
-    cout << date_split[1] << endl;
-    cout << date_split[2] << endl;
-
-    /* if(date_split.size() != 3 || date_split[0].size() != 2 || date_split[1].size() != 2 || date_split[2].size() != 4){
-        throw Excecao("Formato de data invalido!");
-    }*/
-
-    int dia, mes, ano;
-    dia = stoi(date_split[0]);
-    mes = stoi(date_split[1]);
-    ano = stoi(date_split[2]);
-
-    return(date_split);
-}
 
 int main(int argc, char **arvg){
 
@@ -44,13 +10,14 @@ int main(int argc, char **arvg){
 
     Interface i;
 
-    map<string, Plano*> hash_planos;
-
     Date d(2019, 10, 11);
-    PosPago p1("TIM", 10, 100, 10, 10, d);
+    PosPago p1("TIM", 1, 10, 100, 100, d);
 
     Plano* p = &p1;
 
+    cout << p->getNomePlano() << endl;
+
+    /* 
     hash_planos.insert(make_pair("TIM", p));
     if(hash_planos.find("TIM") != hash_planos.end()){
         std::cout<<"Plano 'TIM' found"<<std::endl;
@@ -68,7 +35,7 @@ int main(int argc, char **arvg){
     cout << ptr_plano->getValor() << endl;
 
     cout << stoi("123");
-
+    */
 
     // CLIENTE OK
     /*
