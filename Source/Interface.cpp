@@ -317,6 +317,8 @@ void Interface::menuCadastroCelular(){
 
     refresh();
     menuInicial();
+
+    // COMMIT
 }
 
 void Interface::menuAdicionaCreditos(){
