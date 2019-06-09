@@ -614,6 +614,10 @@ void Interface::listaPlanos(){
             print("TIPO: PRE PAGO");
         }
     }
+
+    print("Pressione qualquer tecla para sair");
+    int c = getch();
+
     refresh();
     menuInicial();
 }
