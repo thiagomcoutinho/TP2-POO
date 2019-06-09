@@ -246,8 +246,7 @@ void Interface::menuCadastroPlano(){
         //Date aux(1990, 10, 11);
         // TO-DO: tratar meses e dias maiores que o possivel em Date.
 
-        PosPago sub_p(nome_plano, vlrMinuto, franquia, velocAlem, veloc, vencimento_ou_validade);
-        p = &sub_p;
+        p = new PosPago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, vencimento_ou_validade);
     }else if(input == "PrePago"){ // Pŕe-Pago
         print("VALOR CREDITO: ");
         getString();
@@ -255,8 +254,7 @@ void Interface::menuCadastroPlano(){
         vencimento_ou_validade = data_atual;
         vencimento_ou_validade.acrescentaTempo();
 
-        PrePago sub_p(nome_plano, vlrMinuto, franquia, velocAlem, veloc, credito, vencimento_ou_validade);
-        p = &sub_p;
+        p = new PrePago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, credito, vencimento_ou_validade);
     }else{
         throw Excecao("Tipo de plano nao existente!");
     }
@@ -618,6 +616,10 @@ void Interface::listaPlanos(){
             print("TIPO: PRE PAGO");
         }
     }
+
+    print("Pressione qualquer tecla para sair");
+    int c = getch();
+
     refresh();
     menuInicial();
 }
