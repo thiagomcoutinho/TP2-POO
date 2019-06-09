@@ -90,6 +90,7 @@ Date & Date::operator = (string str_date){
             aux.push_back(str_date[i]);
         }
     }
+    date_split.push_back(aux);
 
     if(date_split.size() != 3 || date_split[0].size() != 2 || date_split[1].size() != 2 || date_split[2].size() != 4){
         throw Excecao("Formato de data invalido!");
