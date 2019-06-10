@@ -46,10 +46,6 @@ Interface::Interface(){
     
     //informaVencimentos();
     //informaLimiteFranquia();
-    print("");
-    print("Pressione Enter para continuar.");
-    int z = getch();
-    refresh();
 
     // Cria menu inicial
     menuInicial();
@@ -262,12 +258,10 @@ void Interface::menuCadastroPlano(){
     print("TIPO DO PLANO(PosPago ou PrePago): ");
     getString();
     if(input == "PosPago"){ // Pós-Pago
-        //Date aux(1990, 10, 11);
-        // TO-DO: tratar meses e dias maiores que o possivel em Date.
-        vencimento_ou_validade = "00-00-0000";
+        vencimento_ou_validade = "01-01-0000";
         p = new PosPago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, vencimento_ou_validade);
     }else if(input == "PrePago"){ // Pŕe-Pago
-        vencimento_ou_validade = "00-00-0000";
+        vencimento_ou_validade = "01-01-0000";
 
         p = new PrePago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, 0, vencimento_ou_validade);
     }else{

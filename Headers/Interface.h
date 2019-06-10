@@ -5,6 +5,7 @@
 #include "./Plano.h"
 #include<ncurses.h>
 #include<vector>
+#include<fstream> 
 #include<string>
 #include<cstring>
 #include<map>
@@ -21,7 +22,7 @@ class Interface{
         map<string, Plano*> planos;
         vector<Celular*> ptr_celulares;
         Date data_atual;
-
+        
     public:
         Interface();
         ~Interface();
