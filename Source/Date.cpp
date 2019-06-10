@@ -1,10 +1,14 @@
 #include "./../Headers/Date.h"
 
 Date::Date(){
-    ano = mes = dia = hora = min = seg = 0;
+    ano = hora = min = seg = 0;
+    mes = dia = 1;
 }
 
 Date::Date(int _ano, int _mes, int _dia){
+    if(_mes <= 0 || _mes > 12){
+        throw Excecao("Mes invalido!");
+    }
     ano = _ano;
     mes = _mes;
     dia = _dia;
@@ -26,30 +30,32 @@ void Date::acrescentaTempo(){
     int diasRestantes = 180;
     int diferenca;
     int mesInicial = mes;
+    int ultimoDiaMes;
 
     while(diasRestantes != 0){
 
         if(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12){ // 31 DIAS
-            diferenca = dia - 31;
+            ultimoDiaMes = 31;
         }else if(mes == 4 || mes == 6 || mes == 9 || mes == 11){ // 30 DIAS
-            diferenca = dia - 30;
+            ultimoDiaMes = 30;
         }else{ // FEVEREIRO
-            diferenca = dia - 28;
+            ultimoDiaMes = 28;
         }
+        diferenca = ultimoDiaMes - dia;
 
-        if(diferenca == 0){ // ULTIMO DIA DO MES.
+        if(diferenca == 0){ // ATUALIZA MES
             mes++;
             dia = 1;
             diasRestantes--;
+            continue;
+        }
+
+        if(diasRestantes > diferenca){
+            dia += diferenca;
+            diasRestantes -= diferenca;
         }else{
-            if(diferenca > diasRestantes){ // DIFERENCA PARA FINAL DO MES É MENOR QUE DIAS RESTANTES
-                dia += diasRestantes;
-                diasRestantes = 0;
-            }else{ // COMPLETA MES
-                diasRestantes -= diferenca;
-                dia = 1;
-                mes++;
-            }
+            dia += diasRestantes;
+            diasRestantes = 0;
         }
 
         if(mes % 12 == 1 && mesInicial != 1){ // ATUALIZA ANO
@@ -114,7 +120,10 @@ Date & Date::operator = (string str_date){
         throw Excecao("Formato de data invalido!");
     }
 
-    int dia, mes, ano;
+    if(stoi(date_split[1]) <= 0 || stoi(date_split[1]) > 12){
+        throw Excecao("Mes invalido!");
+    }
+
     dia = stoi(date_split[0]);
     mes = stoi(date_split[1]);
     ano = stoi(date_split[2]);
@@ -123,6 +132,11 @@ Date & Date::operator = (string str_date){
 }
 
 Date & Date::operator = (Date data){
+
+    if(data.getMes() <= 0 || data.getMes() > 12){
+        throw Excecao("Mes invalido!");
+    }
+
     ano = data.getAno();
     mes = data.getMes();
     dia = data.getDia();

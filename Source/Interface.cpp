@@ -20,10 +20,30 @@ Interface::Interface(){
     int c = 0;
     int b, erro;
 
-    print("///// OPERADORA TELEFONICA CONAUT /////");
-    print("ENTRE COM A DATA ATUAL(dd-mm-yyyy): ", false);
-    getString();
-    data_atual = input;
+    int a = -1;
+    while(a == -1){
+        try{
+            setMenu();
+
+            print("///// OPERADORA TELEFONICA CONAUT /////");
+            print("ENTRE COM A DATA ATUAL(dd-mm-yyyy): ", false);
+            getString();
+            data_atual = input;
+
+            a = 1;
+        }catch (Excecao e){
+            string excecao = e.getExcecao();
+            setMenu();
+            print("ERRO: ", false);
+            print(excecao.c_str());
+            print("OPERACAO CANCELADA!");
+            print("Aperte qualquer tecla para tentar novamente");
+            erro = getch();
+
+            refresh();
+        }
+    }
+    
     //informaVencimentos();
     //informaLimiteFranquia();
     print("");
@@ -42,8 +62,7 @@ Interface::Interface(){
         if(c != 113){
             try{
                 switchMenu(c);
-            }
-            catch (Excecao e){
+            }catch (Excecao e){
                 string excecao = e.getExcecao();
                 setMenu();
                 print("ERRO: ", false);
@@ -248,8 +267,7 @@ void Interface::menuCadastroPlano(){
         vencimento_ou_validade = "00-00-0000";
         p = new PosPago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, vencimento_ou_validade);
     }else if(input == "PrePago"){ // Pŕe-Pago
-        vencimento_ou_validade = data_atual;
-        vencimento_ou_validade.acrescentaTempo();
+        vencimento_ou_validade = "00-00-0000";
 
         p = new PrePago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, 0, vencimento_ou_validade);
     }else{
@@ -310,6 +328,7 @@ void Interface::menuCadastroCelular(){
             credito = stod(input);
             vencimento_ou_validade = data_atual;
             vencimento_ou_validade.acrescentaTempo();
+            print(vencimento_ou_validade.convertDateToString(false).c_str());
             ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, vencimento_ou_validade, credito);
         }
     }
