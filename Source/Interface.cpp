@@ -198,13 +198,16 @@ void Interface::menuCadastroCliente(){
     print("CPF/CNPJ: ");
     getString();
     endereco = input;
-    
-    refresh();
 
     // CRIA CLIENTE
     Cliente c(CPF, nome, endereco);
     clientes.push_back(c);
 
+    print("Cliente cadastrado com sucesso.");
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
+
+    refresh();
     menuInicial();
 }
 
@@ -246,17 +249,19 @@ void Interface::menuCadastroPlano(){
 
         p = new PosPago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, vencimento_ou_validade);
     }else if(input == "PrePago"){ // Pŕe-Pago
-        print("VALOR CREDITO: ");
-        getString();
-        credito = stod(input);
         vencimento_ou_validade = data_atual;
         vencimento_ou_validade.acrescentaTempo();
 
-        p = new PrePago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, credito, vencimento_ou_validade);
+        p = new PrePago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, 0, vencimento_ou_validade);
     }else{
         throw Excecao("Tipo de plano nao existente!");
     }
     planos.insert(make_pair(nome_plano, p));
+
+    print("Plano cadastrado com sucesso.");
+
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
 
     refresh();
     menuInicial();
@@ -273,11 +278,10 @@ void Interface::menuCadastroCelular(){
     setMenu();
 
     print("///// MENU DE CADASTRO DE CELULARES /////");
-    print("NUMERO DO CLIENTE(A PARTIR DE 1): ");
+    print("NUMERO DO CLIENTE(A PARTIR DE 0): ");
     getString();
     n_cliente = stoi(input);
     if(n_cliente <= clientes.size() && n_cliente >= 0){
-        n_cliente--;
         ptr_cliente = &clientes[n_cliente];
     }else{
         throw Excecao("Numero de cliente nao existente!");
@@ -314,6 +318,11 @@ void Interface::menuCadastroCelular(){
     ptr_celular = &celulares_cliente[celulares_cliente.size()-1];
     ptr_celulares.push_back(ptr_celular);
 
+    print("Celular cadastrado com sucesso.");
+
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
+
     refresh();
     menuInicial();
 }
@@ -327,7 +336,7 @@ void Interface::menuAdicionaCreditos(){
     setMenu();
 
     print("///// MENU DE CREDITOS /////");
-    print("NUMERO DO CELULAR: ");
+    print("NUMERO DO CELULAR(A PARTIR DE 0): ");
     getString();
     numeroCelular = stoi(input);
     Celular* c = getCelular(numeroCelular);
@@ -346,7 +355,12 @@ void Interface::menuAdicionaCreditos(){
     }else{
         throw Excecao("O celular escolhido nao possui plano Pre Pago!");
     }
+
+    print("Creditos adicionados.");
     
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
+
     refresh();
     menuInicial();
 }
@@ -376,6 +390,11 @@ void Interface::menuRegistraLigacaoS(){
     telefone = stod(input);
 
     c->ligar(data_ligacao, duracao, telefone);
+
+    print("Ligacao efetuada.");
+
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
 
     refresh();
     menuInicial();
@@ -413,6 +432,11 @@ void Interface::menuRegistraLigacaoD(){
     }
 
     c->ligar(duracao, td, data_ligacao);
+
+    print("Ligacao efetuada.");
+
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
 
     refresh();
     menuInicial();
@@ -494,6 +518,7 @@ void Interface::listaCreditos(){
 
     int numeroCelular;
     string str_validade;
+    double creditos;
     Date validade;
 
     setMenu();
@@ -512,11 +537,15 @@ void Interface::listaCreditos(){
     if(sub_p != nullptr){ // Celular com plano PrePago
         validade = sub_p->getValidade();
         str_validade = validade.convertDateToString(false);
+        creditos = sub_p->getCredito();
         print("CREDITOS DISPONIVEIS: ", false);
-        print(str_validade.c_str());
+        print(to_string(creditos).c_str());
     }else{
         throw Excecao("O celular escolhido nao possui plano pre pago!");
     }
+
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
 
     refresh();
     menuInicial();
@@ -579,7 +608,7 @@ void Interface::listaClientes(){
     }
 
     print("Pressione qualquer tecla para sair");
-    int c = getch();
+    int z = getch();
 
     refresh();
     menuInicial();
@@ -617,7 +646,7 @@ void Interface::listaPlanos(){
     }
 
     print("Pressione qualquer tecla para sair");
-    int c = getch();
+    int z = getch();
 
     refresh();
     menuInicial();
@@ -645,7 +674,7 @@ void Interface::listaCelulares(){
     }
 
     print("Pressione qualquer tecla para sair");
-    int c = getch();
+    int z = getch();
 
     refresh();
     menuInicial();
