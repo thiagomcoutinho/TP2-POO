@@ -26,6 +26,7 @@ class Date{
 
         // OPERADORES
         bool operator > (Date b) const;
+        bool operator >= (Date b) const;
         Date & operator = (string str_date);
         Date & operator = (Date data);
 

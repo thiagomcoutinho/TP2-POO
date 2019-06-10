@@ -87,7 +87,7 @@ Celular* Interface::getCelular(int numeroCelular){
 
     Celular* c;
 
-    if(numeroCelular <= ptr_celulares.size() && numeroCelular >= 0){
+    if(numeroCelular < ptr_celulares.size() && numeroCelular >= 0){
         c = ptr_celulares[numeroCelular];
     }else{
         throw Excecao("Numero de celular inexistente!");
@@ -240,13 +240,9 @@ void Interface::menuCadastroPlano(){
     print("TIPO DO PLANO(PosPago ou PrePago): ");
     getString();
     if(input == "PosPago"){ // Pós-Pago
-        print("DATA DE VENCIMENTO(dd-mm-yyyy): ");
-        getString();
-        vencimento_ou_validade = input; //TO-DO: BUG NA FUNCAO DE ATRIBUICAO.
-        
         //Date aux(1990, 10, 11);
         // TO-DO: tratar meses e dias maiores que o possivel em Date.
-
+        vencimento_ou_validade = "00-00-0000";
         p = new PosPago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, vencimento_ou_validade);
     }else if(input == "PrePago"){ // Pŕe-Pago
         vencimento_ou_validade = data_atual;
@@ -281,7 +277,7 @@ void Interface::menuCadastroCelular(){
     print("NUMERO DO CLIENTE(A PARTIR DE 0): ");
     getString();
     n_cliente = stoi(input);
-    if(n_cliente <= clientes.size() && n_cliente >= 0){
+    if(n_cliente < clientes.size() && n_cliente >= 0){
         ptr_cliente = &clientes[n_cliente];
     }else{
         throw Excecao("Numero de cliente nao existente!");
@@ -553,21 +549,44 @@ void Interface::listaCreditos(){
 
 void Interface::listaExtratoS(){
 
+    int numeroCelular;
+    Date data_inicial;
+    Celular* c;
+    int count = 0;
+
     setMenu();
+
     print("///// CONSULTA DE EXTRATO SIMPLES /////");
     print("CELULAR: ");
     getString();
-    print("DATA INICIAL: ");
+    numeroCelular = stoi(input);
+    c = getCelular(numeroCelular);
+    print("DATA INICIAL(dd-mm-yyyy): ");
     getString();
+    data_inicial = input;
+
+    vector<Ligacao> vec_ligacoes = c->getLigacoes();
+
+    for(int i=0; i<vec_ligacoes.size(); i++){
+        count++;
+        if(vec_ligacoes[i].getDate() >= data_inicial){
+            print("///// LIGACAO #", false);
+            print(to_string(count).c_str(), false);
+            print(" /////");
+            print("DATA: ", false);
+            print(vec_ligacoes[i].getDate().convertDateToString(false).c_str());
+            print("DURACAO: ", false);
+            print(to_string(vec_ligacoes[i].getDuracao()).c_str());
+            print("VALOR: ", false);
+            print(to_string(vec_ligacoes[i].getCusto()).c_str());
+        }
+    }
+
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
 
     refresh();
     menuInicial();
-    // RECEBE CELULAR
-    // RECEBE DATA
-    // IMPRIME TODAS AS LIGACOES A PARTIR DA DATA
-    // DURACAO
-    // VALOR
-    // DATA
 }
 
 void Interface::listaExtratoD(){
@@ -578,6 +597,9 @@ void Interface::listaExtratoD(){
     getString();
     print("DATA INICIAL: ");
     getString();
+
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
 
     refresh();
     menuInicial();
@@ -736,3 +758,5 @@ void Interface::informaLimiteFranquia(){
 // DONE: cadastros, listas de cliente, planos, creditos e celulares. Adicionar creditos
 
 // TESTAR LIGACOES E EXTRATOS
+
+// TO-DO: Consertar a ligação de dados.

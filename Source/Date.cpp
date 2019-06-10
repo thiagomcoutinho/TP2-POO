@@ -77,6 +77,24 @@ bool Date::operator > (Date b) const{
     }
 }
 
+bool Date::operator >= (Date b) const{
+    if(b.ano >= ano){ // Compara ano
+        return(true);
+    }else if(b.mes >= mes){ // Compara mes
+        return(true);
+    }else if(b.dia >= dia){ // Compara dia
+        return(true);
+    }else if(b.hora >= hora){ // Compara hora
+        return(true);
+    }else if(b.min >= min){ // Compara minuto
+        return(true);
+    }else if(b.seg >= seg){ // Compara segundo
+        return(true);
+    }else{
+        return(false);
+    }
+}
+
 Date & Date::operator = (string str_date){
 
     vector<string> date_split;
