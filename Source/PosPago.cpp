@@ -6,7 +6,7 @@ PosPago::~PosPago(){}
 
 void PosPago::verificaData(const Date& dataLigacao) const{
     if(dataLigacao > vencimento){
-        throw Excecao();
+        throw Excecao("Plano vencido");
     }
 }
 
