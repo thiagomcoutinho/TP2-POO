@@ -556,6 +556,7 @@ void Interface::listaExtratoS(){
     Date data_inicial;
     Celular* c;
     int count = 0;
+    LigacaoSimples* ls;
 
     setMenu();
 
@@ -568,20 +569,24 @@ void Interface::listaExtratoS(){
     getString();
     data_inicial = input;
 
-    vector<Ligacao> vec_ligacoes = c->getLigacoes();
+    vector<Ligacao*> vec_ligacoes = c->getLigacoes();
 
     for(int i=0; i<vec_ligacoes.size(); i++){
-        count++;
-        if(vec_ligacoes[i].getDate() >= data_inicial){
+        
+        ls = dynamic_cast<LigacaoSimples*> (vec_ligacoes[i]);
+        if(ls != nullptr){
+            if(ls->getDate() >= data_inicial){
+            count++;
             print("///// LIGACAO #", false);
             print(to_string(count).c_str(), false);
             print(" /////");
             print("DATA: ", false);
-            print(vec_ligacoes[i].getDate().convertDateToString(false).c_str());
+            print(ls->getDate().convertDateToString(false).c_str());
             print("DURACAO: ", false);
-            print(to_string(vec_ligacoes[i].getDuracao()).c_str());
+            print(to_string(ls->getDuracao()).c_str());
             print("VALOR: ", false);
-            print(to_string(vec_ligacoes[i].getCusto()).c_str());
+            print(to_string(ls->getCusto()).c_str());
+            }
         }
     }
 
@@ -594,21 +599,55 @@ void Interface::listaExtratoS(){
 
 void Interface::listaExtratoD(){
 
+    int numeroCelular;
+    Date data_inicial;
+    Celular* c;
+    int count = 0;
+    LigacaoDados* ld;
+
     setMenu();
+
     print("///// CONSULTA DE EXTRADO DE DADOS /////");
     print("CELULAR: ");
     getString();
-    print("DATA INICIAL: ");
+    numeroCelular = stoi(input);
+    c = getCelular(numeroCelular);
+    print("DATA INICIAL(dd-mm-yyyy): ");
     getString();
+    data_inicial = input;
+
+    vector<Ligacao*> vec_ligacoes = c->getLigacoes();
+
+    for(int i=0; i<vec_ligacoes.size(); i++){
+        count++;
+        ld = dynamic_cast<LigacaoDados*> (vec_ligacoes[i]);
+        if(ld != nullptr){
+            if(ld->getDate() >= data_inicial){
+            count++;
+            print("///// LIGACAO #", false);
+            print(to_string(count).c_str(), false);
+            print(" /////");
+            print("DATA: ", false);
+            print(ld->getDate().convertDateToString(false).c_str());
+            print("DURACAO: ", false);
+            print(to_string(ld->getDuracao()).c_str());
+            print("TIPO: ", false);
+            if(ld->getTipoDados() == download){
+                print("DOWNLOAD");
+            }else{
+                print("UPLOAD");
+            }
+            print("QUANTIDADE CONSUMIDA: ", false);
+            print(to_string(ld->getCusto()).c_str());
+            }
+        }
+    }
 
     print("Pressione qualquer tecla para sair");
     int z = getch();
 
     refresh();
     menuInicial();
-    // RECEBE CELULAR E DATA
-    // CONSUMO DE DADOS A PARTIR DA DATA
-    // IMPRIMIR DATA, DURACAO, TIPO, E QUANTIDADE CONSUMIDA.
 }
 
 void Interface::listaClientes(){
@@ -681,7 +720,7 @@ void Interface::listaCelulares(){
 
     setMenu();
 
-    vector<Ligacao> aux;
+    vector<Ligacao*> aux;
     Plano* p;
     string nome_plano;
 

@@ -21,7 +21,7 @@ class Celular{
         double numero;
         Cliente* cliente;
         Plano* plano;
-        vector<Ligacao> ligacoes;
+        vector<Ligacao*> ligacoes;
         static double proxNumCelular;
 
     public:
@@ -40,7 +40,7 @@ class Celular{
         // FUNCAO INLINE SET STATIC
         inline static void incrementProxNumCelular() {proxNumCelular++;};
         
-        inline vector<Ligacao> getLigacoes() {return(ligacoes);};
+        inline vector<Ligacao*> getLigacoes() {return(ligacoes);};
 
         inline double getNumero() {return(numero);};
 

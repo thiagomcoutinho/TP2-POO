@@ -35,7 +35,8 @@ void Celular::ligar(Date timestamp, double duracao, double numTel){
     plano->cobraCusto(custo);
 
     // FAZ LIGACAO
-    LigacaoSimples l(timestamp, duracao, custo, numTel);
+    Ligacao* l = new LigacaoSimples(timestamp, duracao, custo, numTel);
+
     ligacoes.push_back(l);
 }
 
@@ -68,7 +69,7 @@ void Celular::ligar(double duracao, tipoDados td, Date timestamp){
     plano->setFranquiaGasta(custo);
     
     // FAZ LIGACAO
-    LigacaoDados l(timestamp, duracao, custo, td);
+    Ligacao* l = new LigacaoDados(timestamp, duracao, custo, td);
     ligacoes.push_back(l);
 
     // TO-DO: DIMINUIR A VELOCIDADE DA PARCELA EXTRA SE ULTRAPASSAR A FRANQUIA DE UMA VEZ
