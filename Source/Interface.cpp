@@ -287,7 +287,7 @@ void Interface::menuCadastroCelular(){
     getString();
     nome_plano = input;
     if(planos.find(nome_plano) == planos.end()){
-        throw Excecao();
+        throw Excecao("Plano inexistente");
     }else{
         Plano* p = planos.find(nome_plano)->second;
         PosPago* ptr_posPago = dynamic_cast<PosPago*>(p);

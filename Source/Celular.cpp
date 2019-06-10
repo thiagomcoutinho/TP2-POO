@@ -48,7 +48,7 @@ void Celular::ligar(double duracao, tipoDados td, Date timestamp){
 
     // PLANO NAO POSSUI ASSINATURA DE DADOS
     if(franquia == 0){
-        throw Excecao();
+        throw Excecao("O plano atual nao possui franquia de dados");
     }
 
     if(franquiaGasta > franquia){

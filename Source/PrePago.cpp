@@ -15,12 +15,12 @@ void PrePago::adicionaCreditos(int creditos, Date dataAtual){
 
 void PrePago::verificaCredito(const double& custo) const{
     if(credito - custo < 0){
-        throw Excecao();
+        throw Excecao("Creditos insuficientes");
     }
 }
 
 void PrePago::verificaData(const Date& dataLigacao) const{
     if(dataLigacao > validade){
-        throw Excecao();
+        throw Excecao("Validade dos creditos expirada");
     }
 }
