@@ -732,3 +732,7 @@ void Interface::informaLimiteFranquia(){
 
 // TO-DO: Exceções: Plano nao existente. Celular não existente. Cliente não existente.
 // TO-DO: Criar diagrama UML para colocar no trabalho.
+
+// DONE: cadastros, listas de cliente, planos, creditos e celulares. Adicionar creditos
+
+// TESTAR LIGACOES E EXTRATOS
