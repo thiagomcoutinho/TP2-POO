@@ -7,9 +7,9 @@ double Celular::proxNumCelular = 0;
 Celular::Celular(){
 }
 
-Celular::Celular(Cliente& c, Plano& p){
-    plano = &p;
-    cliente = &c;
+Celular::Celular(Cliente* c, Plano* p){
+    plano = p;
+    cliente = c;
     numero = getProxNumCelular();
     incrementProxNumCelular();
 }

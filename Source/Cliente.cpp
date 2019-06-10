@@ -12,16 +12,16 @@ Cliente::~Cliente(){
 
 // Celular Pos-Pago
 void Cliente::addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, double _veloc, Date vencimento){
-    PosPago p(nomePlano, vlrMinuto, _franquia, _velAlem, _veloc, vencimento);
-    Celular newCel(*this, p);
+    Plano* ptr_plano = new PosPago(nomePlano, vlrMinuto, _franquia, _velAlem, _veloc, vencimento);
+    Celular newCel(this, ptr_plano);
     celulares.push_back(newCel);
 }
 
 // Celular Pre-Pago
 void Cliente::addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, double _veloc, Date curr_date, double credito){
     curr_date.acrescentaTempo(); // ATUALIZA VALIDADE
-    PrePago p(nomePlano, vlrMinuto, _franquia, _velAlem, _veloc, credito, curr_date);
-    Celular newCel(*this, p);
+    Plano* ptr_plano = new PrePago(nomePlano, vlrMinuto, _franquia, _velAlem, _veloc, credito, curr_date);
+    Celular newCel(this, ptr_plano);
     celulares.push_back(newCel);
 }
 

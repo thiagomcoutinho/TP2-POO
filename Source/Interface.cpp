@@ -266,6 +266,7 @@ void Interface::menuCadastroCelular(){
 
     Date vencimento_ou_validade;
     Cliente* ptr_cliente;
+    Celular* ptr_celular = new Celular();
     string nome_plano;
     double n_cliente, vlr_minuto, franquia, velocAlem, veloc, credito;
 
@@ -310,7 +311,7 @@ void Interface::menuCadastroCelular(){
         }
     }
     vector<Celular> celulares_cliente = ptr_cliente->getCelulares();
-    Celular* ptr_celular = &celulares_cliente[celulares_cliente.size()-1];
+    ptr_celular = &celulares_cliente[celulares_cliente.size()-1];
     ptr_celulares.push_back(ptr_celular);
 
     refresh();
@@ -628,6 +629,7 @@ void Interface::listaCelulares(){
 
     vector<Ligacao> aux;
     Plano* p;
+    string nome_plano;
 
     for(int i=0; i<ptr_celulares.size(); i++){
         print("NUMERO DO CELULAR: ", false);
@@ -635,12 +637,18 @@ void Interface::listaCelulares(){
 
         aux = ptr_celulares[i]->getLigacoes();
         print("NUMERO DE LIGACOES: ", false);
-        print(to_string(aux.size()).c_str());
-
+        print(to_string(aux.size()).c_str()); 
+        
         p = ptr_celulares[i]->getPlano();
         print("PLANO: ", false);
         print(p->getNomePlano().c_str());
     }
+
+    print("Pressione qualquer tecla para sair");
+    int c = getch();
+
+    refresh();
+    menuInicial();
 }
 
 void Interface::informaVencimentos(){

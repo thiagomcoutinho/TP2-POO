@@ -26,7 +26,7 @@ class Celular{
 
     public:
         Celular();
-        Celular(Cliente& c, Plano& p);
+        Celular(Cliente* c, Plano* p);
         ~Celular();
 
         // TO-DO: FALTA O NUMERO DO CELULAR.
