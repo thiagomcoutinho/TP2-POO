@@ -11,5 +11,5 @@ void PosPago::verificaData(const Date& dataLigacao) const{
 }
 
 void PosPago::verificaCredito(const double& custo) const{
-    throw Excecao("Esse plano e' do tipo pos pago!"); // FUNCAO DO PLANO PRE-PAGO.
+    throw Excecao("Esse plano e do tipo pos pago!"); // FUNCAO DO PLANO PRE-PAGO.
 }

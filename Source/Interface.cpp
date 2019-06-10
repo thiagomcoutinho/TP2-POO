@@ -20,14 +20,16 @@ Interface::Interface(){
     int c = 0;
     int b, erro;
 
-    /*
-        print("DATA ATUAL(dd-mm-yyyy): ", false);
-        getString();
-        data_atual = input;
-        informaVencimentos();
-        informaLimiteFranquia();
-        print("Pressione Enter para continuar.");
-     */
+    print("///// OPERADORA TELEFONICA CONAUT /////");
+    print("ENTRE COM A DATA ATUAL(dd-mm-yyyy): ", false);
+    getString();
+    data_atual = input;
+    //informaVencimentos();
+    //informaLimiteFranquia();
+    print("");
+    print("Pressione Enter para continuar.");
+    int z = getch();
+    refresh();
 
     // Cria menu inicial
     menuInicial();
@@ -149,6 +151,7 @@ void Interface::switchMenu(int option){
             informaLimiteFranquia();
             break;
         default:
+            throw Excecao("Opcao invalida");
             break;
     }
 }
