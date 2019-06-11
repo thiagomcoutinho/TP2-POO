@@ -321,7 +321,6 @@ void Interface::menuCadastroCelular(){
             getString();
             credito = stod(input);
             vencimento_ou_validade = data_atual;
-            vencimento_ou_validade.acrescentaTempo();
             print(vencimento_ou_validade.convertDateToString(false).c_str());
             ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, vencimento_ou_validade, credito);
         }
@@ -400,7 +399,7 @@ void Interface::menuRegistraLigacaoS(){
     print("# TELEFONE: ");
     getString();
     telefone = stod(input);
-
+    
     c->ligar(data_ligacao, duracao, telefone);
 
     print("Ligacao efetuada.");
@@ -495,6 +494,9 @@ void Interface::listaDadosPacote(){
         print(aux.c_str());
     }
 
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
+
     refresh();
     menuInicial();
 }
@@ -521,6 +523,9 @@ void Interface::listaValorConta(){ // TO-DO
     }else{
         throw Excecao("O celular escolhido nao possui plano pos pago!");
     }
+
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
 
     refresh();
     menuInicial();
@@ -803,6 +808,10 @@ void Interface::informaVencimentos(){
 }
 
 void Interface::informaLimiteFranquia(){
+
+    
+
+
     // QUANDO O CONSUMO DE DADOS ALCANCAR O VALOR
     // DA FRANQUIA, INFORMAR OS DADOS DO CLIENTE E CELULAR
 }
