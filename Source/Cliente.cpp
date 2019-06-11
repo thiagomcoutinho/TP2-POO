@@ -32,7 +32,7 @@ void Cliente::efetuarLigacao(int celularIndex, Date timestamp, double duracao, d
 
 // LIGACAO DE DADOS
 void Cliente::efetuarLigacao(int celularIndex, Date timestamp, double duracao, tipoDados td){
-    celulares[celularIndex].ligar(timestamp, duracao, td);
+    celulares[celularIndex].ligar(duracao, td, timestamp);
 }
 
 // TO-DO: quando tenho que definir o operador de atribuicao?
