@@ -15,7 +15,7 @@ class PrePago : public Plano{
         PrePago();
         PrePago(string _nome, double _vlrMinuto, double _franquia, double _velocAlem, double _veloc, double _credito, Date _validade) : \
         Plano(_nome, _vlrMinuto, _franquia, _velocAlem, _veloc), credito(_credito), validade(_validade) {};
-        ~PrePago();
+        virtual ~PrePago();
 
         // FUNCOES SET
         void adicionaCreditos(int creditos, Date dataAtual);

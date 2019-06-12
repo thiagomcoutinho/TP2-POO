@@ -75,6 +75,16 @@ Interface::Interface(){
 }
 
 Interface::~Interface(){
+
+    map<std::string, Plano*>::iterator it_planos;
+
+    for(it_planos = planos.begin(); it_planos != planos.end(); it_planos++){
+        delete it_planos->second;
+    }
+
+    for(int i=0; i<ptr_celulares.size(); i++){
+        delete ptr_celulares[i];
+    }
     endwin();
 }
 
@@ -809,7 +819,7 @@ void Interface::informaVencimentos(){
 
 void Interface::informaLimiteFranquia(){
 
-    
+
 
 
     // QUANDO O CONSUMO DE DADOS ALCANCAR O VALOR

@@ -16,7 +16,7 @@ class LigacaoDados : public Ligacao{
         LigacaoDados();
         LigacaoDados(const Date _dataHora, const double _duracao, const double _custo, const tipoDados _dtype): \
             Ligacao(_dataHora, _duracao, _custo), dtype(_dtype) {};
-        ~LigacaoDados();
+        virtual ~LigacaoDados();
 
         // FUNCOES GET
         inline tipoDados getTipoDados() const {return(dtype);};
