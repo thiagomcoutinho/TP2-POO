@@ -18,7 +18,7 @@ Celular::~Celular(){
 }
 
 // LIGACAO SIMPLES
-void Celular::ligar(Date timestamp, double duracao, double numTel){
+void Celular::ligar(Date& timestamp, double& duracao, double& numTel){
     // VERIFICA VALIDADE(PRE PAGO) || VENCIMENTO(POS PAGO)
     plano->verificaData(timestamp);
 
