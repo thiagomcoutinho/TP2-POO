@@ -38,7 +38,7 @@ class Date{
 
         // FUNCOES GET
         string convertDateToString(bool ligacao) const;
-        vector<Date> getLimitesMes();
+        vector<int> getLimitesMes();
         inline int getSeg()  {return(seg);};
         inline int getMin()  {return(min);};
         inline int getHora() {return(hora);};

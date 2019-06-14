@@ -512,10 +512,10 @@ void Interface::listaDadosPacote(){
     menuInicial();
 }
 
-void Interface::listaValorConta(){ // TO-DO
+void Interface::listaValorConta(){
 
     int numeroCelular;
-    vector<Date> limitesMes;
+    vector<int> limitesMes;
     vector<Ligacao*> ligacoes;
     Date data_ligacao;
     double valorConta = 0;
@@ -534,13 +534,24 @@ void Interface::listaValorConta(){ // TO-DO
 
     if(sub_p != nullptr){ // Plano Pos-Pago
         limitesMes = data_atual.getLimitesMes();
+
+        Date inicioMes(data_atual.getAno(), data_atual.getMes(), limitesMes[0]);
+        Date fimMes(data_atual.getAno(), data_atual.getMes(), limitesMes[1]);
+
         ligacoes = c->getLigacoes();
+
+        print(data_atual.convertDateToString(false).c_str());
+        print(inicioMes.convertDateToString(false).c_str());
+        print(fimMes.convertDateToString(false).c_str());
+        refresh();
 
         for(int i=0; i<ligacoes.size(); i++){
 
             data_ligacao = ligacoes[i]->getDate();
 
-            if(data_ligacao >= limitesMes[0] && data_ligacao <= limitesMes[1]){
+            if(data_ligacao >= inicioMes && data_ligacao <= fimMes){
+                print(data_ligacao.convertDateToString(false).c_str());
+                refresh();
                 valorConta += ligacoes[i]->getCusto();
             }
         }
@@ -810,7 +821,7 @@ void Interface::informaVencimentos(){
         sub_p = dynamic_cast<PosPago*> (p);
         if(sub_p != nullptr){ // Plano Pos Pago
             vencimento = sub_p->getVencimento();
-            if(vencimento > data_atual){
+            if(data_atual > vencimento){
                 
                 c = curr_cel->getCliente();
                 nome_cliente = c->getNome();
@@ -865,6 +876,7 @@ void Interface::atualizaDataAtual(){
     getString();
     data_atual = input;
 
+    print("");
     print("Data atualizada.");
     print("");
 
@@ -876,13 +888,3 @@ void Interface::atualizaDataAtual(){
 }
 
 // TO-DO: Exceções: Plano nao existente. Celular não existente. Cliente não existente.
-// TO-DO: Criar diagrama UML para colocar no trabalho.
-
-// DONE: cadastros, listas de cliente, planos, creditos e celulares. Adicionar creditos
-
-// TESTAR LIGACOES E EXTRATOS
-
-// TO-DO: Consertar a ligação de dados.
-
-// TO-DO: IMPORTANTE: push_back utiliza construtor de cópia. Ou criar construtor de copia para vetor de objetos
-// ou criar vetor de ponteiros para esses objetos.

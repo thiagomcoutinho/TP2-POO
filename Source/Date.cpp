@@ -66,55 +66,61 @@ void Date::acrescentaTempo(){
 }
 
 bool Date::operator > (Date b) const{
-    if(b.ano < ano){ // Compara ano
+    if(ano > b.getAno()){ // ANO MAIOR
         return(true);
-    }else if(b.mes < mes){ // Compara mes
-        return(true);
-    }else if(b.dia < dia){ // Compara dia
-        return(true);
-    }else if(b.hora < hora){ // Compara hora
-        return(true);
-    }else if(b.min < min){ // Compara minuto
-        return(true);
-    }else if(b.seg < seg){ // Compara segundo
-        return(true);
-    }else{
+    }else if(ano == b.getAno()){
+        if(mes > b.mes){ // MES MAIOR
+            return(true);
+        }else if(mes == b.getMes()){
+            if(dia > b.dia){ // DIA MAIOR
+                return(true);
+            }else{ // DIA MENOR OU IGUAL
+                return(false);
+            }
+        }else{ // MES MENOR
+            return(false);
+        }
+    }else{ // ANO MENOR
         return(false);
     }
 }
 
 bool Date::operator >= (Date b) const{
-    if(b.ano <= ano){ // Compara ano
+    if(ano > b.getAno()){ // ANO MAIOR
         return(true);
-    }else if(b.mes <= mes){ // Compara mes
-        return(true);
-    }else if(b.dia <= dia){ // Compara dia
-        return(true);
-    }else if(b.hora <= hora){ // Compara hora
-        return(true);
-    }else if(b.min <= min){ // Compara minuto
-        return(true);
-    }else if(b.seg <= seg){ // Compara segundo
-        return(true);
-    }else{
+    }else if(ano == b.getAno()){
+        if(mes > b.mes){ // MES MAIOR
+            return(true);
+        }else if(mes == b.getMes()){
+            if(dia >= b.dia){ // DIA MAIOR OU IGUAL
+                return(true);
+            }else{ // DIA MENOR
+                return(false);
+            }
+        }else{ // MES MENOR
+            return(false);
+        }
+    }else{ // ANO MENOR
         return(false);
     }
 }
 
 bool Date:: operator <= (Date b) const{
-    if(b.ano >= ano){ // Compara ano
+    if(ano < b.getAno()){ // ANO MENOR
         return(true);
-    }else if(b.mes >= mes){ // Compara mes
-        return(true);
-    }else if(b.dia >= dia){ // Compara dia
-        return(true);
-    }else if(b.hora >= hora){ // Compara hora
-        return(true);
-    }else if(b.min >= min){ // Compara minuto
-        return(true);
-    }else if(b.seg >= seg){ // Compara segundo
-        return(true);
-    }else{
+    }else if(ano == b.getAno()){
+        if(mes < b.mes){ // MES MENOR
+            return(true);
+        }else if(mes == b.getMes()){
+            if(dia <= b.dia){ // DIA MENOR OU IGUAL
+                return(true);
+            }else{ // DIA MENOR
+                return(false);
+            }
+        }else{ // MES MENOR
+            return(false);
+        }
+    }else{ // ANO MENOR
         return(false);
     }
 }
@@ -175,7 +181,7 @@ string Date::convertDateToString(bool ligacao) const{
     return(sDate);
 }
 
-vector<Date> Date::getLimitesMes(){
+vector<int> Date::getLimitesMes(){
     int ultimoDiaMes;
 
     if(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12){ // 31 DIAS
@@ -186,12 +192,9 @@ vector<Date> Date::getLimitesMes(){
         ultimoDiaMes = 28;
     }
 
-    Date primeiroDia(ano, mes, 1);
-    Date ultimoDia(ano, mes, ultimoDiaMes);
-
-    vector<Date> limitesMes;
-    limitesMes.push_back(primeiroDia);
-    limitesMes.push_back(ultimoDia);
+    vector<int> limitesMes;
+    limitesMes.push_back(1);
+    limitesMes.push_back(ultimoDiaMes);
 
     return(limitesMes);
 }
