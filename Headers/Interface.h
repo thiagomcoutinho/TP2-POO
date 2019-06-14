@@ -43,7 +43,8 @@ class Interface{
         void listaPlanos();
         void listaCelulares();
         void informaVencimentos();
-        void informaLimiteFranquia();
+        void informaLimiteFranquia(Celular* c);
+        void atualizaDataAtual();
         // FUNCOES AUXILIARES
         void print(const char* text, bool breakLine);
         void switchMenu(int option);

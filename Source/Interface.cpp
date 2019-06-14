@@ -170,10 +170,7 @@ void Interface::switchMenu(int option){
             listaCelulares();
             break;
         case 111:
-            informaVencimentos();
-            break;
-        case 112:
-            informaLimiteFranquia();
+            atualizaDataAtual();
             break;
         default:
             throw Excecao("Opcao invalida");
@@ -200,8 +197,7 @@ void Interface::menuInicial(){
     print("l. Lista de Clientes");
     print("m. Lista de Planos");
     print("n. Lista de Celulares");
-    print("o. Informe de Vencimentos");
-    print("p. Limite de Franquia");
+    print("o. Atualizar data atual");
     print("Pressione q para sair");
     print("Escolha uma opcao: ");
 
@@ -428,6 +424,7 @@ void Interface::menuRegistraLigacaoD(){
     int numeroCelular;
     Date data_ligacao;
     double duracao;
+    bool informaFranquiaExcedida;
 
     setMenu();
 
@@ -453,15 +450,20 @@ void Interface::menuRegistraLigacaoD(){
         throw Excecao("Tipo de dados incorreto!");
     }
 
-    c->ligar(duracao, td, data_ligacao);
+    informaFranquiaExcedida = c->ligar(duracao, td, data_ligacao);
 
     print("Ligacao efetuada.");
 
     print("Pressione qualquer tecla para sair");
     int z = getch();
 
-    refresh();
-    menuInicial();
+    if(informaFranquiaExcedida){
+        refresh();
+        informaLimiteFranquia(c);
+    }else{
+        refresh();
+        menuInicial();
+    }
 }
 
 void Interface::listaDadosPacote(){
@@ -775,13 +777,6 @@ void Interface::listaCelulares(){
 
 void Interface::informaVencimentos(){
 
-    /* 
-        DEPOIS QUE A INTERFACE INICIALIZAR,
-        pegar a data atual. Rodar as funcoes de informe e caso tiver algum plano
-        vencido ou franquia vencida, imprimir na tela do usuario.
-        Esperar tecla enter para Imprimir menuInicial();
-    */
-
    setMenu();
 
     print("///// FATURAS VENCIDAS /////");
@@ -816,15 +811,54 @@ void Interface::informaVencimentos(){
             }
         }
     }
+
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
+
+    refresh();
+    menuInicial();
 }
 
-void Interface::informaLimiteFranquia(){
+void Interface::informaLimiteFranquia(Celular* c){
+    Cliente* cliente = c->getCliente();
+    Plano* plano_celular = c->getPlano();
 
+    setMenu();
 
+    print("///// INFORME DE FRANQUIA EXCEDIDA /////");
+    print("CLIENTE: ", false);
+    print(cliente->getNome().c_str());
+    print("CELULAR #", false);
+    print(to_string(c->getNumero()).c_str());
+    print("FRANQUIA DO PLANO: ", false);
+    print(to_string(plano_celular->getFranquia()).c_str());
+    print("FRANQUIA GASTA: ", false);
+    print(to_string(plano_celular->getFranquiaGasta()).c_str());
 
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
 
-    // QUANDO O CONSUMO DE DADOS ALCANCAR O VALOR
-    // DA FRANQUIA, INFORMAR OS DADOS DO CLIENTE E CELULAR
+    refresh();
+    menuInicial();
+}
+
+void Interface::atualizaDataAtual(){
+
+    setMenu();
+
+    print("///// ATUALIZACAO DE DATA /////");
+    print("ENTRE COM A DATA ATUAL: ", false);
+    getString();
+    data_atual = input;
+
+    print("Data atualizada.");
+    print("");
+
+    print("Pressione qualquer tecla para sair");
+    int z = getch();
+
+    refresh();
+    informaVencimentos();
 }
 
 // TO-DO: Exceções: Plano nao existente. Celular não existente. Cliente não existente.

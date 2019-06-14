@@ -41,28 +41,41 @@ void Celular::ligar(Date& timestamp, double& duracao, double& numTel){
 }
 
 // LIGACAO DADOS
-void Celular::ligar(double duracao, tipoDados td, Date timestamp){
+bool Celular::ligar(double duracao, tipoDados td, Date timestamp){
     
     double franquia = plano->getFranquia();
     double franquiaGasta = plano->getFranquiaGasta();
-    double custo;
+    double custo, diff_franquia, duracao_ate_franquia;
+    bool informaFranquiaExcedida = false;
 
     // PLANO NAO POSSUI ASSINATURA DE DADOS
     if(franquia == 0){
         throw Excecao("O plano atual nao possui franquia de dados");
     }
 
-    if(franquiaGasta > franquia){
+    if(franquiaGasta > franquia){ // FRANQUIA TOTALMENTE CONSUMIDA, VELOCIDADE DE DOWNLOAD REDUZIDA
         if(td == download){ // DOWNLOAD
             custo = plano->getVelocAlem()*duracao;
         }else{ // UPLOAD
-            custo = plano->getVelocAlem()*0.1*duracao;
+            custo = plano->getVelocAlem()*(0.1)*duracao;
         }
-    }else{ // FRANQUIA TOTALMENTE CONSUMIDA, VELOCIDADE DE DOWNLOAD REDUZIDA
+    }else{
         if(td == download){ // DOWNLOAD
             custo = plano->getVelocidade()*duracao;
+            if(franquiaGasta + custo > franquia){
+                diff_franquia = franquia - franquiaGasta;
+                duracao_ate_franquia = diff_franquia/plano->getVelocidade();
+                custo = plano->getVelocidade()*(duracao_ate_franquia) + (duracao-duracao_ate_franquia)*plano->getVelocAlem(); 
+                informaFranquiaExcedida = true;
+            }
         }else{ // UPLOAD
             custo = plano->getVelocidade()*0.1*duracao;
+            if(franquiaGasta + custo > franquia){
+                diff_franquia = franquia - franquiaGasta;
+                duracao_ate_franquia = diff_franquia/plano->getVelocidade();
+                custo = plano->getVelocidade()*(duracao_ate_franquia)*(0.1) + (duracao-duracao_ate_franquia)*plano->getVelocAlem()*(0.1); 
+                informaFranquiaExcedida = true;
+            }   
         }
     }
     // ATUALIZA FRANQUIA GASTA
@@ -72,5 +85,5 @@ void Celular::ligar(double duracao, tipoDados td, Date timestamp){
     Ligacao* l = new LigacaoDados(timestamp, duracao, custo, td);
     ligacoes.push_back(l);
 
-    // TO-DO: DIMINUIR A VELOCIDADE DA PARCELA EXTRA SE ULTRAPASSAR A FRANQUIA DE UMA VEZ
+    return(informaFranquiaExcedida);
 }

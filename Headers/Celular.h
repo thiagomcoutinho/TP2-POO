@@ -33,7 +33,7 @@ class Celular{
 
         // FUNCOES DE LIGAR
         void ligar(Date& timestamp, double& duracao, double& numTel);
-        void ligar(double duracao, tipoDados td, Date timestamp);
+        bool ligar(double duracao, tipoDados td, Date timestamp);
 
         // FUNCAO INLINE GET STATIC
         inline static double getProxNumCelular() {return(proxNumCelular);};
