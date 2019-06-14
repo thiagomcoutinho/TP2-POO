@@ -67,7 +67,7 @@ Extrato de Ligacao Simples(j)
     01-01-2019
 
 Valor de Contas(h)
-    
+    1
 
 Registro de Ligacao de Dados(f)
     0
@@ -75,9 +75,15 @@ Registro de Ligacao de Dados(f)
     10
     download
 
-Extrato de Ligacao de Dados
-    0
+Registro de Ligacao de Dados(f)
+    1
     01-01-2019
+    30
+    upload
+
+Extrato de Ligacao de Dados(k)
+    1
+    01-02-2019
 
 Informacao de Pacote de Dados(g)
     0
@@ -85,6 +91,7 @@ Informacao de Pacote de Dados(g)
 Saldo de Creditos(i)
     0
 Adicionar Creditos(d)
+    0
     100
 Saldo de Creditos(i)
     0
@@ -93,4 +100,11 @@ Lista de Clientes(l)
 Lista de Celulares(n)
 Lista de Planos(m)
 
-TESTE DE EXCECOES:
+Registro de Ligacao de Dados(g)
+    0
+    03-04-2019
+    1000
+    download
+
+Atualizar data atual(o)
+    20-11-2020

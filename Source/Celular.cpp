@@ -19,15 +19,14 @@ Celular::~Celular(){
 
 // LIGACAO SIMPLES
 void Celular::ligar(Date& timestamp, double& duracao, double& numTel){
-    // VERIFICA VALIDADE(PRE PAGO) || VENCIMENTO(POS PAGO)
-    plano->verificaData(timestamp);
-
+    
     double custo;
     custo = duracao*plano->getValorMinuto();
 
     // VERIFICA CREDITO CELULAR PRE PAGO
     PosPago* ptr_plano = dynamic_cast<PosPago*>(plano);
     if( ptr_plano == nullptr){ 
+        plano->verificaData(timestamp); // VERIFICA VALIDADE(PRE PAGO)
         plano->verificaCredito(custo);
     }
 
