@@ -18,7 +18,7 @@ class Interface{
         int x;
         int y;
         string input;
-        vector<Cliente> clientes;
+        vector<Cliente*> clientes;
         map<string, Plano*> planos;
         vector<Celular*> ptr_celulares;
         Date data_atual;

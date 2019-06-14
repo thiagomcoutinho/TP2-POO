@@ -32,7 +32,7 @@ class Celular{
         // TO-DO: FALTA O NUMERO DO CELULAR.
 
         // FUNCOES DE LIGAR
-        void ligar(Date timestamp, double duracao, double numTel);
+        void ligar(Date& timestamp, double& duracao, double& numTel);
         void ligar(double duracao, tipoDados td, Date timestamp);
 
         // FUNCAO INLINE GET STATIC

@@ -16,7 +16,7 @@ class Cliente{
         const string CPF;
         const string nome;
         string endereco;
-        vector<Celular> celulares;
+        vector<Celular*> celulares;
 
     public:
         Cliente();
@@ -37,6 +37,6 @@ class Cliente{
         inline string getNome() const {return(nome);};
         inline string getCPF() const {return(CPF);};
         inline string getEndereco() const {return(endereco);};
-        inline vector<Celular> getCelulares() const {return(celulares);};
+        inline vector<Celular*> getCelulares() const {return(celulares);};
 };
 #endif

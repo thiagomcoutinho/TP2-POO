@@ -222,13 +222,14 @@ void Interface::menuCadastroCliente(){
     nome = input;
     print("ENDERECO: ");
     getString();
-    CPF = input;
+    endereco = input;
     print("CPF/CNPJ: ");
     getString();
-    endereco = input;
+    CPF = input;
 
     // CRIA CLIENTE
-    Cliente c(CPF, nome, endereco);
+    Cliente* c = new Cliente(CPF, nome, endereco);
+
     clientes.push_back(c);
 
     print("Cliente cadastrado com sucesso.");
@@ -292,7 +293,7 @@ void Interface::menuCadastroCelular(){
 
     Date vencimento_ou_validade;
     Cliente* ptr_cliente;
-    Celular* ptr_celular = new Celular();
+    Celular* ptr_celular;
     string nome_plano;
     double n_cliente, vlr_minuto, franquia, velocAlem, veloc, credito;
 
@@ -303,7 +304,7 @@ void Interface::menuCadastroCelular(){
     getString();
     n_cliente = stoi(input);
     if(n_cliente < clientes.size() && n_cliente >= 0){
-        ptr_cliente = &clientes[n_cliente];
+        ptr_cliente = clientes[n_cliente];
     }else{
         throw Excecao("Numero de cliente nao existente!");
     }
@@ -335,8 +336,8 @@ void Interface::menuCadastroCelular(){
             ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, vencimento_ou_validade, credito);
         }
     }
-    vector<Celular> celulares_cliente = ptr_cliente->getCelulares();
-    ptr_celular = &celulares_cliente[celulares_cliente.size()-1];
+    vector<Celular*> celulares_cliente = ptr_cliente->getCelulares();
+    ptr_celular = celulares_cliente[celulares_cliente.size()-1];
     ptr_celulares.push_back(ptr_celular);
 
     print("Celular cadastrado com sucesso.");
@@ -682,20 +683,20 @@ void Interface::listaClientes(){
 
     setMenu();
 
-    vector<Celular> aux;
+    vector<Celular*> aux;
 
     for(int i=0; i<clientes.size(); i++){
         print("///// Cliente #", false);
         print(to_string(i).c_str(), false);
         print(" /////");
         print("CPF: ", false);
-        print(clientes[i].getCPF().c_str());
+        print(clientes[i]->getCPF().c_str());
         print("NOME: ", false);
-        print(clientes[i].getEndereco().c_str());
+        print(clientes[i]->getNome().c_str());
         print("ENDERECO: ", false);
-        print(clientes[i].getEndereco().c_str());
+        print(clientes[i]->getEndereco().c_str());
         print("Numero de celulares: ", false);
-        aux = clientes[i].getCelulares();
+        aux = clientes[i]->getCelulares();
         print(to_string(aux.size()).c_str());
     }
 
@@ -834,3 +835,6 @@ void Interface::informaLimiteFranquia(){
 // TESTAR LIGACOES E EXTRATOS
 
 // TO-DO: Consertar a ligação de dados.
+
+// TO-DO: IMPORTANTE: push_back utiliza construtor de cópia. Ou criar construtor de copia para vetor de objetos
+// ou criar vetor de ponteiros para esses objetos.
