@@ -5,6 +5,7 @@
 #include "./PrePago.h"
 #include "./PosPago.h"
 #include "./Date.h"
+
 #include<vector>
 #include<string>
 
@@ -20,23 +21,23 @@ class Cliente{
 
     public:
         Cliente();
-        Cliente(string _cpf, string _nome, string _endereco) : CPF(_cpf), nome(_nome), endereco(_endereco) {};
+        Cliente(const string& _cpf, const string& _nome, const string& _endereco) : CPF(_cpf), nome(_nome), endereco(_endereco) {};
         ~Cliente();
 
         // FUNCOES DE ADICIONAR CELULAR
-        void addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, \
-        double _veloc, Date vencimento);
-        void addCelular(string nomePlano, double vlrMinuto, double _franquia, double _velAlem, \
-        double _veloc, Date curr_date, double credito);
+        void addCelular(const string& nomePlano, const double& vlrMinuto, const double& _franquia, const double& _velAlem, \
+        const double& _veloc, const Date& vencimento);
+        void addCelular(const string& nomePlano, const double& vlrMinuto, const double& _franquia, const double& _velAlem, \
+        const double& _veloc, Date& curr_date, const double& credito);
         
         // FUNCOES DE EFETUAR LIGACAO
-        void efetuarLigacao(int celularIndex, Date timestamp, double duracao, double numTel);
-        void efetuarLigacao(int celularIndex, Date timestamp, double duracao, tipoDados data_type);
+        void efetuarLigacao(const int& celularIndex, const Date& timestamp, const double& duracao, const double& numTel);
+        void efetuarLigacao(const int& celularIndex, const Date& timestamp, const double& duracao, const tipoDados& data_type);
 
         // FUNCOES GET
-        inline string getNome() const {return(nome);};
-        inline string getCPF() const {return(CPF);};
-        inline string getEndereco() const {return(endereco);};
+        inline string getNome()                const {return(nome);};
+        inline string getCPF()                 const {return(CPF);};
+        inline string getEndereco()            const {return(endereco);};
         inline vector<Celular*> getCelulares() const {return(celulares);};
 };
 #endif

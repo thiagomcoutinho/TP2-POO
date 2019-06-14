@@ -29,24 +29,19 @@ class Celular{
         Celular(Cliente* c, Plano* p);
         ~Celular();
 
-        // TO-DO: FALTA O NUMERO DO CELULAR.
+        // FUNCOES DE LIGAÇÃO
+        void ligar(const Date& timestamp, const double& duracao, const double& numTel);
+        bool ligar(const Date& timestamp, const double& duracao, const tipoDados& td);
 
-        // FUNCOES DE LIGAR
-        void ligar(Date& timestamp, double& duracao, double& numTel);
-        bool ligar(double duracao, tipoDados td, Date timestamp);
+        // FUNÇÕES GET
+        inline static double getProxNumCelular()       {return(proxNumCelular);}; // STATIC FUNCTION
+        inline vector<Ligacao*> getLigacoes()    const {return(ligacoes);};
+        inline double getNumero()                const {return(numero);};
+        inline Plano* getPlano()                 const {return(plano);};
+        inline Cliente* getCliente()             const {return(cliente);};
 
-        // FUNCAO INLINE GET STATIC
-        inline static double getProxNumCelular() {return(proxNumCelular);};
-        // FUNCAO INLINE SET STATIC
+        // FUNÇÕES SET
         inline static void incrementProxNumCelular() {proxNumCelular++;};
-        
-        inline vector<Ligacao*> getLigacoes() {return(ligacoes);};
-
-        inline double getNumero() {return(numero);};
-
-        inline Plano* getPlano() {return(plano);};
-
-        inline Cliente* getCliente() {return(cliente);};
 };
 
 #endif

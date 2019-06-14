@@ -9,15 +9,15 @@ using namespace std;
 class Plano{
 
     private:
-        string nome;
-        double valorMinuto;
-        double velocidade;
-        double franquia;
-        double velocAlem;
+        const string nome;
+        const double valorMinuto;
+        const double velocidade;
+        const double franquia;
+        const double velocAlem;
         double franquiaGasta;
 
     public:
-        Plano(string _nome, double _vlrMinuto, double _franquia, double _velocAlem, double _veloc) : \
+        Plano(const string& _nome, const double& _vlrMinuto, const double& _franquia, const double& _velocAlem, const double& _veloc) : \
         nome(_nome), valorMinuto(_vlrMinuto), franquia(_franquia), velocAlem(_velocAlem), \
         velocidade(_veloc), franquiaGasta(0) {};
 

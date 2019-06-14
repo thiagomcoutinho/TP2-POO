@@ -8,14 +8,14 @@ using namespace std;
 class Excecao{
 
     private:
-        string mensagem;
+        const string mensagem;
 
     public:
         Excecao();
-        Excecao(string _mensagem) : mensagem(_mensagem) {};
+        Excecao(const string& _mensagem) : mensagem(_mensagem) {};
         ~Excecao();
 
         // FUNCAO GET
-        inline string getExcecao() {return(mensagem);};
+        inline string getExcecao() const {return(mensagem);};
 };
 #endif

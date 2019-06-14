@@ -13,12 +13,12 @@ class PrePago : public Plano{
 
     public:
         PrePago();
-        PrePago(string _nome, double _vlrMinuto, double _franquia, double _velocAlem, double _veloc, double _credito, Date _validade) : \
+        PrePago(const string& _nome, const double& _vlrMinuto, const double& _franquia, const double& _velocAlem, const double& _veloc, const double& _credito, const Date& _validade) : \
         Plano(_nome, _vlrMinuto, _franquia, _velocAlem, _veloc), credito(_credito), validade(_validade) {};
         virtual ~PrePago();
 
         // FUNCOES SET
-        void adicionaCreditos(int creditos, Date dataAtual);
+        void adicionaCreditos(const int& creditos, const Date& dataAtual);
         inline void cobraCusto(const double& custo) {credito -= custo;};
 
         // FUNCOES GET

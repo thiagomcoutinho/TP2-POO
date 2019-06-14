@@ -1,30 +1,29 @@
 #include "./../Headers/Date.h"
 
 Date::Date(){
-    ano = hora = min = seg = 0;
+    ano = 0;
     mes = dia = 1;
 }
 
-Date::Date(int _ano, int _mes, int _dia){
+Date::Date(const int& _ano, const int& _mes, const int& _dia){
     if(_mes <= 0 || _mes > 12){
         throw Excecao("Mes invalido!");
     }
+    if(ano <= 1950 || ano >= 2100){
+        throw Excecao("Ano invaldo!");
+    }
     ano = _ano;
     mes = _mes;
+
+    vector<int> limitesMes = getLimitesMes();
+    if( dia > limitesMes[1] || dia < limitesMes [0]){
+        throw Excecao("Dia do mes invalido!");
+    }
+
     dia = _dia;
-    hora = min = seg = 0;
 }
 
-Date::Date(int _hora, int _min, int _seg, int _aux){
-    hora = _hora;
-    min = _min;
-    seg = _seg;
-    ano = mes = dia = 0;
-}
-
-Date::~Date(){
-
-}
+Date::~Date(){}
 
 void Date::acrescentaTempo(){
     int diasRestantes = 180;
@@ -50,10 +49,10 @@ void Date::acrescentaTempo(){
             continue;
         }
 
-        if(diasRestantes > diferenca){
+        if(diasRestantes > diferenca){ // ATUALIZA DIA ATE ULTIMO DIA DO MES
             dia += diferenca;
             diasRestantes -= diferenca;
-        }else{
+        }else{                        // ATUALIZA DIA ATE O NUMERO DE DIAS RESTANTES
             dia += diasRestantes;
             diasRestantes = 0;
         }
@@ -65,7 +64,7 @@ void Date::acrescentaTempo(){
     }
 }
 
-bool Date::operator > (Date b) const{
+bool Date::operator > (const Date& b) const{
     if(ano > b.getAno()){ // ANO MAIOR
         return(true);
     }else if(ano == b.getAno()){
@@ -85,7 +84,7 @@ bool Date::operator > (Date b) const{
     }
 }
 
-bool Date::operator >= (Date b) const{
+bool Date::operator >= (const Date& b) const{
     if(ano > b.getAno()){ // ANO MAIOR
         return(true);
     }else if(ano == b.getAno()){
@@ -105,7 +104,7 @@ bool Date::operator >= (Date b) const{
     }
 }
 
-bool Date:: operator <= (Date b) const{
+bool Date:: operator <= (const Date& b) const{
     if(ano < b.getAno()){ // ANO MENOR
         return(true);
     }else if(ano == b.getAno()){
@@ -125,8 +124,7 @@ bool Date:: operator <= (Date b) const{
     }
 }
 
-Date & Date::operator = (string str_date){
-
+Date & Date::operator = (const string& str_date){
     vector<string> date_split;
     string aux;
 
@@ -155,8 +153,7 @@ Date & Date::operator = (string str_date){
     return(*this);
 }
 
-Date & Date::operator = (Date data){
-
+Date & Date::operator = (const Date& data){
     if(data.getMes() <= 0 || data.getMes() > 12){
         throw Excecao("Mes invalido!");
     }
@@ -164,24 +161,17 @@ Date & Date::operator = (Date data){
     ano = data.getAno();
     mes = data.getMes();
     dia = data.getDia();
-    hora = data.getHora();
-    min = data.getMin();
-    seg = data.getSeg();
 
     return(*this);
 }
 
-string Date::convertDateToString(bool ligacao) const{
+string Date::convertDateToString() const{
     string sDate;
-    if(ligacao){ // TO-DO: fazer overload dessa funcao, recebe duracao e print o tempo.
-        sDate = to_string(hora) + ":" + to_string(min) + ":" + to_string(seg); 
-    }else{
-        sDate = to_string(dia) + "/" + to_string(mes) + "/" + to_string(ano);
-    }
+    sDate = to_string(dia) + "/" + to_string(mes) + "/" + to_string(ano);
     return(sDate);
 }
 
-vector<int> Date::getLimitesMes(){
+vector<int> Date::getLimitesMes() const{
     int ultimoDiaMes;
 
     if(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12){ // 31 DIAS

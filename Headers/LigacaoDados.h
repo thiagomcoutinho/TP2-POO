@@ -14,7 +14,7 @@ class LigacaoDados : public Ligacao{
 
     public:
         LigacaoDados();
-        LigacaoDados(const Date _dataHora, const double _duracao, const double _custo, const tipoDados _dtype): \
+        LigacaoDados(const Date& _dataHora, const double& _duracao, const double& _custo, const tipoDados& _dtype): \
             Ligacao(_dataHora, _duracao, _custo), dtype(_dtype) {};
         virtual ~LigacaoDados();
 

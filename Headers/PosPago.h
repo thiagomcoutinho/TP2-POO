@@ -13,7 +13,7 @@ class PosPago : public Plano{
 
     public:
         PosPago();
-        PosPago(string _nome, double _vlrMinuto, double _franquia, double _velocAlem, double _veloc, Date _vencimento) : \
+        PosPago(const string& _nome, const double& _vlrMinuto, const double& _franquia, const double& _velocAlem, const double& _veloc, const Date& _vencimento) : \
         Plano(_nome, _vlrMinuto, _franquia, _velocAlem, _veloc), vencimento(_vencimento) {};
         virtual ~PosPago();
 

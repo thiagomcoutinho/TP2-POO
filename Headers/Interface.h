@@ -3,9 +3,9 @@
 
 #include "./Cliente.h"
 #include "./Plano.h"
+
 #include<ncurses.h>
 #include<vector>
-#include<fstream> 
 #include<string>
 #include<cstring>
 #include<map>
@@ -30,7 +30,7 @@ class Interface{
         void menuInicial();
         void menuCadastroCliente();
         void menuCadastroPlano();
-        void menuCadastroCelular();   // TO-DO: VERIFICAR QUAIS FUNCOES AQUI PODEM SER CONST
+        void menuCadastroCelular();
         void menuAdicionaCreditos();
         void menuRegistraLigacaoS();
         void menuRegistraLigacaoD();
@@ -46,10 +46,10 @@ class Interface{
         void informaLimiteFranquia(Celular* c);
         void atualizaDataAtual();
         // FUNCOES AUXILIARES
-        void print(const char* text, bool breakLine);
-        void switchMenu(int option);
-        void setMenu();
-        Celular* getCelular(int numeroCelular);
+        void print(const char* text, const bool& breakLine);
+        void switchMenu(const int& option) const;
+        void setMenu() const;
+        Celular* getCelular(const int& numeroCelular);
         
         // FUNCOES DE ENTRADA
         void getString();
