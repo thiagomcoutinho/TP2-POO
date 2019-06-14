@@ -94,8 +94,7 @@ void Interface::setMenu(){
     refresh();
 }
 
-void Interface::getString()
-{
+void Interface::getString(){
     nocbreak();
     echo();
 
@@ -328,7 +327,6 @@ void Interface::menuCadastroCelular(){
             getString();
             credito = stod(input);
             vencimento_ou_validade = data_atual;
-            print(vencimento_ou_validade.convertDateToString(false).c_str());
             ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, vencimento_ou_validade, credito);
         }
     }
@@ -517,6 +515,10 @@ void Interface::listaDadosPacote(){
 void Interface::listaValorConta(){ // TO-DO
 
     int numeroCelular;
+    vector<Date> limitesMes;
+    vector<Ligacao*> ligacoes;
+    Date data_ligacao;
+    double valorConta = 0;
 
     setMenu();
 
@@ -531,8 +533,20 @@ void Interface::listaValorConta(){ // TO-DO
     PosPago* sub_p = dynamic_cast<PosPago*> (p);
 
     if(sub_p != nullptr){ // Plano Pos-Pago
-        // IMPRIME O VALOR ACUMULADO APOS O DIA DE VENCIMENTO DO MES ANTERIOR
-        // IMPRIME O VALOR ACUMULADO APOS O DIA DE VENCIMENTO ATUAL
+        limitesMes = data_atual.getLimitesMes();
+        ligacoes = c->getLigacoes();
+
+        for(int i=0; i<ligacoes.size(); i++){
+
+            data_ligacao = ligacoes[i]->getDate();
+
+            if(data_ligacao >= limitesMes[0] && data_ligacao <= limitesMes[1]){
+                valorConta += ligacoes[i]->getCusto();
+            }
+        }
+
+        print("VALOR DA CONTA ATUAL EM ABERTO: ", false);
+        print(to_string(valorConta).c_str());
     }else{
         throw Excecao("O celular escolhido nao possui plano pos pago!");
     }
@@ -650,11 +664,11 @@ void Interface::listaExtratoD(){
     vector<Ligacao*> vec_ligacoes = c->getLigacoes();
 
     for(int i=0; i<vec_ligacoes.size(); i++){
-        count++;
         ld = dynamic_cast<LigacaoDados*> (vec_ligacoes[i]);
         if(ld != nullptr){
             if(ld->getDate() >= data_inicial){
             count++;
+            print("");
             print("///// LIGACAO #", false);
             print(to_string(count).c_str(), false);
             print(" /////");

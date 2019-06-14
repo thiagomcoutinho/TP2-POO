@@ -84,6 +84,24 @@ bool Date::operator > (Date b) const{
 }
 
 bool Date::operator >= (Date b) const{
+    if(b.ano <= ano){ // Compara ano
+        return(true);
+    }else if(b.mes <= mes){ // Compara mes
+        return(true);
+    }else if(b.dia <= dia){ // Compara dia
+        return(true);
+    }else if(b.hora <= hora){ // Compara hora
+        return(true);
+    }else if(b.min <= min){ // Compara minuto
+        return(true);
+    }else if(b.seg <= seg){ // Compara segundo
+        return(true);
+    }else{
+        return(false);
+    }
+}
+
+bool Date:: operator <= (Date b) const{
     if(b.ano >= ano){ // Compara ano
         return(true);
     }else if(b.mes >= mes){ // Compara mes
@@ -155,4 +173,25 @@ string Date::convertDateToString(bool ligacao) const{
         sDate = to_string(dia) + "/" + to_string(mes) + "/" + to_string(ano);
     }
     return(sDate);
+}
+
+vector<Date> Date::getLimitesMes(){
+    int ultimoDiaMes;
+
+    if(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12){ // 31 DIAS
+        ultimoDiaMes = 31;
+    }else if(mes == 4 || mes == 6 || mes == 9 || mes == 11){ // 30 DIAS
+        ultimoDiaMes = 30;
+    }else{ // FEVEREIRO
+        ultimoDiaMes = 28;
+    }
+
+    Date primeiroDia(ano, mes, 1);
+    Date ultimoDia(ano, mes, ultimoDiaMes);
+
+    vector<Date> limitesMes;
+    limitesMes.push_back(primeiroDia);
+    limitesMes.push_back(ultimoDia);
+
+    return(limitesMes);
 }

@@ -25,8 +25,9 @@ class Date{
         ~Date();
 
         // OPERADORES
-        bool operator > (Date b) const;
+        bool operator >  (Date b) const;
         bool operator >= (Date b) const;
+        bool operator <= (Date b) const;
         Date & operator = (string str_date);
         Date & operator = (Date data);
 
@@ -37,6 +38,7 @@ class Date{
 
         // FUNCOES GET
         string convertDateToString(bool ligacao) const;
+        vector<Date> getLimitesMes();
         inline int getSeg()  {return(seg);};
         inline int getMin()  {return(min);};
         inline int getHora() {return(hora);};
