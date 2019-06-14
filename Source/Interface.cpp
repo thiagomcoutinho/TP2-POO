@@ -540,18 +540,11 @@ void Interface::listaValorConta(){
 
         ligacoes = c->getLigacoes();
 
-        print(data_atual.convertDateToString(false).c_str());
-        print(inicioMes.convertDateToString(false).c_str());
-        print(fimMes.convertDateToString(false).c_str());
-        refresh();
-
         for(int i=0; i<ligacoes.size(); i++){
 
             data_ligacao = ligacoes[i]->getDate();
 
             if(data_ligacao >= inicioMes && data_ligacao <= fimMes){
-                print(data_ligacao.convertDateToString(false).c_str());
-                refresh();
                 valorConta += ligacoes[i]->getCusto();
             }
         }
