@@ -1,4 +1,5 @@
 # TP2_POO
+
 Trabalho prático 2 da disciplina de POO. Polimorfismo, herança e templates.
 
 O objetivo do trabalho é implementar um sistema de cadastro de clientes, telefones e pacotes contratados utilizando os conceitos aprendidos na disciplina de POO.
@@ -10,7 +11,7 @@ EXEMPLO DE FUNCIONAMENTO DO CODIGO:
 
 DATA ATUAL: 01-01-2019
 
-Cadastro de Clientes(a): 
+Cadastro de Clientes(a):
     Thiago Coutinho
     Av Afonso Pena
     001

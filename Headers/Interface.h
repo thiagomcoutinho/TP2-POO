@@ -47,8 +47,8 @@ class Interface{
         void atualizaDataAtual();
         // FUNCOES AUXILIARES
         void print(const char* text, const bool& breakLine);
-        void switchMenu(const int& option) const;
-        void setMenu() const;
+        void switchMenu(const int& option);
+        void setMenu();
         Celular* getCelular(const int& numeroCelular);
         
         // FUNCOES DE ENTRADA

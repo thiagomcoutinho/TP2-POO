@@ -1,15 +1,12 @@
 #include "./../Headers/PrePago.h"
 
-PrePago::PrePago(){
+PrePago::PrePago(){}
 
-}
+PrePago::~PrePago(){}
 
-PrePago::~PrePago(){
-    
-}
-
-void PrePago::adicionaCreditos(int creditos, Date dataAtual){
+void PrePago::adicionaCreditos(const int& creditos, const Date& dataAtual){
     credito += creditos;
+    validade = dataAtual;
     validade.acrescentaTempo();
 }
 

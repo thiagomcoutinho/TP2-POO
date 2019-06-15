@@ -1,6 +1,6 @@
 #include "./../Headers/Interface.h"
 
-void Interface::print(const char* text, bool breakLine = true){
+void Interface::print(const char* text, const bool& breakLine = true){
     mvprintw(y, x, text);
     if(breakLine){
         y++;
@@ -109,7 +109,7 @@ void Interface::getString(){
     }
 }
 
-Celular* Interface::getCelular(int numeroCelular){
+Celular* Interface::getCelular(const int& numeroCelular){
 
     Celular* c;
 
@@ -122,7 +122,7 @@ Celular* Interface::getCelular(int numeroCelular){
     return(c);
 }
 
-void Interface::switchMenu(int option){
+void Interface::switchMenu(const int& option){
 
     switch (option)
     {
@@ -264,10 +264,10 @@ void Interface::menuCadastroPlano(){
     print("TIPO DO PLANO(PosPago ou PrePago): ");
     getString();
     if(input == "PosPago"){ // Pós-Pago
-        vencimento_ou_validade = "01-01-0000";
+        vencimento_ou_validade = "01-01-1950";
         p = new PosPago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, vencimento_ou_validade);
     }else if(input == "PrePago"){ // Pŕe-Pago
-        vencimento_ou_validade = "01-01-0000";
+        vencimento_ou_validade = "01-01-1950";
 
         p = new PrePago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, 0, vencimento_ou_validade);
     }else{
@@ -448,7 +448,7 @@ void Interface::menuRegistraLigacaoD(){
         throw Excecao("Tipo de dados incorreto!");
     }
 
-    informaFranquiaExcedida = c->ligar(duracao, td, data_ligacao);
+    informaFranquiaExcedida = c->ligar(data_ligacao, duracao, td);
 
     print("Ligacao efetuada.");
 
@@ -584,7 +584,7 @@ void Interface::listaCreditos(){
 
     if(sub_p != nullptr){ // Celular com plano PrePago
         validade = sub_p->getValidade();
-        str_validade = validade.convertDateToString(false);
+        str_validade = validade.convertDateToString();
         creditos = sub_p->getCredito();
         print("CREDITOS DISPONIVEIS: ", false);
         print(to_string(creditos).c_str());
@@ -630,7 +630,7 @@ void Interface::listaExtratoS(){
             print(to_string(count).c_str(), false);
             print(" /////");
             print("DATA: ", false);
-            print(ls->getDate().convertDateToString(false).c_str());
+            print(ls->getDate().convertDateToString().c_str());
             print("DURACAO: ", false);
             print(to_string(ls->getDuracao()).c_str());
             print("VALOR: ", false);
@@ -677,7 +677,7 @@ void Interface::listaExtratoD(){
             print(to_string(count).c_str(), false);
             print(" /////");
             print("DATA: ", false);
-            print(ld->getDate().convertDateToString(false).c_str());
+            print(ld->getDate().convertDateToString().c_str());
             print("DURACAO: ", false);
             print(to_string(ld->getDuracao()).c_str());
             print("TIPO: ", false);
@@ -825,7 +825,7 @@ void Interface::informaVencimentos(){
                 print("VALOR DO PLANO: ", false);
                 print(to_string(sub_p->getValor()).c_str());
                 print("DATA DE VENCIMENTO: ", false);
-                print(vencimento.convertDateToString(false).c_str());
+                print(vencimento.convertDateToString().c_str());
             }
         }
     }
@@ -879,5 +879,3 @@ void Interface::atualizaDataAtual(){
     refresh();
     informaVencimentos();
 }
-
-// TO-DO: Exceções: Plano nao existente. Celular não existente. Cliente não existente.

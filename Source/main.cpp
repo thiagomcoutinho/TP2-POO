@@ -8,5 +8,3 @@ int main(){
 
     return 0;
 }
-
-// ESCREVENDO NA LINHA 127 DO 'DATE.CPP'

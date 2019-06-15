@@ -1,8 +1,9 @@
 #ifndef PLANO
 #define PLANO
 
-#include<string>
 #include "./Date.h"
+
+#include<string>
 
 using namespace std;
 
@@ -21,7 +22,7 @@ class Plano{
         nome(_nome), valorMinuto(_vlrMinuto), franquia(_franquia), velocAlem(_velocAlem), \
         velocidade(_veloc), franquiaGasta(0) {};
 
-        Plano();
+        Plano() : nome(""), valorMinuto(0), franquia(0), velocAlem(0), velocidade(0), franquiaGasta(0) {};
         virtual ~Plano();
         // FUNCOES GET
         inline double getValorMinuto()   const {return(valorMinuto);};

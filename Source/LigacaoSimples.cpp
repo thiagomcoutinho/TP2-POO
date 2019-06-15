@@ -1,4 +1,3 @@
 #include "./../Headers/LigacaoSimples.h"
 
-LigacaoSimples::~LigacaoSimples(){
-}
+LigacaoSimples::~LigacaoSimples(){}

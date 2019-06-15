@@ -1,5 +1,3 @@
 #include "./../Headers/LigacaoDados.h"
 
-LigacaoDados::~LigacaoDados(){
-
-}
+LigacaoDados::~LigacaoDados(){}
