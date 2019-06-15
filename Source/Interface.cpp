@@ -1,27 +1,27 @@
 #include "./../Headers/Interface.h"
 
 void Interface::print(const char* text, const bool& breakLine = true){
-    mvprintw(y, x, text);
-    if(breakLine){
+    mvprintw(y, x, text); // MOVE O PONTEIRO PARA POSICAO (X, Y) E IMPRIME TEXTO
+    if(breakLine){ // QUEBRA DE LINHA, MANTEM X NA POSICAO INICIAL
         y++;
         x = 5;
-    }else{
+    }else{ // CONTINUA NA LINHA, ATUALIZA X CONFORME O TAMANHO DA STRING. Y É MANTIDO.
         string s_text(text);
         x += s_text.size();
     }
 }
 
 Interface::Interface(){
-    // Inicializa tela
+    // INICIALIZA TELA
     initscr();
-    // Posicoes do cursor
+    // POSIÇÃO INICIAL PADRÃO DO PONTEIRO DE PRINT
     x = y = 5;
     
     int c = 0;
     int b, erro;
-
     int a = -1;
-    while(a == -1){
+
+    while(a == -1){ // RECEBE DATA INICIAL DO PROGRAMA
         try{
             setMenu();
 
@@ -43,14 +43,10 @@ Interface::Interface(){
             refresh();
         }
     }
-    
-    //informaVencimentos();
-    //informaLimiteFranquia();
 
-    // Cria menu inicial
+    // PRINT DO MENU INICIAL
     menuInicial();
-    // Loop infinito ate que o cliente saia da aplicacao
-    while(c != 113){ // 'q' quit
+    while(c != 113){ // LOOP INFINITO ATÉ QUE O CLIENTE SAIA DA APLICAÇÃO (q)
         c = getch();
         if(c == 113){break;}
 
@@ -58,7 +54,8 @@ Interface::Interface(){
         if(c != 113){
             try{
                 switchMenu(c);
-            }catch (Excecao e){
+            }catch (Excecao e){ // TRATAMENTO DE EXCESSOES DO PROGRAMA
+                // IMPRIME EXCESSAO E ESPERA ENTRADA DO USUARIO PARA RETORNAR AO MENU PRINCIPAL
                 string excecao = e.getExcecao();
                 setMenu();
                 print("ERRO: ", false);
@@ -75,23 +72,23 @@ Interface::Interface(){
 }
 
 Interface::~Interface(){
-
+    // DESALOCA PONTEIROS
     map<std::string, Plano*>::iterator it_planos;
-
     for(it_planos = planos.begin(); it_planos != planos.end(); it_planos++){
         delete it_planos->second;
     }
-
     for(int i=0; i<ptr_celulares.size(); i++){
         delete ptr_celulares[i];
     }
+    // FECHA JANELA
     endwin();
 }
 
 void Interface::setMenu(){
+    // COLOCA PONTEIRO NA POSICAO PADRAO (5,5)
     y = x = 5;
-    clear();
-    refresh();
+    clear(); // LIMPA TELA
+    refresh(); // ATUALIZA TELA
 }
 
 void Interface::getString(){
@@ -102,7 +99,7 @@ void Interface::getString(){
 
     int ch = getch();
 
-    while ( ch != '\n' )
+    while ( ch != '\n' ) // LÊ CHAR E APPEND PARA STRING ATE QUE 'ENTER' SEJA PRESSIONADO
     {
         input.push_back( ch );
         ch = getch();
@@ -110,9 +107,9 @@ void Interface::getString(){
 }
 
 Celular* Interface::getCelular(const int& numeroCelular){
-
     Celular* c;
-
+    // RECEBE NUMERO DE CELULAR E RETORNA PONTEIRO PARA O CELULAR CASO ELE EXISTA
+    // CASO CONTRÁRIO RETORNA EXCESSAO
     if(numeroCelular < ptr_celulares.size() && numeroCelular >= 0){
         c = ptr_celulares[numeroCelular];
     }else{
@@ -123,7 +120,7 @@ Celular* Interface::getCelular(const int& numeroCelular){
 }
 
 void Interface::switchMenu(const int& option){
-
+    // SWITCH CASE PARA CHAMAR MENUS
     switch (option)
     {
         case 97:
@@ -178,7 +175,7 @@ void Interface::switchMenu(const int& option){
 }
 
 void Interface::menuInicial(){
-
+    // IMPRIME MENU INICIAL
     setMenu();
 
     print("///// OPERADORA TELEFONICA CONAUT /////");
@@ -255,7 +252,7 @@ void Interface::menuCadastroPlano(){
     print("VELOCIDADE DO PACOTE DE DADOS(Mbps): ");
     getString();
     veloc = stod(input);
-    print("FRANQUIA(Mb): ");
+    print("FRANQUIA(MB): ");
     getString();
     franquia = stod(input);
     print("VELOCIDADE ALEM DA FRANQUIA(Mbps): ");
@@ -266,9 +263,8 @@ void Interface::menuCadastroPlano(){
     if(input == "PosPago"){ // Pós-Pago
         vencimento_ou_validade = "01-01-1950";
         p = new PosPago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, vencimento_ou_validade);
-    }else if(input == "PrePago"){ // Pŕe-Pago
+    }else if(input == "PrePago"){ // Pré-Pago
         vencimento_ou_validade = "01-01-1950";
-
         p = new PrePago(nome_plano, vlrMinuto, franquia, velocAlem, veloc, 0, vencimento_ou_validade);
     }else{
         throw Excecao("Tipo de plano nao existente!");
@@ -318,18 +314,19 @@ void Interface::menuCadastroCelular(){
         velocAlem = p->getVelocAlem();
         veloc = p->getVelocidade();
         if(ptr_posPago != nullptr){ // Pós-Pago
-            print("DATA DE VENCIMENTO: ");
+            print("DATA DE VENCIMENTO(DD-YY-MMMM): ");
             getString();
-            vencimento_ou_validade = input;
+            vencimento_ou_validade = input; // OVERLOAD OPERATOR STRING TO DATE
             ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, vencimento_ou_validade);
         }else{ // Pre-Pago
-            print("CREDITO INICIAL: ");
+            print("CREDITO INICIAL(REAIS): ");
             getString();
             credito = stod(input);
             vencimento_ou_validade = data_atual;
             ptr_cliente->addCelular(nome_plano, vlr_minuto, franquia, velocAlem, veloc, vencimento_ou_validade, credito);
         }
     }
+    // ADICIONA PONTEIRO DO CELULAR RECEM CRIADO PARA A LISTA DE PONTEIROS DE CELULARES
     vector<Celular*> celulares_cliente = ptr_cliente->getCelulares();
     ptr_celular = celulares_cliente[celulares_cliente.size()-1];
     ptr_celulares.push_back(ptr_celular);
@@ -357,7 +354,7 @@ void Interface::menuAdicionaCreditos(){
     numeroCelular = stoi(input);
     Celular* c = getCelular(numeroCelular);
 
-    print("VALOR DE CREDITOS: ");
+    print("VALOR DE CREDITOS(REAIS): ");
     getString();
     creditos = stod(input);
 
@@ -366,7 +363,7 @@ void Interface::menuAdicionaCreditos(){
     Plano* p = c->getPlano();
     PrePago* sub_p = dynamic_cast<PrePago*> (p);
 
-    if(sub_p != nullptr){
+    if(sub_p != nullptr){ // VERIFICA SE PRE-PAGO
         sub_p->adicionaCreditos(creditos, data_atual);
     }else{
         throw Excecao("O celular escolhido nao possui plano Pre Pago!");
@@ -390,12 +387,12 @@ void Interface::menuRegistraLigacaoS(){
     setMenu();
 
     print("///// MENU DE REGISTRO DE LIGACOES SIMPLES /////");
-    print("CELULAR: ");
+    print("CELULAR(A PARTIR DO 0): ");
     getString();
     numeroCelular = stoi(input);
     Celular* c = getCelular(numeroCelular);
 
-    print("DATA: ");
+    print("DATA(DD-MM-YYYY): ");
     getString();
     data_ligacao = input;
     print("DURACAO(MIN): ");
@@ -427,12 +424,12 @@ void Interface::menuRegistraLigacaoD(){
     setMenu();
 
     print("///// MENU DE REGISTRO DE LIGACOES DE DADOS /////");
-    print("CELULAR: ");
+    print("CELULAR(A PARTIR DO 0): ");
     getString();
     numeroCelular = stoi(input);
     Celular* c = getCelular(numeroCelular);
 
-    print("DATA: ");
+    print("DATA(DD-MM-YYYY): ");
     getString();
     data_ligacao = input;
     print("DURACAO(MIN): ");
@@ -448,6 +445,7 @@ void Interface::menuRegistraLigacaoD(){
         throw Excecao("Tipo de dados incorreto!");
     }
 
+    // BOLEANO QUE INFORMA SE A FRANQUIA FOI EXCEDIDA
     informaFranquiaExcedida = c->ligar(data_ligacao, duracao, td);
 
     print("Ligacao efetuada.");
@@ -455,6 +453,7 @@ void Interface::menuRegistraLigacaoD(){
     print("Pressione qualquer tecla para sair");
     int z = getch();
 
+    // CASO A FRANQUIA TENHA SIDO ULTRAPASSADA, INFORMA OPERADORA
     if(informaFranquiaExcedida){
         refresh();
         informaLimiteFranquia(c);
@@ -472,36 +471,36 @@ void Interface::listaDadosPacote(){
     setMenu();
     
     print("///// CONSULTA DE DADOS DO PACOTE /////");
-    print("CELULAR: ");
+    print("CELULAR(A PARTIR DE 0): ");
     getString();
     numeroCelular = stoi(input);
     Celular* c = getCelular(numeroCelular);
 
     Plano* p = c->getPlano();
 
-    print("FRANQUIA: ", false);
+    print("FRANQUIA(MB): ", false);
     aux = to_string(p->getFranquia());
     print(aux.c_str());
-    print("FRANQUIA GASTA: ", false);
+    print("FRANQUIA GASTA(MB): ", false);
     aux = to_string(p->getFranquiaGasta());
     print(aux.c_str());
     print("VELOCIDADE ATUAL: ");
 
-    print("DOWNLOAD: ", false);
+    print("DOWNLOAD(Mbps): ", false);
 
     if(p->getFranquiaGasta() > p->getFranquia()){ // FRANQUIA TOTALMENTE GASTA, VELOCIDADE REDUZIDA
         aux = to_string(p->getVelocAlem());
         print(aux.c_str());
 
         aux = to_string(p->getVelocAlem()*0.1);
-        print("UPLOAD: ", false);
+        print("UPLOAD(Mbps): ", false);
         print(aux.c_str());
     }else{ // FRANQUIA DISPONIVEL, VELOCIDADE CONTRATADA
         aux = to_string(p->getVelocidade());
         print(aux.c_str());
 
         aux = to_string(p->getVelocidade()*0.1);
-        print("UPLOAD: ", false);
+        print("UPLOAD(Mbps): ", false);
         print(aux.c_str());
     }
 
@@ -523,7 +522,7 @@ void Interface::listaValorConta(){
     setMenu();
 
     print("///// CONSULTA DE CONTAS /////");
-    print("CELULAR : ");
+    print("CELULAR(A PARTIR DE 0): ");
     getString();
     numeroCelular = stoi(input);
 
@@ -535,21 +534,20 @@ void Interface::listaValorConta(){
     if(sub_p != nullptr){ // Plano Pos-Pago
         limitesMes = data_atual.getLimitesMes();
 
+        // DATAS INICIAS E FINAIS DO MES
         Date inicioMes(data_atual.getAno(), data_atual.getMes(), limitesMes[0]);
         Date fimMes(data_atual.getAno(), data_atual.getMes(), limitesMes[1]);
 
         ligacoes = c->getLigacoes();
-
         for(int i=0; i<ligacoes.size(); i++){
 
             data_ligacao = ligacoes[i]->getDate();
-
             if(data_ligacao >= inicioMes && data_ligacao <= fimMes){
                 valorConta += ligacoes[i]->getCusto();
             }
         }
 
-        print("VALOR DA CONTA ATUAL EM ABERTO: ", false);
+        print("VALOR DA CONTA ATUAL EM ABERTO(REAIS): ", false);
         print(to_string(valorConta).c_str());
     }else{
         throw Excecao("O celular escolhido nao possui plano pos pago!");
@@ -572,7 +570,7 @@ void Interface::listaCreditos(){
     setMenu();
 
     print("///// CONSULTA DE CREDITOS /////");
-    print("CELULAR : ");
+    print("CELULAR(A PARTIR DE 0): ");
     getString();
     numeroCelular = stoi(input);
 
@@ -586,7 +584,7 @@ void Interface::listaCreditos(){
         validade = sub_p->getValidade();
         str_validade = validade.convertDateToString();
         creditos = sub_p->getCredito();
-        print("CREDITOS DISPONIVEIS: ", false);
+        print("CREDITOS DISPONIVEIS(REAIS): ", false);
         print(to_string(creditos).c_str());
     }else{
         throw Excecao("O celular escolhido nao possui plano pre pago!");
@@ -610,7 +608,7 @@ void Interface::listaExtratoS(){
     setMenu();
 
     print("///// CONSULTA DE EXTRATO SIMPLES /////");
-    print("CELULAR: ");
+    print("CELULAR(A PARTIR DE 0): ");
     getString();
     numeroCelular = stoi(input);
     c = getCelular(numeroCelular);
@@ -657,7 +655,7 @@ void Interface::listaExtratoD(){
     setMenu();
 
     print("///// CONSULTA DE EXTRADO DE DADOS /////");
-    print("CELULAR: ");
+    print("CELULAR(A PARTIR DE 0): ");
     getString();
     numeroCelular = stoi(input);
     c = getCelular(numeroCelular);
