@@ -9,14 +9,14 @@ Date::Date(const int& _ano, const int& _mes, const int& _dia){
     if(_mes <= 0 || _mes > 12){
         throw Excecao("Mes invalido!");
     }
-    if(ano <= 1950 || ano >= 2100){
-        throw Excecao("Ano invaldo!");
+    if(_ano < 1950 || _ano > 2100){
+        throw Excecao("Ano invalido(T)!");
     }
     ano = _ano;
     mes = _mes;
 
     vector<int> limitesMes = getLimitesMes();
-    if( dia > limitesMes[1] || dia < limitesMes [0]){
+    if(_dia > limitesMes[1] || _dia < limitesMes [0]){
         throw Excecao("Dia do mes invalido!");
     }
 
@@ -128,7 +128,7 @@ Date & Date::operator = (const string& str_date){
     vector<string> date_split;
     string aux;
 
-    for(int i=0; i<str_date.size(); i++){
+    for(int i=0; i<str_date.size(); i++){ // PARTICIONA STRING A PARTIR DO TOKEN '-'
         if(str_date[i] == '-'){
             date_split.push_back(aux);
             aux.clear();
@@ -138,34 +138,55 @@ Date & Date::operator = (const string& str_date){
     }
     date_split.push_back(aux);
 
+    // CONFERE FORMATO DE DATA
     if(date_split.size() != 3 || date_split[0].size() != 2 || date_split[1].size() != 2 || date_split[2].size() != 4){
         throw Excecao("Formato de data invalido!");
     }
 
+    // CONFERE INTERVALOS DAS DATAS
     if(stoi(date_split[1]) <= 0 || stoi(date_split[1]) > 12){
         throw Excecao("Mes invalido!");
     }
 
-    dia = stoi(date_split[0]);
+    if(stoi(date_split[2]) < 1950 || stoi(date_split[2]) > 2100){
+        throw Excecao("Ano invalido!");
+    }
     mes = stoi(date_split[1]);
     ano = stoi(date_split[2]);
 
+    vector<int> limitesMes = getLimitesMes();
+    if(stoi(date_split[0]) > limitesMes[1] || stoi(date_split[0]) < limitesMes[0]){
+        throw Excecao("Dia do mes invalido!");
+    }
+    dia = stoi(date_split[0]);
+    
     return(*this);
 }
 
 Date & Date::operator = (const Date& data){
+    // CONFERE SE A DATA É VALIDA E ATRIBUI AO NOVO OBJETO
     if(data.getMes() <= 0 || data.getMes() > 12){
         throw Excecao("Mes invalido!");
     }
 
+    if(data.getAno() < 1950 || data.getAno() > 2100){
+        throw Excecao("Ano invalido!");
+    }
+
     ano = data.getAno();
     mes = data.getMes();
+
+    vector<int> limitesMes = getLimitesMes();
+    if(data.getDia() > limitesMes[1] || data.getDia() < limitesMes[0]){
+        throw Excecao("Dia do mes invalido!");
+    }
     dia = data.getDia();
 
     return(*this);
 }
 
 string Date::convertDateToString() const{
+    // CONVERTE DATA PARA FORMATO STRING DD/MM/YYYY
     string sDate;
     sDate = to_string(dia) + "/" + to_string(mes) + "/" + to_string(ano);
     return(sDate);
