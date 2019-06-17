@@ -2,3 +2,9 @@
 main
 *.o
 *.zip
+*.aux
+*.pdf
+*.toc
+*.log
+*.gz
+*.out

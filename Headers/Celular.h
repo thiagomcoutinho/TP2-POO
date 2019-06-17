@@ -43,5 +43,4 @@ class Celular{
         // FUNÇÕES SET
         inline static void incrementProxNumCelular() {proxNumCelular++;};
 };
-
 #endif
