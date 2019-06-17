@@ -8,3 +8,5 @@ main
 *.log
 *.gz
 *.out
+*.fls
+*.fdb*

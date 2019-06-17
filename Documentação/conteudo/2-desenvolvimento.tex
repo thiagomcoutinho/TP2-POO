@@ -2,35 +2,212 @@ Durante a implementação do trabalho, conceitos desenvolvidos previamente como 
 
 Além das classes que compõem os elementos de uma operadora de telefonia, como clientes, ligações e planos, foi necessário desenvolver classes para manipular exceções, datas e gerenciar a interação entre classes. A última tarefa citada é implementada através da classe \textbf{Interface}, responsável por criar processos acessíveis ao cliente do aplicativo; é a classe mais complexa e será descrita por último para facilitar o seu entendimento.
 
-\subsection{Classe Cliente}
+Essa seção contém os cabeçalhos de cada classe implementada no trabalho com uma breve explicação. Para maiores detalhes, consulte o código fonte.
+
+\subsection{Classe Cliente} \label{sec:cliente}
+
+\begin{lstlisting}[basicstyle=\tiny]
+#ifndef CLIENTE
+#define CLIENTE
+
+#include "./Celular.h"
+#include "./PrePago.h"
+#include "./PosPago.h"
+#include "./Date.h"
+
+#include<vector>
+#include<string>
+
+using namespace std;
+
+class Cliente{
+
+	private:
+		const string CPF;
+		const string nome;
+		string endereco;
+		vector<Celular*> celulares;
+	
+	public:
+		Cliente();
+		Cliente(const string& _cpf, const string& _nome, const string& _endereco) : CPF(_cpf), nome(_nome), endereco(_endereco) {};
+		~Cliente();
+		
+		// FUNCOES DE ADICIONAR CELULAR
+		void addCelular(const string& nomePlano, const double& vlrMinuto, const double& _franquia, const double& _velAlem, \
+		const double& _veloc, const Date& vencimento);
+		void addCelular(const string& nomePlano, const double& vlrMinuto, const double& _franquia, const double& _velAlem, \
+		const double& _veloc, Date& curr_date, const double& credito);
+		
+		// FUNCOES DE EFETUAR LIGACAO
+		void efetuarLigacao(const int& celularIndex, const Date& timestamp, const double& duracao, const double& numTel);
+		void efetuarLigacao(const int& celularIndex, const Date& timestamp, const double& duracao, const tipoDados& data_type);
+		
+		// FUNCOES GET
+		inline string getNome()                const {return(nome);};
+		inline string getCPF()                 const {return(CPF);};
+		inline string getEndereco()            const {return(endereco);};
+		inline vector<Celular*> getCelulares() const {return(celulares);};
+};
+#endif
+\end{lstlisting}
+
+A classe cliente armazena dados de CPF, nome do cliente e seu endereço, além de um vetor contendo os celulares atribuídos a ele. O código utiliza composição para incluir a classe \textit{Celular}, que também é composta por \textit{Cliente}; como essa declaração é recursiva, é necessário o uso de \textit{forward declaration}, que será abordado na classe do Celular. 
+
+Os métodos presentes são simples, existem funções que adicionam objetos de celulares e funções que efetuam ligações a partir de um objeto celular. Ambas possuem sobrecarga em sua assinatura e utilizam alocação de memória para criar os objetos. As sobrecargas são feitas nas duas funções para diferenciar operações de criar celulares com planos do tipo Pré-pago e Pós-Pago, ou fazer ligações do tipo de Dados ou Simples.
 
 
+\subsection{Classe Celular} \label{sec:celular}
+
+\begin{lstlisting}[basicstyle=\tiny]
+#ifndef CELULAR
+#define CELULAR
+
+#include "./Plano.h"
+#include "./PosPago.h"
+#include "./Excecao.h"
+#include "./Ligacao.h"
+#include "./LigacaoDados.h"
+#include "./LigacaoSimples.h"
+#include "./Date.h"
+
+#include<vector>
+
+using namespace std;
+
+class Cliente; // Instanciando classe sem declaração completa (FORWARD DECLARATION)
+
+class Celular{
+
+	private:
+		double numero;
+		Cliente* cliente;
+		Plano* plano;
+		vector<Ligacao*> ligacoes;
+		static double proxNumCelular;
+	
+	public:
+		Celular();
+		Celular(Cliente* c, Plano* p);
+		~Celular();
+		
+		// FUNCOES DE LIGAÇÃO
+		void ligar(const Date& timestamp, const double& duracao, const double& numTel);
+		bool ligar(const Date& timestamp, const double& duracao, const tipoDados& td);
+		
+		// FUNÇÕES GET
+		inline static double getProxNumCelular()       {return(proxNumCelular);}; // STATIC FUNCTION
+		inline vector<Ligacao*> getLigacoes()    const {return(ligacoes);};
+		inline double getNumero()                const {return(numero);};
+		inline Plano* getPlano()                 const {return(plano);};
+		inline Cliente* getCliente()             const {return(cliente);};
+		
+		// FUNÇÕES SET
+		inline static void incrementProxNumCelular() {proxNumCelular++;};
+};
+#endif
+\end{lstlisting}
+
+A definição dessa classe tem caráter recursivo com a classe Cliente e portanto é necessário o uso de \textit{forward declaration}, já citado na Seção \ref{sec:cliente}. A classe deve ser declarada sem corpo, avisando ao compilador que ela existe, mas seu corpo ainda deve ser declarado em no respectivo arquivo \texttt{.cpp}; o objeto da classe ainda não declarada deve ser instanciado como ponteiro.
+
+Cada celular possui um número único, que é gerenciado através da variável \texttt{static proxNumCelular} e armazenada na variável \texttt{double numero}. Um celular também deve possuir um plano, pertencer a apenas um cliente e conter uma lista de ligações efetuadas por ele. Para utilizar conceitos de herança e polimorfismo, os objetos da \textit{Ligações} são acessados por meio de ponteiros. 
+
+Métodos \textit{getters} e \textit{setters} foram criados para retornar e modificar valores privados da classe. As funções sobrecarregadas \textit{ligar} podem ser chamadas tanto através da classe Cliente quanto Celular, a sobrecarga é feita para diferenciar ligações do tipo de Dados ou Simples. Essas funções desempenham a principal funcionalidade da seção atual, alguns pontos importantes são detalhados abaixo:
+
+\begin{lstlisting}
+// LIGACAO SIMPLES
+void Celular::ligar(const Date& timestamp, const double& duracao, const double& numTel){
+	double custo;
+	custo = duracao*plano->getValorMinuto(); // CALCULA O CUSTO DA LIGACAO
+	
+	PosPago* ptr_plano = dynamic_cast<PosPago*>(plano); // VERIFICA QUAL TIPO DE PLANO
+	if( ptr_plano == nullptr){ 
+		plano->verificaData(timestamp); // VERIFICA VALIDADE DOS CREDITOS
+		plano->verificaCredito(custo);  // VERIFICA CREDITO CELULAR PRE PAGO
+	}
+	plano->cobraCusto(custo); // COBRA CUSTO
+	
+	Ligacao* l = new LigacaoSimples(timestamp, duracao, custo, numTel); // LIGA
+	ligacoes.push_back(l);
+}
+\end{lstlisting}
+
+Foi utilizado \textit{dynamic cast} para verificar qual era o Plano do celular, em termos de código, qual classe derivada de Plano o ponteiro apontava. Para o caso de Ligação Simples com Plano Pré-Pago, a validade dos créditos tem que ser verificada e caso inválido uma exceção será jogada.
+
+Para Ligações do tipo Dados tem que ser verificado se o Plano possui franquia, caso ele não tenha, uma exceção deve ser mostrada na tela. Para o cálculo do custo da ligação, dois fatores devem ser considerados: se a ligação foi do tipo \texttt{download} ou \texttt{upload} e se a franquia de dados foi estourada durante a ligação. 
+
+Para ligações do tipo \texttt{upload}, a velocidade de uso será um décimo da velocidade padrão especificada no plano(velocidade de \text{download}); para o caso de limite de franquia excedido durante a ligação, a velocidade utilizada será composta pela velocidade da franquia e a velocidade após seu consumo total. Ambos os casos influenciam no custo final da ligação e foram considerados na implementação do código.
 
 
+\subsection{Classe Date} \label{sec:date}
 
-\subsection{Classe Celular}
+\begin{lstlisting}
+#ifndef DATE
+#define DATE
 
-\subsection{Classe Date}
+#include "./Excecao.h"
 
-\subsection{Classe Interface}
+#include<string>
+#include<vector>
 
-\subsection{Classe Exceção}
+using namespace std;
 
-\subsection{Classes Base}
+class Date{
+	
+	private:
+		int dia;
+		int mes;
+		int ano;
+	
+	public:
+		Date();
+		Date(const int& _ano, const int& _mes, const int& _dia);
+		~Date();
+	
+		// OPERADORES
+		bool operator >  (const Date& b) const;
+		bool operator >= (const Date& b) const;
+		bool operator <= (const Date& b) const;
+		Date & operator = (const string& str_date);
+		Date & operator = (const Date& data);
+		
+		// FUNCOES SET
+		void acrescentaTempo();
+		
+		// FUNCOES GET
+		string convertDateToString() const;
+		vector<int> getLimitesMes() const;
+		inline int getDia()  const {return(dia);};
+		inline int getMes()  const {return(mes);};
+		inline int getAno()  const {return(ano);};
+};
+#endif
+\end{lstlisting}
 
-\subsubsection{Plano}
+\subsection{Classe Interface} \label{sec:interface}
 
-\subsubsection{Ligacao}
+\subsection{Classe Exceção} \label{sec:excecao}
 
-\subsection{Classes Derivadas}
+\subsection{Classes Base} \label{sec:classes_base}
 
-\subsubsection{PosPago : Plano}
+\subsubsection{Plano} \label{sec:plano}
 
-\subsubsection{PrePago : Plano}
+\subsubsection{Ligacao} \label{sec:ligacao}
 
-\subsubsection{LigacaoDados: Ligacao}
+\subsection{Classes Derivadas} \label{sec:classes_derivadas}
 
-\subsubsection{LigacaoSimples: Ligacao}
+\subsubsection{PosPago : Plano} \label{sec:pospago}
+
+\subsubsection{PrePago : Plano} \label{sec:prepago}
+
+\subsubsection{LigacaoDados: Ligacao} \label{sec:ligacaodados}
+
+\subsubsection{LigacaoSimples: Ligacao} \label{sec:ligacaosimples}
+
+\subsection{Observações} \label{sec:observacoes}
+
+TO-DO: Ligação com crédito excedido, computar ligação até o momento em que o crédito acaba.
+
 
 
 % Dynamic casting, upcasting
