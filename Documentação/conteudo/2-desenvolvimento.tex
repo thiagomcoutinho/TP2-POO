@@ -4,6 +4,8 @@ Além das classes que compõem os elementos de uma operadora de telefonia, como 
 
 Essa seção contém os cabeçalhos de cada classe implementada no trabalho com uma breve explicação. Para maiores detalhes, consulte o código fonte.
 
+\pagebreak
+
 \subsection{Classe Cliente} \label{sec:cliente}
 
 \begin{lstlisting}[basicstyle=\tiny]
@@ -56,7 +58,7 @@ A classe cliente armazena dados de CPF, nome do cliente e seu endereço, além d
 
 Os métodos presentes são simples, existem funções que adicionam objetos de celulares e funções que efetuam ligações a partir de um objeto celular. Ambas possuem sobrecarga em sua assinatura e utilizam alocação de memória para criar os objetos. As sobrecargas são feitas nas duas funções para diferenciar operações de criar celulares com planos do tipo Pré-pago e Pós-Pago, ou fazer ligações do tipo de Dados ou Simples.
 
-
+\pagebreak
 \subsection{Classe Celular} \label{sec:celular}
 
 \begin{lstlisting}[basicstyle=\tiny]
@@ -114,7 +116,7 @@ Cada celular possui um número único, que é gerenciado através da variável \
 
 Métodos \textit{getters} e \textit{setters} foram criados para retornar e modificar valores privados da classe. As funções sobrecarregadas \textit{ligar} podem ser chamadas tanto através da classe Cliente quanto Celular, a sobrecarga é feita para diferenciar ligações do tipo de Dados ou Simples. Essas funções desempenham a principal funcionalidade da seção atual, alguns pontos importantes são detalhados abaixo:
 
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\tiny]
 // LIGACAO SIMPLES
 void Celular::ligar(const Date& timestamp, const double& duracao, const double& numTel){
 	double custo;
@@ -141,7 +143,7 @@ Para ligações do tipo \texttt{upload}, a velocidade de uso será um décimo da
 
 \subsection{Classe Date} \label{sec:date}
 
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\tiny]
 #ifndef DATE
 #define DATE
 
@@ -184,30 +186,346 @@ class Date{
 #endif
 \end{lstlisting}
 
-\subsection{Classe Interface} \label{sec:interface}
+Date é uma classe auxiliar no sistema mas fornece estrutura crucial para o seu funcionamento. Ela possui variáveis privadas representando o dia, mês e ano da data. Seus métodos públicos consistem em operadores para comparação entre datas($>$, $>=$, $<=$, $=$), o operador de igualdade foi sobrecarregado para que Date possa receber valores tanto de strings quanto de objetos da mesma classe. 
+
+A função \texttt{acrescentaTempo())} é responsável por adicionar 180 dias na data de validade de créditos de um celular com plano pré-pago. O código garante que os dias sejam distribuídos corretamente através dos meses e anos, mantendo coerência nos valores. Anos bissextos não foram levados em conta.
+	
+O método \texttt{getLimiteMes()} retorna um vetor de inteiros contendo o primeiro e o último dia do mês para o objeto que o chamou. Essa rotina será utilizada para varrer objetos dentro de um mês específico e extrair informações.
+
+\texttt{convertDateToString()} converte os valores privados de Date para string, facilitando a impressão de datas na tela.
 
 \subsection{Classe Exceção} \label{sec:excecao}
 
+\begin{lstlisting}[basicstyle=\tiny]
+#ifndef EXCECAO
+#define EXCECAO
+
+#include<string>
+
+using namespace std;
+
+class Excecao{
+
+	private:
+		const string mensagem;
+	
+	public:
+		Excecao();
+		Excecao(const string& _mensagem) : mensagem(_mensagem) {};
+		~Excecao();
+		
+		// FUNCAO GET
+		inline string getExcecao() const {return(mensagem);};
+};
+#endif
+\end{lstlisting}
+
+A classe de Exceção basicamente armazena uma string contendo a descrição da exceção e uma função do tipo \textit{get} para retornar essa string. Sua principal função é ser utilizada com o método \texttt{throw} para lançamento de exceções, tratadas no construtor da classe Interface.
+
+Essa classe é utilizada no programa em diversos casos, entradas de datas inválidas, operações específicas de sub-planos em celulares que não possuem o plano, número de cliente inválido, etc\dots
+
 \subsection{Classes Base} \label{sec:classes_base}
+
+Técnicas de herança e polimorfismo foram aplicadas no desenvolvimento desse trabalho prático, aumentando sua capacidade de abstração e complexidade. As classes base permitem que  características básicas sejam definidas, exista o requisito de definição obrigatória de uma função na classe derivada e chamadas de função com o mesmo nome mas funcionalidade diferentes gerenciadas por um objeto de um só tipo. 
 
 \subsubsection{Plano} \label{sec:plano}
 
+\begin{lstlisting}[basicstyle=\tiny]
+#ifndef PLANO
+#define PLANO
+
+#include "./Date.h"
+
+#include<string>
+
+using namespace std;
+
+class Plano{
+
+	private:
+		const string nome;
+		const double valorMinuto;
+		const double velocidade;
+		const double franquia;
+		const double velocAlem;
+		double franquiaGasta;
+		
+	public:
+		Plano(const string& _nome, const double& _vlrMinuto, const double& _franquia, const double& _velocAlem, const double& _veloc) : \
+		nome(_nome), valorMinuto(_vlrMinuto), franquia(_franquia), velocAlem(_velocAlem), \
+		velocidade(_veloc), franquiaGasta(0) {};
+		
+		Plano() : nome(""), valorMinuto(0), franquia(0), velocAlem(0), velocidade(0), franquiaGasta(0) {};
+		virtual ~Plano();
+		// FUNCOES GET
+		inline double getValorMinuto()   const {return(valorMinuto);};
+		inline double getVelocidade()    const {return(velocidade);};
+		inline double getFranquia()      const {return(franquia);};
+		inline double getVelocAlem()     const {return(velocAlem);};
+		inline double getFranquiaGasta() const {return(franquiaGasta);};
+		inline string getNomePlano()     const {return(nome);};
+		
+		// FUNCOES SET
+		inline void setFranquiaGasta(const double& gasto) {franquiaGasta += gasto;};
+		
+		// VIRTUAIS PURAS
+		virtual void verificaCredito(const double& custo) const = 0;
+		virtual void verificaData(const Date& dataLigacao) const = 0;
+		virtual void cobraCusto(const double& custo) = 0;
+};
+#endif
+\end{lstlisting}
+
+Alguns aspectos interessantes de implementação da classe Plano é a definição de funções virtuais puras, que obrigam sua redeclaração na classe derivada e o destrutor virtual, que é necessário para que a destruição de um objeto derivado seja feita por completo.
+
+A estrutura armazena valores básicos essenciais para um Plano de celular, como nome, valor do minuto, velocidade dos dados, franquia, etc\dots Todos esses valores possuem funções do tipo \textit{get} correspondentes.
+
+\pagebreak
+
 \subsubsection{Ligacao} \label{sec:ligacao}
+
+\begin{lstlisting}[basicstyle=\tiny]
+#ifndef LIGACAO
+#define LIGACAO
+
+#include "./Date.h"
+
+class Ligacao{
+
+	private:
+		const Date dataHora;
+		const double duracao;
+		const double custo;
+
+	public:
+		Ligacao() : duracao(0), custo(0) {};
+		Ligacao(const Date& _dataHora, const double& _duracao, const double& _custo) : dataHora(_dataHora), duracao(_duracao), custo(_custo) {};
+		virtual ~Ligacao();
+		
+		// FUNCOES GET
+		inline double getDuracao() const {return(duracao);};
+		inline double getCusto()   const {return(custo);};
+		inline Date getDate()      const {return(dataHora);};
+};
+#endif
+\end{lstlisting}
+
+A base Ligação tem estrutura simples: armazena a hora, duração e custo da ligação e possui métodos de \textit{get} para acessar esses elementos.
 
 \subsection{Classes Derivadas} \label{sec:classes_derivadas}
 
+As classes derivadas nos permitem criar abstrações de uma classe base, que possui elementos comuns à suas bases. Cada uma possui sua particularidade e comumente é simples, pois já possui sua base de métodos e variáveis definidas previamente.
+
 \subsubsection{PosPago : Plano} \label{sec:pospago}
+
+\begin{lstlisting}[basicstyle=\tiny]
+#ifndef POSPAGO
+#define POSPAGO
+
+#include "./Date.h"
+#include "./Plano.h"
+#include "./Excecao.h"
+
+class PosPago : public Plano{
+
+	private:
+		Date vencimento;
+		double valor;
+
+	public:
+		PosPago();
+		PosPago(const string& _nome, const double& _vlrMinuto, const double& _franquia, const double& _velocAlem, const double& _veloc, const Date& _vencimento) : \
+		Plano(_nome, _vlrMinuto, _franquia, _velocAlem, _veloc), vencimento(_vencimento) {};
+		virtual ~PosPago();
+		
+		// FUNCOES DE VERIFICACAO
+		void verificaData(const Date& dataLigacao) const;
+		void verificaCredito(const double& custo) const;
+		
+		// FUNCOES SET
+		inline void cobraCusto(const double& custo) {valor += custo;};
+		
+		// FUNCOES GET
+		inline Date getVencimento() const {return(vencimento);};
+		inline double getValor() const {return(valor);};
+};
+#endif
+\end{lstlisting}
+
+Plano pós-pago possui apenas o valor da conta a ser paga e sua data de vencimento. Os métodos \texttt{verifica Data},  \texttt{verificaCredito} e \texttt{cobraCusto} foram herdadas de sua classe base e precisam ser definidas por serem virtuais puras na base. As duas primeiras não tem muita importância para essa classe derivada, mas podem receber outro significado em uma nova implementação, na qual o plano vence e o usuário não pode efetuar ligações até que ele seja renovado.
 
 \subsubsection{PrePago : Plano} \label{sec:prepago}
 
+\begin{lstlisting}[basicstyle=\tiny]
+#ifndef PREPAGO
+#define PREPAGO
+
+#include "./Date.h"
+#include "./Plano.h"
+#include "./Excecao.h"
+
+class PrePago : public Plano{
+
+	private:    
+		double credito;
+		Date validade;
+
+	public:
+		PrePago();
+		PrePago(const string& _nome, const double& _vlrMinuto, const double& _franquia, const double& _velocAlem, const double& _veloc, const double& _credito, const Date& _validade) : \
+		Plano(_nome, _vlrMinuto, _franquia, _velocAlem, _veloc), credito(_credito), validade(_validade) {};
+		virtual ~PrePago();
+		
+		// FUNCOES SET
+		void adicionaCreditos(const int& creditos, const Date& dataAtual);
+		inline void cobraCusto(const double& custo) {credito -= custo;};
+		
+		// FUNCOES GET
+		inline Date getValidade() const {return(validade);};
+		inline double getCredito() const {return(credito);};
+		
+		// FUNCOES DE VERIFICACAO
+		void verificaData(const Date& dataLigacao) const;
+		void verificaCredito(const double& custo) const;
+};
+#endif
+\end{lstlisting}
+
+Tanto nas estruturas derivadas PosPago quanto na PrePago, um elemento interessante é o construtor das classes, que define as variáveis do próprio objeto mas também chama o construtor da classe base. 
+
+A classe PrePago possui variáveis privadas de data de validade do plano e a quantidade de créditos restantes. Funções \textit{get} e \textit{set} são definidas para manipular as variáveis e também métodos de verificação como \texttt{verificaData} e \texttt{verificaCredito}, comentados na Seção \ref{sec:celular}.
+
+\pagebreak
+
+
 \subsubsection{LigacaoDados: Ligacao} \label{sec:ligacaodados}
+
+\begin{lstlisting}[basicstyle=\tiny]
+#ifndef LIGACAODADOS
+#define LIGACAODADOS
+
+#include "./Ligacao.h"
+
+using namespace std;
+
+enum tipoDados{download, upload};
+
+class LigacaoDados : public Ligacao{
+
+	private:
+		const tipoDados dtype;
+
+	public:
+		LigacaoDados();
+		LigacaoDados(const Date& _dataHora, const double& _duracao, const double& _custo, const tipoDados& _dtype): \
+		Ligacao(_dataHora, _duracao, _custo), dtype(_dtype) {};
+		virtual ~LigacaoDados();
+		
+		// FUNCOES GET
+		inline tipoDados getTipoDados() const {return(dtype);};
+};
+#endif
+\end{lstlisting}
+
+Sua característica mais marcante é o uso de \texttt{enum} para categorizar o tipo de dados utilizado na ligação. Seu construtor também é declarado na forma descrita na Seção \ref{sec:prepago}. 
 
 \subsubsection{LigacaoSimples: Ligacao} \label{sec:ligacaosimples}
 
-\subsection{Observações} \label{sec:observacoes}
+\begin{lstlisting}[basicstyle=\tiny]
+#ifndef LIGACAOSIMPLES
+#define LIGACAOSIMPLES
 
-TO-DO: Ligação com crédito excedido, computar ligação até o momento em que o crédito acaba.
+#include "./Ligacao.h"
 
+class LigacaoSimples : public Ligacao{
 
+	private:   
+		const double numTelefone;
 
-% Dynamic casting, upcasting
+	public:
+		LigacaoSimples();
+		LigacaoSimples(const Date& _dataHora, const double& _duracao, const double& _custo, const double& _numTel): \
+		Ligacao(_dataHora, _duracao, _custo), numTelefone(_numTel) {};
+		virtual ~LigacaoSimples();
+		
+		// FUNCOES GET
+		inline double getNumTelefone() const {return(numTelefone);};
+};
+#endif
+\end{lstlisting}
+
+A LigacaoSimples também possui apenas uma variável, o número do telefone, e um método tipo \textit{get} para recuperar esse número. Estrutura simples, característica de classes derivadas.
+
+\pagebreak
+
+\subsection{Classe Interface} \label{sec:interface}
+
+\begin{lstlisting}[basicstyle=\tiny]
+#ifndef INTERFACE
+#define INTERFACE
+
+#include "./Cliente.h"
+#include "./Plano.h"
+
+#include<ncurses.h>
+#include<vector>
+#include<string>
+#include<cstring>
+#include<map>
+
+using namespace std;
+
+class Interface{
+
+private:
+int x;
+int y;
+string input;
+vector<Cliente*> clientes;
+map<string, Plano*> planos;
+vector<Celular*> ptr_celulares;
+Date data_atual;
+
+public:
+Interface();
+~Interface();
+// FUNCOES DE IMPRESSAO
+void menuInicial();
+void menuCadastroCliente();
+void menuCadastroPlano();
+void menuCadastroCelular();
+void menuAdicionaCreditos();
+void menuRegistraLigacaoS();
+void menuRegistraLigacaoD();
+void listaDadosPacote();
+void listaValorConta();
+void listaCreditos();
+void listaExtratoS();
+void listaExtratoD();
+void listaClientes();
+void listaPlanos();
+void listaCelulares();
+void informaVencimentos();
+void informaLimiteFranquia(Celular* c);
+void atualizaDataAtual();
+// FUNCOES AUXILIARES
+void print(const char* text, const bool& breakLine);
+void switchMenu(const int& option);
+void setMenu();
+Celular* getCelular(const int& numeroCelular);
+
+// FUNCOES DE ENTRADA
+void getString();
+};
+#endif
+\end{lstlisting}
+
+A classe Interface é a classe mais importante do sistema, pois ela cria processos para as rotinas desenvolvidas. Suas variáveis privadas armazenam e gerenciam os elementos da operadora de telefonia, a classe possui um vetor de ponteiros de \texttt{Cliente}, tabela hash com key-value mapeando string para ponteiro de \texttt{Plano}, vetor de ponteiro de \texttt{Celular} e algumas variáveis auxiliares como data atual de operação, entrada do usuário e coordenadas de escrita na tela.
+
+Ela possui funções auxiliares como receber entrada do usuário, preparar menu de impressão, troca de menu e impressão na tela.
+
+Existem as funções de impressão, que são responsáveis por gerenciar a lógica de cada operação da operadora. Esses métodos efetuam chamadas de métodos pertencentes às classes desenvolvidas nesse trabalho. Operações de \texttt{dynamic\_cast}, tipo \textit{get} e tipo \textit{set} são comumente usadas.
+
+O construtor da classe é o responsável pelo tratamento de exceções. Nele, um laço \texttt{while} é utilizado para receber entradas do cliente até que ele escolha a opção de sair, no menu inicial. Dentro desse laço \texttt{while} uma estrutura \texttt{try-catch} permite o tratamento das exceções, imprimindo na tela do usuário o erro ocorrido e retornando para o menu inicial.
+
+\textbf{Observação de implementação:} ao listar o valor das contas de cada telefone, o valor é calculado dentro do mês corrente, da data atual presente na interface. Essa implementação não permite que o vencimento de um plano seja diferente do último dia do mês, caso contrário os valores retornados seriam incoesos.
